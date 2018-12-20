@@ -280,10 +280,11 @@
 
 	<!-- User accounts -->
 
+	<!--password: admin0 -->
 	<bean id="userAccount1" class="security.UserAccount">
-		<property name="username" value="admin" />
+		<property name="username" value="admin0" />
 		<property name="password"
-			value="21232f297a57a5a743894a0e4a801fc3" />
+			value="62f04a011fbb80030bb0a13701c20b41" />
 		<property name="enabled" value="true" />
 		<property name="authorities">
 			<list>
@@ -294,20 +295,7 @@
 		</property>
 	</bean>
 
-	<bean id="userAccount2" class="security.UserAccount">
-		<property name="username" value="customer" />
-		<property name="password"
-			value="91ec1f9324753048c0096d036a694f86" />
-		<property name="enabled" value="true" />
-		<property name="authorities">
-			<list>
-				<bean class="security.Authority">
-					<property name="authority" value="CUSTOMER" />
-				</bean>
-			</list>
-		</property>
-	</bean>
-
+	<!--password: super -->
 	<bean id="userAccount3" class="security.UserAccount">
 		<property name="username" value="super" />
 		<property name="password"
@@ -325,10 +313,11 @@
 		</property>
 	</bean>
 
+	<!--password: referee0 -->
 	<bean id="userAccount4" class="security.UserAccount">
-		<property name="username" value="useracount0" />
+		<property name="username" value="referee0" />
 		<property name="password"
-			value="34cc93ece0ba9e3f6f235d4af979b16c" />
+			value="f3e597454269a05abc6ae80cc61125f1" />
 		<property name="enabled" value="true" />
 		<property name="authorities">
 			<list>
@@ -339,10 +328,11 @@
 		</property>
 	</bean>
 
+	<!--password: customer0 -->
 	<bean id="userAccount5" class="security.UserAccount">
-		<property name="username" value="useracount1" />
+		<property name="username" value="customer0" />
 		<property name="password"
-			value="db0edd04aaac4506f7edab03ac855d56" />
+			value="5db2d12c8faad9e49884e367696d47ef" />
 		<property name="enabled" value="true" />
 		<property name="authorities">
 			<list>
@@ -353,10 +343,11 @@
 		</property>
 	</bean>
 
+	<!--password: handyWorker0 -->
 	<bean id="userAccount6" class="security.UserAccount">
 		<property name="username" value="handyWorker0" />
 		<property name="password"
-			value="218dd27aebeccecae69ad8408d9a36bf" />
+			value="3f7287b27f75264f9d230cdecafb7068" />
 		<property name="enabled" value="true" />
 		<property name="authorities">
 			<list>
@@ -367,10 +358,11 @@
 		</property>
 	</bean>
 
+	<!--password: sponsor0 -->
 	<bean id="userAccount7" class="security.UserAccount">
 		<property name="username" value="sponsor0" />
 		<property name="password"
-			value="00cdb7bb942cf6b290ceb97d6aca64a3" />
+			value="3c004c81ad1758df81046fa03c2cb651" />
 		<property name="enabled" value="true" />
 		<property name="authorities">
 			<list>
@@ -381,10 +373,11 @@
 		</property>
 	</bean>
 
+	<!--password: admin1 -->
 	<bean id="userAccount8" class="security.UserAccount">
 		<property name="username" value="admin1" />
 		<property name="password"
-			value="b25ef06be3b6948c0bc431da46c2c738" />
+			value="e00cf25ad42683b3df678c61f42c6bda" />
 		<property name="enabled" value="true" />
 		<property name="authorities">
 			<list>
@@ -395,10 +388,11 @@
 		</property>
 	</bean>
 
+	<!--password: customer1 -->
 	<bean id="userAccount9" class="security.UserAccount">
 		<property name="username" value="customer1" />
 		<property name="password"
-			value="5d69dd95ac183c9643780ed7027d128a" />
+			value="ffbc4675f864e0e9aab8bdf7a0437010" />
 		<property name="enabled" value="true" />
 		<property name="authorities">
 			<list>
@@ -409,10 +403,11 @@
 		</property>
 	</bean>
 
+	<!--password: customer2 -->
 	<bean id="userAccount10" class="security.UserAccount">
 		<property name="username" value="customer2" />
 		<property name="password"
-			value="87e897e3b54a405da144968b2ca19b45" />
+			value="5ce4d191fd14ac85a1469fb8c29b7a7b" />
 		<property name="enabled" value="true" />
 		<property name="authorities">
 			<list>
@@ -423,10 +418,11 @@
 		</property>
 	</bean>
 
+	<!--password: handyWorker1 -->
 	<bean id="userAccount11" class="security.UserAccount">
 		<property name="username" value="handyWorker1" />
 		<property name="password"
-			value="1e5c2776cf544e213c3d279c40719643" />
+			value="78da4cd657c85d3cf54ae4497ed223f2" />
 		<property name="enabled" value="true" />
 		<property name="authorities">
 			<list>
@@ -437,10 +433,11 @@
 		</property>
 	</bean>
 
+	<!--password: referee1 -->
 	<bean id="userAccount12" class="security.UserAccount">
-		<property name="username" value="useracount12" />
+		<property name="username" value="referee1" />
 		<property name="password"
-			value="3eb33f919dd0f10113a97bbe90072671" />
+			value="092d469d0a71c8002e32f808b861f9a4" />
 		<property name="enabled" value="true" />
 		<property name="authorities">
 			<list>
@@ -451,10 +448,11 @@
 		</property>
 	</bean>
 
+	<!--password: customer3 -->
 	<bean id="userAccount13" class="security.UserAccount">
-		<property name="username" value="useracount13" />
+		<property name="username" value="customer3" />
 		<property name="password"
-			value="50f18851c93feaabb97fbc5124c17aad" />
+			value="033f7f6121501ae98285ad77f216d5e7" />
 		<property name="enabled" value="true" />
 		<property name="authorities">
 			<list>
@@ -465,10 +463,11 @@
 		</property>
 	</bean>
 
+	<!--password: handyWorker2 -->
 	<bean id="userAccount14" class="security.UserAccount">
-		<property name="username" value="useracount14" />
+		<property name="username" value="handyWorker2" />
 		<property name="password"
-			value="063870da59e001367f8ea63c6ee4b9a1" />
+			value="118ad5acc8ff3ea8006c280b310cd492" />
 		<property name="enabled" value="true" />
 		<property name="authorities">
 			<list>
@@ -479,10 +478,11 @@
 		</property>
 	</bean>
 
+	<!--password: handyWorker3 -->
 	<bean id="userAccount15" class="security.UserAccount">
-		<property name="username" value="useracount15" />
+		<property name="username" value="handyWorker3" />
 		<property name="password"
-			value="9be48cbea07d6d210f1a36cd6e1386f7" />
+			value="c210fdd660ad5034b88ad8bb9c135c26" />
 		<property name="enabled" value="true" />
 		<property name="authorities">
 			<list>
@@ -493,14 +493,15 @@
 		</property>
 	</bean>
 
+	<!--password: referee2 -->
 	<bean id="userAccount16" class="security.UserAccount">
-		<property name="username" value="administrator0" />
-		<property name="password" value="8e389be9b9244ca6b9c4b3a779a9a39d" />
+		<property name="username" value="referee2" />
+		<property name="password" value="4f556d5a66f4fe0d058523a7b8e19d91" />
 		<property name="enabled" value="true" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="ADMINISTRATOR" />
+					<property name="authority" value="REFEREE" />
 				</bean>
 			</list>
 		</property>
