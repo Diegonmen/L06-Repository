@@ -50,6 +50,12 @@ public class WarrantyService {
 
 
 
+	public void delete(Integer id) {
+		warrantyRepository.delete(id);
+	}
+
+
+
 	public Collection<Warranty> findDraftModeWarranties(){
 		Collection<Warranty> res = warrantyRepository.findDraftModeWarranties();
 		Assert.notEmpty(res);
