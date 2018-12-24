@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Warranty;
 import services.WarrantyService;
 
 @Controller
@@ -32,5 +33,30 @@ public class WarrantyController extends AbstractController {
 		model.addObject("list", warrantyservice.findAll());
 		
 		return model;
+	}
+	
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView create() {
+		ModelAndView result;
+		Warranty warranty;
+		
+		warranty = this.warrantyservice.create();
+		result = this.createEditModelAndView(warranty);
+		return result;
+	}
+	
+	protected ModelAndView createEditModelAndView(Warranty warranty) {
+		ModelAndView result;
+		result = createEditModelAndView(warranty, null);
+		return result;
+	}
+	
+	protected ModelAndView createEditModelAndView(Warranty warranty, String messageCode) {
+		ModelAndView result;
+		result = new ModelAndView("warranty/edit");
+		result.addObject("warranty", warranty);
+		result.addObject("message", messageCode);
+		
+		return result;
 	}
 }

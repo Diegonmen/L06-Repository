@@ -10,14 +10,25 @@
 
 package controllers;
 
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import domain.Customer;
+import services.CustomerService;
 
 @Controller
 @RequestMapping("/customer")
 public class CustomerController extends AbstractController {
 
+	@Autowired
+	private CustomerService customerService;
+	
 	// Constructors -----------------------------------------------------------
 
 	public CustomerController() {
@@ -45,4 +56,76 @@ public class CustomerController extends AbstractController {
 
 		return result;
 	}
+
+	@RequestMapping("/viewProfile")
+	public ModelAndView view() {
+		ModelAndView result;
+
+		result = new ModelAndView("customer/viewProfile");
+		result.addObject("actor", customerService.findByPrincipal());
+
+		return result;
+	}
+	
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView create() {
+		ModelAndView result;
+		Customer customer;
+
+		customer = this.customerService.create();
+		result = this.createEditModelAndView(customer);
+
+		return result;
+	}
+	
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit() {
+		ModelAndView result;
+		Customer customer;
+		
+		customer = customerService.findByPrincipal();
+		result = createEditModelAndView(customer);
+
+		return result;
+	}
+	
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@Valid Customer customer, BindingResult binding) {
+		ModelAndView result;
+		
+		if(binding.hasErrors()) {
+			result = createEditModelAndView(customer);
+		}else {
+			try {
+				customerService.save(customer);
+				result = new ModelAndView("redirect:list.do");
+			}catch (Throwable oops) {
+				result = createEditModelAndView(customer, "customer.commit.error");
+			}
+		}
+		return result;
+	}
+	
+	protected ModelAndView createEditModelAndView(Customer customer) {
+		ModelAndView result;
+		
+		result = createEditModelAndView(customer, null);
+		return result;
+	}
+	
+	protected ModelAndView createEditModelAndView(Customer customer, String messageCode) {
+		ModelAndView result;
+		
+		if (customer.getId() > 0)
+			result = new ModelAndView("customer/edit");
+		else
+			result = new ModelAndView("customer/create");
+	
+		result.addObject("customer", customer);
+		result.addObject("message", messageCode);
+		
+		return result;
+	}
+
 }
+
