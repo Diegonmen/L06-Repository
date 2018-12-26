@@ -158,5 +158,16 @@ public class RefereeService {
 		Assert.notNull(res);
 		return res;
 	}
+	
+	public Referee findByPrincipal() {
+		Referee res;
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		if (userAccount == null)
+			res = null;
+		else
+			res = this.refereeRepository.findByUserAccountId(userAccount.getId());
+		return res;
+	}
 
 }

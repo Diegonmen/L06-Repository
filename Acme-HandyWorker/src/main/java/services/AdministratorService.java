@@ -586,7 +586,7 @@ public class AdministratorService {
 		return ans;
 	}
 
-	public Object findSelf() {
+	public Administrator findByPrincipal() {
 		Administrator res;
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();

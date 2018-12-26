@@ -80,6 +80,18 @@ public class ApplicationService {
 	public Application save(Application entity) {
 		return applicationRepository.save(entity);
 	}
+	
+	public Application create() {
+		Application result;
+		result = new Application();
+		Collection<String> comments = new LinkedList<>();
+		String status = "PENDING";
+		
+		result.setStatus(status);
+		result.setComments(comments);
+		
+		return result;
+	}
 
 	public Collection<Application> findApplicationsByCustomer(final Customer customer) {
 		Assert.notNull(customer);

@@ -54,6 +54,11 @@ public class WarrantyService {
 		warrantyRepository.delete(id);
 	}
 
+	public Warranty create() {
+		Warranty result = new Warranty();
+		result.setFinalMode(false);
+		return result;
+	}
 
 
 	public Collection<Warranty> findDraftModeWarranties(){

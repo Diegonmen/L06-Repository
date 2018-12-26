@@ -64,4 +64,29 @@ public class WarrantyController extends AbstractController {
 		
 		return result;
 	}
+	
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView create() {
+		ModelAndView result;
+		Warranty warranty;
+		
+		warranty = this.warrantyservice.create();
+		result = this.createEditModelAndView(warranty);
+		return result;
+	}
+	
+	protected ModelAndView createEditModelAndView(Warranty warranty) {
+		ModelAndView result;
+		result = createEditModelAndView(warranty, null);
+		return result;
+	}
+	
+	protected ModelAndView createEditModelAndView(Warranty warranty, String messageCode) {
+		ModelAndView result;
+		result = new ModelAndView("warranty/edit");
+		result.addObject("warranty", warranty);
+		result.addObject("message", messageCode);
+		
+		return result;
+	}
 }
