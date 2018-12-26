@@ -61,4 +61,10 @@ public class WarrantyService {
 		Assert.notEmpty(res);
 		return res;
 	}
+	
+	public Warranty create() {
+		Warranty result = new Warranty();
+		result.setFinalMode(false);
+		return result;
+	}
 }

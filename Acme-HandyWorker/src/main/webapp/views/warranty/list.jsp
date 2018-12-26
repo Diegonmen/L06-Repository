@@ -18,10 +18,16 @@
 	<display:column value="${row.title}" title="${warrantyTitle}"></display:column>
 	<display:column value="${row.terms}" title="${warrantyTermse}"></display:column>
 	<display:column value="${row.applicableLaws}" title="${warrantyApplicableLaws}"></display:column>
+	
 	<display:column>
-		<a href="warrany/edit?q=${row.id}">${warrantyedit}</a>
+	<jstl:if test="${row.finalMode==false }">
+		<a href="warrany/adminstrator/edit.do?warrantyId=${row.id}">${warrantyedit}</a>
+	</jstl:if>
 	</display:column>
 	<display:column>
-		<a href="warrany/delete?q=${row.id}">${warrantyDelete}</a>
+	<jstl:if test="${row.finalMode==false }">
+		<a href="warrany/administrator/delete.do?warrantyId=${row.id}">${warrantyDelete}</a>
+	</jstl:if>
 	</display:column>
+	
 </display:table>
