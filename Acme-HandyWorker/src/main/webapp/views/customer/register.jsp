@@ -15,6 +15,9 @@
 	<form:hidden path="userAccount" />
 	<form:hidden path="socialIdentity" />
 	<form:hidden path="boxes" />
+	<form:hidden path="complaints" />
+	<form:hidden path="fixUpTasks" />
+	<form:hidden path="endorsements" />
 	
 	<form:hidden path="userAccount.authorities" />
 	
@@ -87,10 +90,8 @@
 	
 	<br/>
 	
-	<jstl:if test="${enabled==true }">
-		<input type="submit" class="ui primary button" name="save"
+	<input type="submit" class="ui primary button" name="save"
 			value="<spring:message code="customer.save" />">
-	</jstl:if>
 	
 	<input type="button" class="ui button" name="cancel"
 		value="<spring:message code="customer.cancel" />"

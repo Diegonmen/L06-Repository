@@ -126,6 +126,18 @@ public class CustomerController extends AbstractController {
 		
 		return result;
 	}
+	
+	@RequestMapping("/register")
+	public ModelAndView register() {
+
+		ModelAndView result;
+		Customer actor = customerService.create();
+
+		result = new ModelAndView("customer/register");
+		result.addObject("actor", actor);
+
+		return result;
+	}
 
 }
 
