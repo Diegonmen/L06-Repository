@@ -8,14 +8,11 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<form:form action="administrator/modify.do">
+<form:form action="administrator/edit.do" modelAttribute="administrator">
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="userAccount.authorities" />
-	<form:hidden path="userAccount.version" />
-	<form:hidden path="userAccount.enabled" />
-	<form:hidden path="userAccount.id" />
 	<form:hidden path="suspicious" />
+	<form:hidden path="userAccount"/>
 
 	<div class="ui equal width form">
 		<div class="fields">
@@ -42,24 +39,6 @@
 				</form:label>
 				<form:input placeholder="${actor.surname}" path="surname" />
 				<form:errors class="error" path="surname" />
-			</div>
-		</div>
-		<div class="fields">
-			<!-- Password -->
-			<div class="field">
-				<form:label path="password">
-					<spring:message code="administrator.password" />
-				</form:label>
-				<form:input path="userAccount.password" />
-				<form:errors class="error" path="userAccount.password" />
-			</div>
-			<!-- Repeat password -->
-			<div class="field">
-				<form:label path="repeatPassword">
-					<spring:message code="administrator.repeatPassword" />
-				</form:label>
-				<form:input path="repeatPassword" />
-				<form:errors class="error" path="repeatPassword" />
 			</div>
 		</div>
 		<div class="fields">

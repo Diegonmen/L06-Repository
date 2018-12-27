@@ -1,5 +1,7 @@
 package controllers;
 
+import static org.junit.Assert.assertNotNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -14,7 +16,7 @@ import services.WarrantyService;
 @Controller
 @RequestMapping("/warranty")
 public class WarrantyController extends AbstractController {
-	
+
 	@Autowired
 	WarrantyService warrantyservice;
 
@@ -22,10 +24,10 @@ public class WarrantyController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView model = new ModelAndView("warranty/list");
 		model.addObject("list", warrantyservice.findAll());
-		
+
 		return model;
 	}
-	
+
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam(value = "warrantyId") int warrantyId, BindingResult binding) {
 		ModelAndView result;
@@ -35,58 +37,44 @@ public class WarrantyController extends AbstractController {
 		} catch (Throwable oops) {
 			result = createEditModelAndView(warrantyservice.findOne(warrantyId), "warranty.commit.error");
 		}
-		
-		
+
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
 		Warranty warranty;
-		
+
 		warranty = this.warrantyservice.create();
 		result = this.createEditModelAndView(warranty);
 		return result;
 	}
-	
+
 	protected ModelAndView createEditModelAndView(Warranty warranty) {
 		ModelAndView result;
 		result = createEditModelAndView(warranty, null);
 		return result;
 	}
-	
+
 	protected ModelAndView createEditModelAndView(Warranty warranty, String messageCode) {
 		ModelAndView result;
 		result = new ModelAndView("warranty/administrator/edit");
 		result.addObject("warranty", warranty);
 		result.addObject("message", messageCode);
-		
+
 		return result;
 	}
-	
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create() {
+
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam int warrantyId) {
 		ModelAndView result;
 		Warranty warranty;
-		
-		warranty = this.warrantyservice.create();
-		result = this.createEditModelAndView(warranty);
-		return result;
-	}
-	
-	protected ModelAndView createEditModelAndView(Warranty warranty) {
-		ModelAndView result;
-		result = createEditModelAndView(warranty, null);
-		return result;
-	}
-	
-	protected ModelAndView createEditModelAndView(Warranty warranty, String messageCode) {
-		ModelAndView result;
-		result = new ModelAndView("warranty/edit");
-		result.addObject("warranty", warranty);
-		result.addObject("message", messageCode);
-		
+
+		warranty = warrantyservice.findOne(warrantyId);
+		assertNotNull(warranty);
+		result = createEditModelAndView(warranty);
+
 		return result;
 	}
 }

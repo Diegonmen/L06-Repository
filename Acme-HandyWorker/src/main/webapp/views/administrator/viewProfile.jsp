@@ -61,8 +61,8 @@
 </table>
 
 <input type="button" name="save" class="ui button"
- value="<spring:message code="administrator.modify" />"
- onclick="javascript: relativeRedir('administrator/modifyProfile.do');" />
+ value="<spring:message code="administrator.edit" />"
+ onclick="javascript: relativeRedir('administrator/edit.do');" />
 
 </body>
 </html>
