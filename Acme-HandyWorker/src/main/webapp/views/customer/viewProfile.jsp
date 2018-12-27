@@ -63,7 +63,7 @@
 
 <input type="button" name="save" class="ui button"
  value="<spring:message code="customer.modify" />"
- onclick="javascript: relativeRedir('customer/modifyProfile.do');" />
+ onclick="javascript: relativeRedir('customer/edit.do');" />
 
 </body>
 </html>

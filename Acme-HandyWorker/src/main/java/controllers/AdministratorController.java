@@ -81,8 +81,11 @@ public class AdministratorController extends AbstractController {
 	public ModelAndView edit() {
 		ModelAndView result;
 		Administrator administrator;
+		
 
 		administrator = administratorservice.findByPrincipal();
+		
+		
 		result = createEditModelAndView(administrator);
 
 		return result;
@@ -116,6 +119,7 @@ public class AdministratorController extends AbstractController {
 
 	protected ModelAndView createEditModelAndView(Administrator administrator, String messageCode) {
 		ModelAndView result;
+		
 		result = new ModelAndView("administrator/edit");
 		result.addObject("administrator", administrator);
 		result.addObject("message", messageCode);

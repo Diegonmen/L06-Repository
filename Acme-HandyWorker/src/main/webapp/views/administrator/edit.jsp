@@ -13,6 +13,9 @@
 	<form:hidden path="version" />
 	<form:hidden path="suspicious" />
 	<form:hidden path="userAccount"/>
+	<jstl:if test="${administrator.getId()!=0 }">
+	<form:hidden path="userAccount.password"/>
+	</jstl:if>
 
 	<div class="ui equal width form">
 		<div class="fields">
@@ -41,6 +44,18 @@
 				<form:errors class="error" path="surname" />
 			</div>
 		</div>
+		<div class="fields">
+			<!-- Password -->
+			<div class="field">
+				<form:label path="userAccount.password">
+					<spring:message code="administrator.password" />
+				</form:label>
+				<form:input  path="userAccount.password" />
+				<form:errors class="error" path="userAccount.password" />
+			</div>
+		</div>
+		
+		
 		<div class="fields">
 			<!-- Email -->
 			<div class="field">

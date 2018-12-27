@@ -15,7 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import domain.Actor;
+import domain.Box;
 import domain.Configuration;
+import domain.SocialIdentity;
 import repositories.ActorRepository;
 import security.LoginService;
 import security.UserAccount;
@@ -173,6 +175,28 @@ public class ActorService {
 		return res;
 		
 	}
+	
+//	public Actor create() {
+//
+//		Actor result;
+//		UserAccount userAccount;
+//
+//		result = new Actor() {};
+//		userAccount = new UserAccount();
+//
+//		result.setSuspicious(false);
+//
+//		userAccount.setEnabled(true);
+//
+//		Collection<Box> boxes = new LinkedList<>();
+//		result.setBoxes(boxes);
+//		Collection<SocialIdentity> socialIdentity = new LinkedList<>();
+//		result.setSocialIdentity(socialIdentity);
+//		result.setUserAccount(userAccount);
+//
+//		return result;
+//
+//	}
 
 //		HandyWorker res = handyWorkerService.save(handyWorker);
 

@@ -37,13 +37,42 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="customer/action-1.do"><spring:message code="master.page.customer.action.1" /></a></li>
-					<li><a href="customer/action-2.do"><spring:message code="master.page.customer.action.2" /></a></li>					
+					<li><a href="customer/action-2.do"><spring:message code="master.page.customer.action.2" /></a></li>
+					<li><a href="customer/viewProfile.do"><spring:message code="master.page.customer.view" /></a></li>					
+				</ul>
+			</li>
+		</security:authorize>
+		
+		<security:authorize access="hasRole('HANDYWORKER')">
+			<li><a class="fNiv"><spring:message	code="master.page.handyWorker" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="handyWorker/viewProfile.do"><spring:message code="master.page.handyWorker.view" /></a></li>					
+				</ul>
+			</li>
+		</security:authorize>
+		
+		<security:authorize access="hasRole('REFEREE')">
+			<li><a class="fNiv"><spring:message	code="master.page.referee" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="referee/viewProfile.do"><spring:message code="master.page.referee.view" /></a></li>					
+				</ul>
+			</li>
+		</security:authorize>
+		
+		<security:authorize access="hasRole('SPONSOR')">
+			<li><a class="fNiv"><spring:message	code="master.page.sponsor" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="sponsor/viewProfile.do"><spring:message code="master.page.sponsor.view" /></a></li>					
 				</ul>
 			</li>
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
+			<li><a class="fNiv" href="actor/register.do"><spring:message code="master.page.register" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">

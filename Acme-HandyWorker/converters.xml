@@ -1,4 +1,0 @@
-bean class="converters.CategoryToStringConverter" />
-bean class="converters.StringToCategoryConverter" />
-</util:list>
-</beans>

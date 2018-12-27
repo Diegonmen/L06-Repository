@@ -47,19 +47,11 @@
 		<div class="fields">
 			<!-- Password -->
 			<div class="field">
-				<form:label path="password">
-					<spring:message code="handyWorker.password" />
+				<form:label path="userAccount.password">
+					<spring:message code="administrator.password" />
 				</form:label>
-				<form:input path="userAccount.password" />
+				<form:input  path="userAccount.password" />
 				<form:errors class="error" path="userAccount.password" />
-			</div>
-			<!-- Repeat password -->
-			<div class="field">
-				<form:label path="repeatPassword">
-					<spring:message code="handyWorker.repeatPassword" />
-				</form:label>
-				<form:input path="repeatPassword" />
-				<form:errors class="error" path="repeatPassword" />
 			</div>
 		</div>
 		<div class="fields">

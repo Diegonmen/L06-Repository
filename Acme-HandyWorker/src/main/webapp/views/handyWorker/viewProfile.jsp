@@ -85,7 +85,7 @@
 
 <input type="button" name="save" class="ui button"
  value="<spring:message code="handyWorker.modify" />"
- onclick="javascript: relativeRedir('handyWorker/modifyProfile.do');" />
+ onclick="javascript: relativeRedir('handyWorker/edit.do');" />
 
 </body>
 </html>
