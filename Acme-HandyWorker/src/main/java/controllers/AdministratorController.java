@@ -126,5 +126,17 @@ public class AdministratorController extends AbstractController {
 
 		return result;
 	}
+	
+	@RequestMapping("/register")
+	public ModelAndView register() {
+
+		ModelAndView result;
+		Administrator actor = administratorservice.create();
+
+		result = new ModelAndView("administrator/register");
+		result.addObject("actor", actor);
+
+		return result;
+	}
 
 }
