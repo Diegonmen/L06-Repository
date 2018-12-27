@@ -27,7 +27,9 @@
 					<li><a href="administrator/action-1.do"><spring:message code="master.page.administrator.action.1" /></a></li>
 					<li><a href="administrator/action-2.do"><spring:message code="master.page.administrator.action.2" /></a></li>
 					<li><a href="administrator/viewProfile.do"><spring:message code="master.page.administrator.view" /></a></li>	
-					<li><a href="warranty/list.do"><spring:message code="master.page.warraty.list" /></a></li>			
+					<li><a href="warranty/list.do"><spring:message code="master.page.warraty.list" /></a></li>
+					<li><a href="administrator/registerAdministrator.do"><spring:message code="master.page.administrator.register" /></a></li>
+					<li><a href="administrator/registerReferee.do"><spring:message code="master.page.referee.register" /></a></li>		
 				</ul>
 			</li>
 		</security:authorize>
@@ -72,7 +74,15 @@
 		
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
-			<li><a class="fNiv" href="actor/register.do"><spring:message code="master.page.register" /></a></li>
+			<li><a class="fNiv"><spring:message code="master.page.register" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="customer/register.do"><spring:message code="master.page.customer.register" /></a></li>
+					<li><a href="handyWorker/register.do"><spring:message code="master.page.handyWorker.register" /></a></li>
+					<li><a href="sponsor/register.do"><spring:message code="master.page.sponsor.register" /></a></li>
+					
+				</ul>
+			</li>
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
