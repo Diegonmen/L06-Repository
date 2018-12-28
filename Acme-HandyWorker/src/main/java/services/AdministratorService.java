@@ -84,6 +84,9 @@ public class AdministratorService {
 
 	@Autowired
 	private EndorsementService		endorsementService;
+	
+	@Autowired
+	private BoxServices boxservices;
 
 
 	// Simple CRUD methods ----------------------------------------------------
@@ -169,10 +172,10 @@ public class AdministratorService {
 			spambox.setPredefined(true);
 			spambox.setMessages(messages);
 			Collection<Box> boxes = new LinkedList<Box>();
-			boxes.add(inbox);
-			boxes.add(outbox);
-			boxes.add(trashbox);
-			boxes.add(spambox);
+			boxes.add(boxservices.save(inbox));
+			boxes.add(boxservices.save(outbox));
+			boxes.add(boxservices.save(trashbox));
+			boxes.add(boxservices.save(spambox));
 			administrator.setBoxes(boxes);
 
 		}
@@ -426,10 +429,10 @@ public class AdministratorService {
 			spambox.setPredefined(true);
 			spambox.setMessages(messages);
 			Collection<Box> boxes = new LinkedList<Box>();
-			boxes.add(inbox);
-			boxes.add(outbox);
-			boxes.add(trashbox);
-			boxes.add(spambox);
+			boxes.add(boxservices.save(inbox));
+			boxes.add(boxservices.save(outbox));
+			boxes.add(boxservices.save(trashbox));
+			boxes.add(boxservices.save(spambox));
 			sponsor.setBoxes(boxes);
 
 		}
@@ -489,10 +492,10 @@ public class AdministratorService {
 			spambox.setPredefined(true);
 			spambox.setMessages(messages);
 			Collection<Box> boxes = new LinkedList<Box>();
-			boxes.add(inbox);
-			boxes.add(outbox);
-			boxes.add(trashbox);
-			boxes.add(spambox);
+			boxes.add(boxservices.save(inbox));
+			boxes.add(boxservices.save(outbox));
+			boxes.add(boxservices.save(trashbox));
+			boxes.add(boxservices.save(spambox));
 			referee.setBoxes(boxes);
 
 		}

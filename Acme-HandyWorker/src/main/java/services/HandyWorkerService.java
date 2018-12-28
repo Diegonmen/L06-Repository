@@ -55,6 +55,9 @@ public class HandyWorkerService {
 
 	@Autowired
 	private ReportService reportService;
+	
+	@Autowired
+	private BoxServices boxservices;
 
 	// Supporting services ----------------------------------------------------
 
@@ -133,10 +136,10 @@ public class HandyWorkerService {
 			spambox.setPredefined(true);
 			spambox.setMessages(messages);
 			Collection<Box> boxes = new LinkedList<Box>();
-			boxes.add(inbox);
-			boxes.add(outbox);
-			boxes.add(trashbox);
-			boxes.add(spambox);
+			boxes.add(boxservices.save(inbox));
+			boxes.add(boxservices.save(outbox));
+			boxes.add(boxservices.save(trashbox));
+			boxes.add(boxservices.save(spambox));
 			handyWorker.setBoxes(boxes);
 
 		}
