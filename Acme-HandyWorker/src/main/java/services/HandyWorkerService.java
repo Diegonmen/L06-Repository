@@ -141,6 +141,7 @@ public class HandyWorkerService {
 			boxes.add(boxservices.save(trashbox));
 			boxes.add(boxservices.save(spambox));
 			handyWorker.setBoxes(boxes);
+			handyWorker.setMake(handyWorker.getName() + " " + handyWorker.getMiddleName() + " " + handyWorker.getSurname());
 
 		}
 

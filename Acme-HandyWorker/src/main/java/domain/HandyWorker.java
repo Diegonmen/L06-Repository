@@ -8,15 +8,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 @Entity
 public class HandyWorker extends Actor {
 
 	private String	make;
 
 
-	@NotBlank
 	public String getMake() {
 		return this.make;
 	}

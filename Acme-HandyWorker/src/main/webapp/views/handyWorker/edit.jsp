@@ -8,14 +8,20 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<form:form action="handyWorker/modify.do">
+<form:form action="handyWorker/modify.do" modelAttribute="actor">
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="userAccount.authorities" />
-	<form:hidden path="userAccount.version" />
-	<form:hidden path="userAccount.enabled" />
-	<form:hidden path="userAccount.id" />
 	<form:hidden path="suspicious" />
+	<form:hidden path="userAccount" />
+	<form:hidden path="socialIdentity" />
+	<form:hidden path="boxes" />
+	<form:hidden path="endorsements" />
+	<form:hidden path="applications" />
+	<form:hidden path="tutorials" />
+	<form:hidden path="curriculum" />
+	<form:hidden path="finder" />
+	<form:hidden path="make" />
+	
 
 	<div class="ui equal width form">
 		<div class="fields">
@@ -48,10 +54,18 @@
 			<!-- Password -->
 			<div class="field">
 				<form:label path="userAccount.password">
-					<spring:message code="administrator.password" />
+					<spring:message code="handyWorker.password" />
 				</form:label>
 				<form:input  path="userAccount.password" />
 				<form:errors class="error" path="userAccount.password" />
+			</div>
+			<!-- Make -->
+			<div class="field">
+				<form:label path="make">
+					<spring:message code="handyWorker.make" />
+				</form:label>
+				<form:input placeholder="${actor.make}" path="make" />
+				<form:errors class="error" path="make" />
 			</div>
 		</div>
 		<div class="fields">

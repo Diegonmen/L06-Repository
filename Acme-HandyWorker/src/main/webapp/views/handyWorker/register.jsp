@@ -8,15 +8,46 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<form:form action="handyWorker/save.do">
+<form:form action="handyWorker/edit.do" modelAttribute="actor">
+	<form:hidden path="id" />
+	<form:hidden path="version" />
+	<form:hidden path="suspicious" />
+	<form:hidden path="userAccount" />
+	<form:hidden path="socialIdentity" />
+	<form:hidden path="boxes" />
+	<form:hidden path="endorsements" />
+	<form:hidden path="applications" />
+	<form:hidden path="tutorials" />
+	<form:hidden path="curriculum" />
+	<form:hidden path="finder" />
+	<form:hidden path="make" />
+	
+	<form:hidden path="userAccount.authorities" />
+	
 	<div class="ui equal width form">
+	<div class="form-group"> 
+		<form:label path="userAccount.username">
+			<spring:message code="handyWorker.userAccount.username" />
+		</form:label>
+		<form:input class="form-control" path="userAccount.username" />
+		<form:errors class="text-danger" path="userAccount.username" />
+	</div>
+	<div class="form-group"> 
+		<form:label path="userAccount.password">
+			<spring:message code="handyWorker.userAccount.password" />
+		</form:label>
+		<form:password class="form-control" path="userAccount.password" />
+		<form:errors class="text-danger" path="userAccount.password" />
+	</div>
+
+	
 		<div class="fields">
 			<!-- Name -->
 			<div class="field">
 				<form:label path="name">
 					<spring:message code="handyWorker.name" />
 				</form:label>
-				<form:input placeholder="${actor.name}" path="name" />
+				<form:input class="form-control" path="name" />
 				<form:errors class="error" path="name" />
 			</div>
 			<!-- MiddleName -->
@@ -24,7 +55,7 @@
 				<form:label path="middleName">
 					<spring:message code="handyWorker.middleName" />
 				</form:label>
-				<form:input placeholder="${actor.middleName}" path="middleName" />
+				<form:input class="form-control" path="middleName" />
 				<form:errors class="error" path="middleName" />
 			</div>
 			<!-- Surname -->
@@ -32,36 +63,12 @@
 				<form:label path="surname">
 					<spring:message code="handyWorker.surname" />
 				</form:label>
-				<form:input placeholder="${actor.surname}" path="surname" />
+				<form:input class="form-control" path="surname" />
 				<form:errors class="error" path="surname" />
 			</div>
 		</div>
-		<!-- Username -->
-		<div class="fields">
-			<div class="form-group">
-			<form:label path="userAccount.username">
-				<spring:message code="actor.username" />
-			</form:label>
-			<form:input class="form-control" path="userAccount.username" />
-			<form:errors class="text-danger" path="userAccount.username" />
-		</div>
-			<!-- Password -->
-			<div class="field">
-				<form:label path="password">
-					<spring:message code="handyWorker.password" />
-				</form:label>
-				<form:input path="userAccount.password" />
-				<form:errors class="error" path="userAccount.password" />
-			</div>
-			<!-- Repeat password -->
-			<div class="field">
-				<form:label path="repeatPassword">
-					<spring:message code="handyWorker.repeatPassword" />
-				</form:label>
-				<form:input path="repeatPassword" />
-				<form:errors class="error" path="repeatPassword" />
-			</div>
-		</div>
+		
+		
 		<div class="fields">
 			<!-- Email -->
 			<div class="field">
@@ -86,7 +93,7 @@
 				<form:label path="address">
 					<spring:message code="handyWorker.address" />
 				</form:label>
-				<form:input placeholder="${actor.address}" path="address" />
+				<form:input class="form-control" path="address" />
 				<form:errors class="error" path="address" />
 			</div>
 			<!-- Photo -->
@@ -94,19 +101,16 @@
 				<form:label path="photo">
 					<spring:message code="handyWorker.photo" />
 				</form:label>
-				<form:input placeholder="${actor.photo}" path="photo" />
+				<form:input class="form-control" path="photo" />
 				<form:errors class="error" path="photo" />
 			</div>
 		</div>
-	</div>
 
-	<jstl:if test="${enabled==true }">
-		<input type="submit" class="ui primary button" name="save"
+	<input type="submit" class="ui primary button" name="save"
 			value="<spring:message code="handyWorker.save" />">
-	</jstl:if>
 
 	<input type="button" class="ui button" name="cancel"
 		value="<spring:message code="handyWorker.cancel" />"
 		onclick="javascript: relativeRedir('welcome/index.do');">
-
+</div>
 </form:form>

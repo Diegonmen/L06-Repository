@@ -104,7 +104,7 @@ public class CustomerController extends AbstractController {
 		}else {
 			try {
 				customerService.save(customer);
-				result = new ModelAndView("redirect:welcome/index.do");
+				result = new ModelAndView("redirect:/welcome/index.do");
 			}catch (Throwable oops) {
 				result = createEditModelAndView(customer, "customer.commit.error");
 			}

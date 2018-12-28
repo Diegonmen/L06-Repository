@@ -59,12 +59,9 @@
 		</tr>
 		<tr>
 			<td><spring:message code="handyWorker.make" />
-			<td data-label="address">${actor.make}</td>
-		</tr>
-		<tr>
-			<td><spring:message code="handyWorker.make" />
 			<td data-label="make">${actor.make}</td>
 		</tr>
+		<jstl:if test="${actor.curriculum.id!=0}">
 		<tr>
 			<td><spring:message code="handyWorker.currilum.ticker" />
 			<td>
@@ -75,10 +72,7 @@
 				 </a>
 			</td>
 		</tr>
-		<tr>
-			<td><spring:message code="handyWorker.make" />
-			<td data-label="make">${actor.make}</td>
-		</tr>
+		</jstl:if>
 	</tbody>
 </table>
 
