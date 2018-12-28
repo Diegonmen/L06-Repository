@@ -54,7 +54,7 @@
 		<security:intercept-url pattern="/customer/action-1.do" access="hasRole('CUSTOMER')" /> 
 		<security:intercept-url pattern="/customer/action-2.do" access="hasRole('CUSTOMER')" /> 
 		<security:intercept-url pattern="/customer/viewProfile.do" access="hasRole('CUSTOMER')" /> 
-		<security:intercept-url pattern="/customer/edit.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/customer/edit.do" access="hasRole('CUSTOMER') or isAnonymous()" />
 		<security:intercept-url pattern="/customer/register.do" access="!isAuthenticated()" />
 		
 		

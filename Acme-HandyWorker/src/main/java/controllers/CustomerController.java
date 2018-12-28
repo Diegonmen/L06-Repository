@@ -10,11 +10,14 @@
 
 package controllers;
 
+import java.util.Arrays;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -95,10 +98,13 @@ public class CustomerController extends AbstractController {
 		
 		if(binding.hasErrors()) {
 			result = createEditModelAndView(customer);
+			for(ObjectError e : binding.getAllErrors()) {
+				System.out.println(e.getObjectName() + " error [" + e.getDefaultMessage() + "] " + Arrays.toString(e.getCodes()));
+			}
 		}else {
 			try {
 				customerService.save(customer);
-				result = new ModelAndView("redirect:list.do");
+				result = new ModelAndView("redirect:welcome/index.do");
 			}catch (Throwable oops) {
 				result = createEditModelAndView(customer, "customer.commit.error");
 			}
@@ -119,9 +125,9 @@ public class CustomerController extends AbstractController {
 		if (customer.getId() > 0)
 			result = new ModelAndView("customer/edit");
 		else
-			result = new ModelAndView("customer/create");
+			result = new ModelAndView("customer/register");
 	
-		result.addObject("customer", customer);
+		result.addObject("actor", customer);
 		result.addObject("message", messageCode);
 		
 		return result;

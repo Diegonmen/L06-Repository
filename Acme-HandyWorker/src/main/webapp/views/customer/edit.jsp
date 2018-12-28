@@ -48,7 +48,7 @@
 			<!-- Password -->
 			<div class="field">
 				<form:label path="userAccount.password">
-					<spring:message code="administrator.password" />
+					<spring:message code="customer.password" />
 				</form:label>
 				<form:input  path="userAccount.password" />
 				<form:errors class="error" path="userAccount.password" />

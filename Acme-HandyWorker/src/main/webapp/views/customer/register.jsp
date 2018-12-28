@@ -8,7 +8,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<form:form action="customer/save.do" modelAttribute="actor">
+<form:form action="customer/edit.do" modelAttribute="actor">
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="suspicious" />
