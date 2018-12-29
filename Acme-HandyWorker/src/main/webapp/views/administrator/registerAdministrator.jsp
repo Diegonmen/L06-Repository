@@ -8,7 +8,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<form:form action="administrator/save.do" modelAttribute="actor">
+<form:form action="administrator/editAdministrator.do" modelAttribute="actor">
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="suspicious" />
@@ -87,13 +87,8 @@
 	
 	<br/>
 	
-	<%-- <input type="submit" class="btn btn-primary" name="save" value="<spring:message code="administrator.save" />" >&nbsp;
-	<input type="submit" class="btn btn-primary" name="cancel" value="<spring:message code="administrator.cancel" />" >&nbsp; --%>
-	
-	<jstl:if test="${enabled==true }">
-		<input type="submit" class="ui primary button" name="save"
+	<input type="submit" class="ui primary button" name="save"
 			value="<spring:message code="administrator.save" />">
-	</jstl:if>
 	
 	<input type="button" class="ui button" name="cancel"
 		value="<spring:message code="administrator.cancel" />"

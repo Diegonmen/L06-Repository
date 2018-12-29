@@ -8,14 +8,13 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<form:form action="administrator/edit.do" modelAttribute="administrator">
+<form:form action="administrator/edit.do" modelAttribute="actor">
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="suspicious" />
-	<form:hidden path="userAccount"/>
-	<jstl:if test="${administrator.getId()!=0 }">
-	<form:hidden path="userAccount.password"/>
-	</jstl:if>
+	<form:hidden path="userAccount" />
+	<form:hidden path="socialIdentity" />
+	<form:hidden path="boxes" />
 
 	<div class="ui equal width form">
 		<div class="fields">
@@ -54,8 +53,6 @@
 				<form:errors class="error" path="userAccount.password" />
 			</div>
 		</div>
-		
-		
 		<div class="fields">
 			<!-- Email -->
 			<div class="field">
@@ -94,7 +91,7 @@
 		</div>
 	</div>
 
-	<jstl:if test="${enabled==true }">
+	<jstl:if test="${actor.userAccount.enabled==true }">
 		<input type="submit" class="ui primary button" name="save"
 			value="<spring:message code="administrator.save" />">
 	</jstl:if>

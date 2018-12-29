@@ -10,17 +10,22 @@
 
 package controllers;
 
+import java.util.Arrays;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.Administrator;
+import domain.Referee;
 import services.AdministratorService;
+import services.RefereeService;
 
 @Controller
 @RequestMapping("/administrator")
@@ -29,6 +34,9 @@ public class AdministratorController extends AbstractController {
 	// Constructors -----------------------------------------------------------
 	@Autowired
 	private AdministratorService administratorservice;
+	
+	@Autowired
+	private RefereeService refereeService;
 
 	public AdministratorController() {
 		super();
@@ -97,10 +105,13 @@ public class AdministratorController extends AbstractController {
 		
 		if(binding.hasErrors()) {
 			result = createEditModelAndView(administrator);
+			for(ObjectError e : binding.getAllErrors()) {
+				System.out.println(e.getObjectName() + " error [" + e.getDefaultMessage() + "] " + Arrays.toString(e.getCodes()));
+			}
 		}else {
 			try {
 				administratorservice.save(administrator);
-				result = new ModelAndView("redirect:list.do");
+				result = new ModelAndView("redirect:/welcome/index.do");
 			}catch (Throwable oops) {
 				result = createEditModelAndView(administrator, "administrator.commit.error");
 			}
@@ -108,32 +119,86 @@ public class AdministratorController extends AbstractController {
 		return result;
 	}
 	
+	@RequestMapping(value = "/editReferee", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@Valid Referee referee, BindingResult binding) {
+		ModelAndView result;
+		
+		if(binding.hasErrors()) {
+			result = createEditModelAndView(referee);
+			for(ObjectError e : binding.getAllErrors()) {
+				System.out.println(e.getObjectName() + " error [" + e.getDefaultMessage() + "] " + Arrays.toString(e.getCodes()));
+			}
+		}else {
+			try {
+				refereeService.save(referee);
+				result = new ModelAndView("redirect:/welcome/index.do");
+			}catch (Throwable oops) {
+				result = createEditModelAndView(referee, "referee.commit.error");
+			}
+		}
+		return result;
+	}
 	
 
 	protected ModelAndView createEditModelAndView(Administrator administrator) {
 		ModelAndView result;
-
+		
 		result = createEditModelAndView(administrator, null);
 		return result;
 	}
-
+	
 	protected ModelAndView createEditModelAndView(Administrator administrator, String messageCode) {
 		ModelAndView result;
 		
-		result = new ModelAndView("administrator/edit");
-		result.addObject("administrator", administrator);
+		if (administrator.getId() > 0)
+			result = new ModelAndView("administrator/edit");
+		else
+			result = new ModelAndView("administrator/registerAdministrator");
+	
+		result.addObject("actor", administrator);
 		result.addObject("message", messageCode);
-
+		
 		return result;
 	}
 	
-	@RequestMapping("/register")
-	public ModelAndView register() {
+	protected ModelAndView createEditModelAndView(Referee referee) {
+		ModelAndView result;
+		
+		result = createEditModelAndView(referee, null);
+		return result;
+	}
+	
+	protected ModelAndView createEditModelAndView(Referee referee, String messageCode) {
+		ModelAndView result;
+		
+		result = new ModelAndView("administrator/registerReferee");
+	
+		result.addObject("actor", referee);
+		result.addObject("message", messageCode);
+		
+		return result;
+	}
+	
+	
+	@RequestMapping("/registerAdministrator")
+	public ModelAndView registerAdmin() {
 
 		ModelAndView result;
 		Administrator actor = administratorservice.create();
 
-		result = new ModelAndView("administrator/register");
+		result = new ModelAndView("administrator/registerAdministrator");
+		result.addObject("actor", actor);
+
+		return result;
+	}
+	
+	@RequestMapping("/registerReferee")
+	public ModelAndView registerReferee() {
+
+		ModelAndView result;
+		Referee actor = refereeService.create();
+
+		result = new ModelAndView("administrator/registerReferee");
 		result.addObject("actor", actor);
 
 		return result;

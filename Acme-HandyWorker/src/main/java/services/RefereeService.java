@@ -68,7 +68,7 @@ public class RefereeService {
 
 		result.setSuspicious(false);
 
-		authority.setAuthority("referee");
+		authority.setAuthority("REFEREE");
 		userAccount.addAuthority(authority);
 		userAccount.setEnabled(true);
 

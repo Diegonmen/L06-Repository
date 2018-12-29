@@ -473,7 +473,6 @@ public class AdministratorService {
 			Assert.isTrue(logedUserAccount.getAuthorities().contains(authority2), "admin.notEqual.userAccount");
 			Assert.isTrue(referee.isSuspicious() == false, "admin.notSuspicious.false");
 			referee.getUserAccount().setPassword(encoder.encodePassword(referee.getUserAccount().getPassword(), null));
-			referee.getUserAccount().setEnabled(true);
 			Collection<Message> messages = new LinkedList<>();
 			Box inbox = new Box();
 			inbox.setName("INBOX");

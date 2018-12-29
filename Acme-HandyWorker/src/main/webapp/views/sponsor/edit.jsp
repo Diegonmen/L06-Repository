@@ -8,15 +8,15 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<form:form action="sponsor/modify.do">
+<form:form action="sponsor/edit.do" modelAttribute="actor">
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="userAccount.authorities" />
-	<form:hidden path="userAccount.version" />
-	<form:hidden path="userAccount.enabled" />
-	<form:hidden path="userAccount.id" />
 	<form:hidden path="suspicious" />
-
+	<form:hidden path="userAccount" />
+	<form:hidden path="socialIdentity" />
+	<form:hidden path="boxes" />
+	<form:hidden path="sponsorships" />
+	
 	<div class="ui equal width form">
 		<div class="fields">
 			<!-- Name -->
@@ -48,7 +48,7 @@
 			<!-- Password -->
 			<div class="field">
 				<form:label path="userAccount.password">
-					<spring:message code="administrator.password" />
+					<spring:message code="sponsor.password" />
 				</form:label>
 				<form:input  path="userAccount.password" />
 				<form:errors class="error" path="userAccount.password" />
@@ -92,7 +92,7 @@
 		</div>
 	</div>
 
-	<jstl:if test="${enabled==true }">
+	<jstl:if test="${actor.userAccount.enabled==true }">
 		<input type="submit" class="ui primary button" name="save"
 			value="<spring:message code="sponsor.save" />">
 	</jstl:if>
