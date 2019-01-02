@@ -130,7 +130,7 @@ public class AdministratorController extends AbstractController {
 			}
 		}else {
 			try {
-				refereeService.save(referee);
+				administratorservice.saveReferee(referee);
 				result = new ModelAndView("redirect:/welcome/index.do");
 			}catch (Throwable oops) {
 				result = createEditModelAndView(referee, "referee.commit.error");

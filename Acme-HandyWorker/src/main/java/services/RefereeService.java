@@ -79,6 +79,7 @@ public class RefereeService {
 		final Collection<Report> reports = new LinkedList<>();
 		result.setReports(reports);
 		result.setUserAccount(userAccount);
+		result.getUserAccount().setEnabled(true);
 
 		return result;
 
