@@ -1,10 +1,13 @@
 package controllers;
 
+import java.util.Arrays;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -61,10 +64,13 @@ public class RefereeController extends AbstractController {
 		
 		if(binding.hasErrors()) {
 			result = createEditModelAndView(referee);
+			for(ObjectError e : binding.getAllErrors()) {
+				System.out.println(e.getObjectName() + " error [" + e.getDefaultMessage() + "] " + Arrays.toString(e.getCodes()));
+			}
 		}else {
 			try {
 				refereeService.save(referee);
-				result = new ModelAndView("redirect:list.do");
+				result = new ModelAndView("redirect:/welcome/index.do");
 			}catch (Throwable oops) {
 				result = createEditModelAndView(referee, "referee.commit.error");
 			}
@@ -87,7 +93,7 @@ public class RefereeController extends AbstractController {
 		else
 			result = new ModelAndView("referee/create");
 
-		result.addObject("referee", referee);
+		result.addObject("actor", referee);
 		result.addObject("message", messageCode);
 
 		return result;
