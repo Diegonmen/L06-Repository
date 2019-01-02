@@ -10,14 +10,6 @@
 
 <form:form action="warranty/administrator/edit.do" modelAttribute="warranty">
 
-	<jstl:if test="${warranty.getId() == 0}">
-		<h2><spring:message code="warranty.create" /></h2>
- 	</jstl:if>
- 	
-	<jstl:if test="${warranty.getId() != 0}">
-		<h2><spring:message code="warranty.edit" /></h2>
- 	</jstl:if>
-
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	
@@ -49,18 +41,18 @@
 		<form:label path="finalMode">
 			<spring:message code="warranty.finalMode" />
 		</form:label>
-		<form:radiobutton path="finalMode" value=true/><spring:message code="warranty.finalModeTrue" />
-		<form:radiobutton path="finalMode" value=false/><spring:message code="warranty.finalModeFalse" />
-		<form:textarea path="comments"/>
-		<form:errors class="text-danger" path="comments"/>
+		<form:radiobutton path="finalMode" value="true"/><spring:message code="warranty.finalModeTrue" />
+		<form:radiobutton path="finalMode" value="false"/><spring:message code="warranty.finalModeFalse" />
 	</div>
 	
 	<input type="submit" name="save" value="<spring:message code="warranty.save" />">
 
 	<jstl:if test="${warranty.getId() != 0}">
-		<input type="submit" name="delete" value="<spring:message code="warranty.delete" />">
+		<jstl:if test="${warranty.finalMode==false }">
+			<input type="submit" class="btn btn-warning" name="delete" value="<spring:message code="warranty.delete" />">
+		</jstl:if>
  	</jstl:if>
-	
+ 	
 	<input type="button" name="cancel" value="<spring:message code="warranty.cancel" />" onclick="javascript: relativeRedir('warranty/list.do')">
 	
 </form:form>

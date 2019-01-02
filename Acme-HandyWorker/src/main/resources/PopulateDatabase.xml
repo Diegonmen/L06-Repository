@@ -2417,24 +2417,26 @@
 
 	<!-- Category -->
 
+	<bean id="categorySuper" class="domain.Category">
+		<property name="name" value="Category" >
+		</property>
+	</bean>
+
 	<bean id="category0" class="domain.Category">
 		<property name="name" value="categoryName0" />
-		<property name="childCategories">
-			<list></list>
+		<property name="parentCategory" ref = "categorySuper">
 		</property>
 	</bean>
 
 	<bean id="category1" class="domain.Category">
 		<property name="name" value="categoryName1" />
-		<property name="childCategories">
-			<list></list>
+		<property name="parentCategory" ref = "categorySuper">
 		</property>
 	</bean>
 
 	<bean id="category2" class="domain.Category">
 		<property name="name" value="categoryName2" />
-		<property name="childCategories">
-			<list></list>
+		<property name="parentCategory" ref = "category1">
 		</property>
 	</bean>
 

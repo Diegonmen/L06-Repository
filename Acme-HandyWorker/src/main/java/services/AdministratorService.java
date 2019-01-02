@@ -233,7 +233,7 @@ public class AdministratorService {
 		authority.setAuthority("ADMINISTRATOR");
 		logedUserAccount = LoginService.getPrincipal();
 
-		if (this.exists(warranty.getId()) && logedUserAccount.getAuthorities().contains(authority) && !warranty.isFinalMode()) {
+		if (warrantyService.exists(warranty.getId()) && logedUserAccount.getAuthorities().contains(authority) && !warranty.isFinalMode()) {
 			saved = this.warrantyService.findOne(warranty.getId());
 			Assert.notNull(saved);
 			result = this.warrantyService.save(warranty);
@@ -256,7 +256,7 @@ public class AdministratorService {
 	}
 
 	public Warranty findOneWarranty(Integer warrantyId) {
-		Assert.isTrue(this.exists(warrantyId));
+		Assert.isTrue(warrantyService.exists(warrantyId));
 		UserAccount logedUserAccount;
 		Authority authority;
 		authority = new Authority();

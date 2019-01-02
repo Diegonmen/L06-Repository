@@ -1,16 +1,21 @@
 package controllers;
 
-import static org.junit.Assert.assertNotNull;
+import java.util.Arrays;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.Warranty;
+import services.AdministratorService;
 import services.WarrantyService;
 
 @Controller
@@ -19,6 +24,9 @@ public class WarrantyController extends AbstractController {
 
 	@Autowired
 	WarrantyService warrantyservice;
+	
+	@Autowired
+	AdministratorService administratorService;
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
@@ -28,14 +36,14 @@ public class WarrantyController extends AbstractController {
 		return model;
 	}
 
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam(value = "warrantyId") int warrantyId, BindingResult binding) {
+	@RequestMapping(value = "/administrator/edit", method = RequestMethod.POST, params = "delete")
+	public ModelAndView delete(Warranty warranty, BindingResult binding) {
 		ModelAndView result;
 		try {
-			warrantyservice.delete(warrantyId);
-			result = new ModelAndView("redirect:list.do");
+			warrantyservice.delete(warranty.getId());
+			result = new ModelAndView("redirect:/warranty/list.do");
 		} catch (Throwable oops) {
-			result = createEditModelAndView(warrantyservice.findOne(warrantyId), "warranty.commit.error");
+			result = createEditModelAndView(administratorService.findOneWarranty(warranty.getId()), "warranty.commit.error");
 		}
 
 		return result;
@@ -66,15 +74,35 @@ public class WarrantyController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/administrator/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam int warrantyId) {
 		ModelAndView result;
 		Warranty warranty;
 
-		warranty = warrantyservice.findOne(warrantyId);
-		assertNotNull(warranty);
+		warranty = administratorService.findOneWarranty(warrantyId);
+		Assert.notNull(warranty);
 		result = createEditModelAndView(warranty);
 
+		return result;
+	}
+	
+	@RequestMapping(value = "/administrator/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@Valid Warranty warranty, BindingResult binding) {
+		ModelAndView result;
+		
+		if(binding.hasErrors()) {
+			result = createEditModelAndView(warranty);
+			for(ObjectError e : binding.getAllErrors()) {
+				System.out.println(e.getObjectName() + " error [" + e.getDefaultMessage() + "] " + Arrays.toString(e.getCodes()));
+			}
+		}else {
+			try {
+				administratorService.saveWarranty(warranty);
+				result = new ModelAndView("redirect:/warranty/list.do");
+			}catch (Throwable oops) {
+				result = createEditModelAndView(warranty, "warranty.commit.error");
+			}
+		}
 		return result;
 	}
 }

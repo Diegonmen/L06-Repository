@@ -1,10 +1,8 @@
 
 package domain;
 
-import java.util.Collection;
-
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -26,16 +24,16 @@ public class Category extends DomainEntity {
 
 	// Relationships ----------------------------------------------------------
 
-	private Collection<Category>	childCategories;
+	private Category	parentCategory;
 
 
-	@OneToMany
-	public Collection<Category> getChildCategories() {
-		return this.childCategories;
+	@ManyToOne(optional = true)
+	public Category getParentCategory() {
+		return this.parentCategory;
 	}
 
-	public void setChildCategories(final Collection<Category> childCategories) {
-		this.childCategories = childCategories;
+	public void setParentCategory(final Category parentCategory) {
+		this.parentCategory = parentCategory;
 	}
 
 }
