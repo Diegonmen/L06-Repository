@@ -8,14 +8,14 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<form:form action="referee/modify.do">
+<form:form action="referee/edit.do" modelAttribute="actor">
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="userAccount.authorities" />
-	<form:hidden path="userAccount.version" />
-	<form:hidden path="userAccount.enabled" />
-	<form:hidden path="userAccount.id" />
 	<form:hidden path="suspicious" />
+	<form:hidden path="userAccount" />
+	<form:hidden path="socialIdentity" />
+	<form:hidden path="boxes" />
+	<form:hidden path="reports" />
 
 	<div class="ui equal width form">
 		<div class="fields">
@@ -92,7 +92,7 @@
 		</div>
 	</div>
 
-	<jstl:if test="${enabled==true }">
+	<jstl:if test="${actor.userAccount.enabled==true }">
 		<input type="submit" class="ui primary button" name="save"
 			value="<spring:message code="referee.save" />">
 	</jstl:if>
