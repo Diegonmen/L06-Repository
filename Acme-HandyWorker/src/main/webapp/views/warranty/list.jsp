@@ -14,6 +14,7 @@
 	var="warrantyApplicableLaws" />
 <spring:message code="warranty.delete" var="warrantyDelete" />
 <spring:message code="warranty.edit" var="warrantyEdit" />
+<spring:message code="warranty.create" var="warrantyEdit" />
 
 
 
@@ -33,3 +34,7 @@
 		</jstl:if>
 	</display:column>
 </display:table>
+
+<input type="button" class="ui button" name="create"
+		value="<spring:message code="warranty.create" />"
+		onclick="javascript: relativeRedir('warranty/administrator/create.do');">

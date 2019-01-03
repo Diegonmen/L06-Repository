@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
@@ -330,11 +331,54 @@ public class HandyWorkerService {
 		}
 	}
 
-	public List<FixUpTask> filter(String command, int maxResults) {
-		Query query = entitymanager.createQuery(
-				"select c from FixUpTask c where c.ticker like CONCAT('%',:command,'%') or c.description like CONCAT('%',:command,'%') or c.address like CONCAT('%',:command,'%') or c.maxPrice = :command")
-				.setMaxResults(maxResults);
-		query.setParameter("command", command);
+	public List<FixUpTask> filter(String command, Date startDate, Date endDate, double minPrice, double maxPrice) {
+		if((command == null || "".equals(command)) && startDate == null && endDate == null && minPrice < 0 && maxPrice < 0) {
+			return Arrays.asList();
+		}
+		
+		StringBuilder str = new StringBuilder("select c from FixUpTask c where 1 = 1 ");
+		
+		if(command != null || !"".equals(command)) {
+			str.append(" and c.ticker like CONCAT('%',:command,'%') or c.description like CONCAT('%',:command,'%') or c.address like CONCAT('%',:command,'%')");
+		}
+		
+		if(startDate != null) {
+			str.append(" and c.startDate > :startDate");
+		}
+		
+		if(endDate != null) {
+			str.append(" and c.endDate < :endDate");
+		}
+		
+		if(minPrice >= 0) {
+			str.append(" and c.minPrice > :minPrice");
+		}
+		
+		if(maxPrice >= 0) {
+			str.append(" and c.maxPrice > :maxPrice");
+		}
+		
+		Query query = entitymanager.createQuery(str.toString());
+		
+		if(command != null || !"".equals(command)) {
+			query.setParameter("command", command);
+		}
+		
+		if(startDate != null) {
+			query.setParameter("startDate", startDate);
+		}
+		
+		if(endDate != null) {
+			query.setParameter("endDate", endDate);
+		}
+		
+		if(minPrice >= 0) {
+			query.setParameter("minPrice", minPrice);
+		}
+		
+		if(maxPrice >= 0) {
+			query.setParameter("maxPrice", maxPrice);
+		}
 
 		List<FixUpTask> fixuptask = query.getResultList();
 

@@ -32,8 +32,13 @@ public class CategoryService {
 		return categoryRepository.exists(id);
 	}
 
-	public void delete(Category entity) {
-		categoryRepository.delete(entity);
+	public void delete(Integer id) {
+		categoryRepository.delete(id);
+	}
+
+	public Category create() {
+		Category res = new Category();
+		return res;
 	}
 
 	

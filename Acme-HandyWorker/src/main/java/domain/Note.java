@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -34,6 +35,7 @@ public class Note extends DomainEntity {
 		this.moment = moment;
 	}
 
+	@NotBlank
 	public String getCreatorComment() {
 		return this.creatorComment;
 	}

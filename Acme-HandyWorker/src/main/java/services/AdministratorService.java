@@ -284,7 +284,7 @@ public class AdministratorService {
 		authority.setAuthority("ADMINISTRATOR");
 		logedUserAccount = LoginService.getPrincipal();
 
-		if (this.exists(category.getId()) && logedUserAccount.getAuthorities().contains(authority)) {
+		if (this.categoryService.exists(category.getId()) && logedUserAccount.getAuthorities().contains(authority)) {
 			saved = this.categoryService.findOne(category.getId());
 			Assert.notNull(saved);
 			result = this.categoryService.save(category);
@@ -307,7 +307,7 @@ public class AdministratorService {
 	}
 
 	public Category findOneCategory(Integer categoryId) {
-		Assert.isTrue(this.exists(categoryId));
+		Assert.isTrue(this.categoryService.exists(categoryId));
 		UserAccount logedUserAccount;
 		Authority authority;
 		authority = new Authority();
@@ -327,7 +327,7 @@ public class AdministratorService {
 		authority.setAuthority("ADMINISTRATOR");
 		logedUserAccount = LoginService.getPrincipal();
 		Assert.isTrue(logedUserAccount.getAuthorities().contains(authority));
-		this.categoryService.delete(category);
+		this.categoryService.delete(category.getId());
 	}
 
 	public Collection<Double> findAvgMinMaxStdDvtFixUpTasksPerUser() {

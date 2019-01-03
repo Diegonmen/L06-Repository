@@ -301,7 +301,7 @@ public class AdministratorServiceTest extends AbstractTest {
 		Category category = this.categoryService.findAll().iterator().next();
 		Assert.notNull(category);
 		Assert.isTrue(this.categoryService.exists(category.getId()));
-		this.categoryService.delete(category);
+		this.categoryService.delete(category.getId());
 	}
 
 	@Test

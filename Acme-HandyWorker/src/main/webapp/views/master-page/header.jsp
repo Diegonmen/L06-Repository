@@ -28,6 +28,7 @@
 					<li><a href="administrator/action-2.do"><spring:message code="master.page.administrator.action.2" /></a></li>
 					<li><a href="administrator/viewProfile.do"><spring:message code="master.page.administrator.view" /></a></li>	
 					<li><a href="warranty/list.do"><spring:message code="master.page.warraty.list" /></a></li>
+					<li><a href="category/list.do"><spring:message code="master.page.category.list" /></a></li>
 				</ul>
 			</li>
 			<li><a class="fNiv"><spring:message code="master.page.register" /></a>

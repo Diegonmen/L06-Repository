@@ -14,100 +14,95 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Warranty;
+import domain.Category;
 import services.AdministratorService;
-import services.WarrantyService;
+import services.CategoryService;
 
 @Controller
-@RequestMapping("/warranty")
-public class WarrantyController extends AbstractController {
-
+@RequestMapping("/category")
+public class CategoryController extends AbstractController{
 	@Autowired
-	WarrantyService warrantyservice;
+	CategoryService categoryservice;
 	
 	@Autowired
 	AdministratorService administratorService;
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
-		ModelAndView model = new ModelAndView("warranty/list");
-		model.addObject("list", warrantyservice.findAll());
+		ModelAndView model = new ModelAndView("category/list");
+		model.addObject("list", categoryservice.findAll());
 
 		return model;
 	}
 
 	@RequestMapping(value = "/administrator/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(Warranty warranty, BindingResult binding) {
+	public ModelAndView delete(Category category, BindingResult binding) {
 		ModelAndView result;
 		try {
-			warrantyservice.delete(warranty.getId());
-			result = new ModelAndView("redirect:/warranty/list.do");
+			categoryservice.delete(category.getId());
+			result = new ModelAndView("redirect:/category/list.do");
 		} catch (Throwable oops) {
-			result = createEditModelAndView(administratorService.findOneWarranty(warranty.getId()), "warranty.commit.error");
+			result = createEditModelAndView(administratorService.findOneCategory(category.getId()), "category.commit.error");
 		}
 
 		return result;
 	}
 
-	@RequestMapping(value = "/administrator/create", method = RequestMethod.GET)
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
-		Warranty warranty;
+		Category category;
 
-		warranty = this.warrantyservice.create();
-		result = this.createEditModelAndView(warranty);
+		category = this.categoryservice.create();
+		result = this.createEditModelAndView(category);
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(Warranty warranty) {
+	protected ModelAndView createEditModelAndView(Category category) {
 		ModelAndView result;
-		result = createEditModelAndView(warranty, null);
+		result = createEditModelAndView(category, null);
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(Warranty warranty, String messageCode) {
+	protected ModelAndView createEditModelAndView(Category category, String messageCode) {
 		ModelAndView result;
-		
-		if (warranty.getId() > 0)
-			result = new ModelAndView("warranty/administrator/edit");
-		else
-			result = new ModelAndView("warranty/administrator/create");
-		
-		result.addObject("warranty", warranty);
+		result = new ModelAndView("category/administrator/edit");
+		result.addObject("category", category);
 		result.addObject("message", messageCode);
 
 		return result;
 	}
 
 	@RequestMapping(value = "/administrator/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam int warrantyId) {
+	public ModelAndView edit(@RequestParam int categoryId) {
 		ModelAndView result;
-		Warranty warranty;
+		Category category;
 
-		warranty = administratorService.findOneWarranty(warrantyId);
-		Assert.notNull(warranty);
-		result = createEditModelAndView(warranty);
+		category = administratorService.findOneCategory(categoryId);
+		Assert.notNull(category);
+		result = createEditModelAndView(category);
 
 		return result;
 	}
 	
 	@RequestMapping(value = "/administrator/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Warranty warranty, BindingResult binding) {
+	public ModelAndView save(@Valid Category category, BindingResult binding) {
 		ModelAndView result;
 		
 		if(binding.hasErrors()) {
-			result = createEditModelAndView(warranty);
+			result = createEditModelAndView(category);
 			for(ObjectError e : binding.getAllErrors()) {
 				System.out.println(e.getObjectName() + " error [" + e.getDefaultMessage() + "] " + Arrays.toString(e.getCodes()));
 			}
 		}else {
 			try {
-				administratorService.saveWarranty(warranty);
-				result = new ModelAndView("redirect:/warranty/list.do");
+				administratorService.saveCategory(category);
+				result = new ModelAndView("redirect:/category/list.do");
 			}catch (Throwable oops) {
-				result = createEditModelAndView(warranty, "warranty.commit.error");
+				result = createEditModelAndView(category, "category.commit.error");
 			}
 		}
 		return result;
 	}
 }
+

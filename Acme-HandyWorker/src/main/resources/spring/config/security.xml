@@ -51,6 +51,10 @@
 		
 		<security:intercept-url pattern="/warranty/list.do" access="hasRole('ADMINISTRATOR')" /> 
 		<security:intercept-url pattern="/warranty/administrator/edit.do" access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/warranty/administrator/create.do" access="hasRole('ADMINISTRATOR')" />
+		
+		<security:intercept-url pattern="/category/list.do" access="hasRole('ADMINISTRATOR')" /> 
+		<security:intercept-url pattern="/category/administrator/edit.do" access="hasRole('ADMINISTRATOR')" />
 		
 
 		<security:intercept-url pattern="/customer/action-1.do" access="hasRole('CUSTOMER')" /> 

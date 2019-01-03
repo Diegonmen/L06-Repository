@@ -33,12 +33,12 @@ public class FixUpTaskServiceTest extends AbstractTest {
 	@Autowired
 	private HandyWorkerService handyWorkerService;
 
-	@Test
-	public void findFixUpTask() {
-		List<FixUpTask> list = handyWorkerService.filter("970203", 10);
-
-		Assert.isTrue(!list.isEmpty());
-	}
+//	@Test
+//	public void findFixUpTask() {
+//		List<FixUpTask> list = handyWorkerService.filter("970203", 10);
+//
+//		Assert.isTrue(!list.isEmpty());
+//	}
 
 	@Test
 	public void findAllFixUpTaskTest() {

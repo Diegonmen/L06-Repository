@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.Arrays;
+import java.util.Date;
 
 import javax.validation.Valid;
 
@@ -10,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.HandyWorker;
@@ -107,6 +109,23 @@ public class HandyWorkerController extends AbstractController {
 
 		result = new ModelAndView("handyWorker/register");
 		result.addObject("actor", actor);
+
+		return result;
+	}
+	
+	@RequestMapping(value = "/finder", method = RequestMethod.GET)
+	public ModelAndView finder(
+			@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+			@RequestParam(value = "startDate", required = false) Date startDate,
+			@RequestParam(value = "endDate", required = false) Date endDate,
+			@RequestParam(value = "minPrice", required = false, defaultValue = "-1") double minPrice,
+			@RequestParam(value = "maxPrice", required = false, defaultValue = "-1") double maxPrice
+			) {
+
+		ModelAndView result;
+
+		result = new ModelAndView("handyWorker/finder");
+		result.addObject("result", handyWorkerService.filter(keyword, startDate, endDate, minPrice, maxPrice));
 
 		return result;
 	}
