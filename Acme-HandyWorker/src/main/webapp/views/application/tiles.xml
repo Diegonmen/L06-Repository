@@ -12,9 +12,29 @@
 		<put-attribute name="body" value="/views/application/list.jsp" />
 	</definition>
 
-	<definition name="application/edit" extends="master.page">	
-		<put-attribute name="title" value="Application edition" />
-		<put-attribute name="body" value="/views/application/edit.jsp" />
+	<definition name="application/customer/editStatus" extends="master.page">	
+		<put-attribute name="title" value="Edit status" />
+		<put-attribute name="body" value="/views/application/editStatus.jsp" />
+	</definition>
+	
+	<definition name="application/customer/view" extends="master.page">	
+		<put-attribute name="title" value="View application" />
+		<put-attribute name="body" value="/views/application/viewCustomer.jsp" />
+	</definition>
+	
+	<definition name="application/customer/editComments" extends="master.page">	
+		<put-attribute name="title" value="Add comments" />
+		<put-attribute name="body" value="/views/application/editStatus.jsp" />
+	</definition>
+	
+	<definition name="application/handyWorker/view" extends="master.page">	
+		<put-attribute name="title" value="View application" />
+		<put-attribute name="body" value="/views/application/viewHandyWorker.jsp" />
+	</definition>
+	
+	<definition name="application/handyWorker/create" extends="master.page">	
+		<put-attribute name="title" value="Create application" />
+		<put-attribute name="body" value="/views/application/create.jsp" />
 	</definition>
 	
 	

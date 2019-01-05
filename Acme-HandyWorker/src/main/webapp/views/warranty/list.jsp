@@ -14,7 +14,7 @@
 	var="warrantyApplicableLaws" />
 <spring:message code="warranty.delete" var="warrantyDelete" />
 <spring:message code="warranty.edit" var="warrantyEdit" />
-<spring:message code="warranty.create" var="warrantyEdit" />
+<spring:message code="warranty.create" var="warrantyCreate" />
 
 
 
