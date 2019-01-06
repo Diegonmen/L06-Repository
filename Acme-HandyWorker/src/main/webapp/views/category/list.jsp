@@ -15,9 +15,6 @@
 <spring:message code="category.edit" var="categoryEdit" />
 
 
-
-
-
 <display:table pagesize="3" class="displaytag" keepStatus="true"
 	name="list" requestURI="/category/list.do" id="row">
 	
