@@ -28,6 +28,8 @@
 	<display:column>
 		<a href="category/administrator/edit.do?categoryId=${row.id}">${categoryEdit}</a>
 	</display:column>
-	
-	
 </display:table>
+
+<input type="button" class="ui button" name="create"
+		value="<spring:message code="category.create" />"
+		onclick="javascript: relativeRedir('category/administrator/create.do');">

@@ -17,9 +17,10 @@
 <spring:message code="fixUpTask.startDate" var="startDate" />
 <spring:message code="fixUpTask.endDate" var="endDate" />
 <spring:message code="fixUpTask.category" var="category" />
+<spring:message code="fixUpTask.warranty" var="warranty" />
 
 <display:table name="fixUpTask" id="row"
-	requestURI="fixUpTask/customer/list.do" pagesize="5" class="displaytag">
+	requestURI="fixUpTask/customer/list.do" pagesize="3" class="displaytag">
 
 	<security:authorize access="hasRole('CUSTOMER')">
 		<display:column>
@@ -39,20 +40,17 @@
 		</display:column>
 		<display:column property = "category.name" titleKey = "${category.name} }">
 		</display:column>
-		<display:column>
-			<a href="fixUpTask/customer/warranty.do"> <spring:message
-					code="fixUpTask.warranty" />
-			</a>
+		<display:column property = "warranty.name" titleKey = "${warranty.name} }">
 		</display:column>
 		<display:column>
-			<a href="fixUpTask/customer/phases.do"> <spring:message
-					code="fixUpTask.phases" />
-			</a>
+			<input type="button" name="viewPhases"
+ 				value="<spring:message code="fixUpTask.Phases" />"
+				 onclick="javascript: relativeRedir('/phase/list.do');" />
 		</display:column>
 		<display:column>
-			<a href="fixUpTask/customer/complaints.do"> <spring:message
-					code="fixUpTask.complaints" />
-			</a>
+			<input type="button" name="viewComplaints"
+			 	value="<spring:message code="fixUpTask.Complaints" />"
+				 onclick="javascript: relativeRedir('/complaint/list.do');" />
 		</display:column>
 	</security:authorize>
 	
@@ -66,12 +64,8 @@
 
 </display:table>
 
-<input type="button" name="viewPhases"
- value="<spring:message code="fixUpTask.viewPhases" />"
- onclick="javascript: relativeRedir('phase/view.do');" />
-
 <!-- <button onclick="window.location.href = '/createFixUpTask.do'">Crear </button> -->
 <input type="button" name="createFixUpTask"
  value="<spring:message code="fixUpTask.create" />"
- onclick="javascript: relativeRedir('fixUpTask/createFixUpTask.do');" />
+ onclick="javascript: relativeRedir('fixUpTask/create.do');" />
  

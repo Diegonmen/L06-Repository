@@ -33,6 +33,7 @@
 		<value>/views/application/messages</value>
 		<value>/views/warranty/messages</value>
 		<value>/views/category/messages</value>
+		<value>/views/fixUpTask/messages</value>
 	</util:list>
 
 </beans>

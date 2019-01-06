@@ -48,7 +48,7 @@ public class CategoryController extends AbstractController{
 		return result;
 	}
 
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	@RequestMapping(value = "/administrator/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
 		Category category;
