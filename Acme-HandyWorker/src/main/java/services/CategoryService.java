@@ -15,7 +15,7 @@ public class CategoryService {
 
 	@Autowired
 	private CategoryRepository categoryRepository;
-
+	
 	public Category save(Category entity) {
 		return categoryRepository.save(entity);
 	}

@@ -3,6 +3,7 @@ package services;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -11,8 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import domain.Application;
+import domain.Complaint;
 import domain.Customer;
 import domain.FixUpTask;
+import domain.Phase;
 import repositories.FixUpTaskRepository;
 
 @Service
@@ -30,9 +34,36 @@ public class FixUpTaskService {
 	private CustomerService customerService;
 
 	// Simple CRUD methods ----------------------------------------------------
+	
+	public FixUpTask create() {
+		FixUpTask res = new FixUpTask();
+		res.setApplications(new LinkedList<Application>());
+		res.setComplaints(new LinkedList<Complaint>());
+		res.setPhases(new LinkedList<Phase>());
+		res.setPublicationMoment(new Date());
+		res.setTicker(tickerGenerator());
+		
+		return res;
+	}
+	
+	public Collection<Phase> getPhasesOf(int id) {
+		return fixUpTaskRepository.findOne(id).getPhases();
+	}
+	
+	public Collection<Complaint> getComplaintsOf(int id) {
+		return fixUpTaskRepository.findOne(id).getComplaints();
+	}
+	
+	public Collection<Application> getApplicationsOf(int id) {
+		return fixUpTaskRepository.findOne(id).getApplications();
+	}
 
 	public FixUpTask save(FixUpTask entity) {
 		return fixUpTaskRepository.save(entity);
+	}
+
+	public FixUpTask saveAndFlush(FixUpTask entity) {
+		return fixUpTaskRepository.saveAndFlush(entity);
 	}
 
 	public List<FixUpTask> findAll() {

@@ -46,7 +46,8 @@
 					<li class="arrow"></li>
 					<li><a href="customer/action-1.do"><spring:message code="master.page.customer.action.1" /></a></li>
 					<li><a href="customer/action-2.do"><spring:message code="master.page.customer.action.2" /></a></li>
-					<li><a href="customer/viewProfile.do"><spring:message code="master.page.customer.view" /></a></li>					
+					<li><a href="customer/viewProfile.do"><spring:message code="master.page.customer.view" /></a></li>
+					<li><a href="fixuptask/list.do"><spring:message code="fixuptask.list" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
@@ -55,7 +56,8 @@
 			<li><a class="fNiv"><spring:message	code="master.page.handyWorker" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="handyWorker/viewProfile.do"><spring:message code="master.page.handyWorker.view" /></a></li>					
+					<li><a href="handyWorker/viewProfile.do"><spring:message code="master.page.handyWorker.view" /></a></li>
+					<li><a href="fixuptask/list.do"><spring:message code="fixuptask.list" /></a></li>					
 				</ul>
 			</li>
 		</security:authorize>

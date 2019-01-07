@@ -1,3 +1,4 @@
+<%@page import="org.springframework.context.i18n.LocaleContextHolder"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -7,6 +8,8 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="view" tagdir="/WEB-INF/tags"%>
+
+<jstl:set value="<%=LocaleContextHolder.getLocale()%>" var="locale"></jstl:set>
 
 <spring:message code="fixUpTask.ticker" var="ticker" />
 <spring:message code="fixUpTask.publicationMoment" var="publicationMoment" />
@@ -18,54 +21,129 @@
 <spring:message code="fixUpTask.endDate" var="endDate" />
 <spring:message code="fixUpTask.category" var="category" />
 <spring:message code="fixUpTask.warranty" var="warranty" />
+<spring:message code="fixUpTask.phases" var="phases" />
+<spring:message code="fixUpTask.complaints" var="complaints" />
+<spring:message code="fixUpTask.view" var="view" />
+<spring:message code="fixUpTask.application" var="application" />
 
-<display:table name="fixUpTask" id="row"
-	requestURI="fixUpTask/customer/list.do" pagesize="3" class="displaytag">
+<display:table name="list" id="row" requestURI="fixuptask/list.do" pagesize="3" class="displaytag">
 
 	<security:authorize access="hasRole('CUSTOMER')">
-		<display:column>
-			<a href="fixUpTask/customer/edit.do?fixUpTaskId=${row.id}"> <spring:message
-					code="fixUpTask.edit" />
-			</a>
+		<display:column title="${application}">
+			<a href="javascript:showDialog('view-applications', sucessApplications, 'q=${row.id}', 'fixuptask/async/aplications.do')">${view}</a>
 		</display:column>
-		<display:column>
-			<a href="fixUpTask/customer/list.do?fixUpTaskId=${row.id}"> <spring:message
-					code="fixUpTask.delete" />
-			</a>
+		<display:column property="category.name" title="${category}">
+			<jstl:if test="${locale == 'en'}">${row.category.name}</jstl:if>
+			<jstl:if test="${locale == 'es'}">${row.category.espName}</jstl:if>
 		</display:column>
-		<display:column>
-			<a href="fixUpTask/customer/application.do"> <spring:message
-					code="fixUpTask.application" />
-			</a>
+		<display:column property="warranty.title" title="${warranty}">
 		</display:column>
-		<display:column property = "category.name" titleKey = "${category.name} }">
+		<display:column title="${phases}">
+			<a href="javascript:showDialog('view-phases', sucessPhases, 'q=${row.id}', 'fixuptask/async/phases.do')">${view}</a>
 		</display:column>
-		<display:column property = "warranty.name" titleKey = "${warranty.name} }">
-		</display:column>
-		<display:column>
-			<input type="button" name="viewPhases"
- 				value="<spring:message code="fixUpTask.Phases" />"
-				 onclick="javascript: relativeRedir('/phase/list.do');" />
-		</display:column>
-		<display:column>
-			<input type="button" name="viewComplaints"
-			 	value="<spring:message code="fixUpTask.Complaints" />"
-				 onclick="javascript: relativeRedir('/complaint/list.do');" />
+		<display:column title="${complaints}">
+			<a href="javascript:showDialog('view-complaints', sucessComplaints, 'q=${row.id}', 'fixuptask/async/complaints.do')">${view}</a>
 		</display:column>
 	</security:authorize>
-	
+
 	<display:column property="ticker" title="${ticker}" />
 	<display:column property="publicationMoment" title="${publicationMoment}" />
-	<display:column property="description" titleKey="${description}" />
-	<display:column property="address" titleKey="${address}" />
-	<display:column property="maxPrice" titleKey="${maxPrice}" />
-	<display:column property="startDate" titleKey="${startDate}" />
-	<display:column property="endDate" titleKey="${endDate}" />
+	<display:column property="description" title="${description}" />
+	<display:column property="address" title="${address}" />
+	<display:column property="maxPrice" title="${maxPrice}" />
+	<display:column property="startDate" title="${startDate}" />
+	<display:column property="endDate" title="${endDate}" />
+	
+	<display:column>
+		<a href="fixuptask/customer/edit.do?fixuptaskId=${row.id}"> <spring:message code="fixUpTask.edit" />
+		</a>
+	</display:column>
 
 </display:table>
 
 <!-- <button onclick="window.location.href = '/createFixUpTask.do'">Crear </button> -->
-<input type="button" name="createFixUpTask"
- value="<spring:message code="fixUpTask.create" />"
- onclick="javascript: relativeRedir('fixUpTask/create.do');" />
- 
+<input type="button" name="createFixUpTask" value="<spring:message code="fixUpTask.create" />" onclick="javascript: relativeRedir('fixUpTask/create.do');" />
+
+<div class="ui modal" id="view-phases" style="display: none">
+	<div class="header">${phases}</div>
+	<div class="content">
+		<div id="view-phases-content" class="ui middle aligned selection list">
+			
+		</div>
+	</div>
+</div>
+
+<div class="ui modal" id="view-complaints" style="display: none">
+	<div class="header">${complaints}</div>
+	<div class="content">
+		<div id="view-complaints-content" class="ui middle aligned selection list">
+			
+		</div>
+	</div>
+</div>
+
+<div class="ui modal" id="view-applications" style="display: none">
+	<div class="header">${application}</div>
+	<div class="content">
+		<div id="view-applications-content" class="ui middle aligned selection list">
+			
+		</div>
+	</div>
+</div>
+
+<script>
+	function sucessPhases(data) {
+		let container = $('#view-phases-content');
+		container.html('');
+		
+		for(let e in data) {
+			let icon = $(document.createElement('i')).addClass('angle double right icon');
+			
+			let header = $(document.createElement('div')).addClass('header').html(data[e].title);
+			let content = $(document.createElement('div')).addClass('content').append(header);
+			
+			let item = $(document.createElement('div')).addClass('item').append(icon).append(content).on('click', function() {
+				location.href = 'phase/actor/view.do?id=' + data[e].id;
+			});
+			
+			container.append(item);
+		}
+	}
+	
+	function sucessComplaints(data) {
+		let container = $('#view-complaints-content');
+		container.html('');
+		
+		for(let e in data) {
+			let icon = $(document.createElement('i')).addClass('angle double right icon');
+			
+			let header = $(document.createElement('div')).addClass('header').html(data[e].title);
+			let content = $(document.createElement('div')).addClass('content').append(header);
+			
+			let item = $(document.createElement('div')).addClass('item').append(icon).append(content).on('click', function() {
+				location.href = 'complaint/actor/view.do?id=' + data[e].id;
+			});
+			
+			container.append(item);
+		}
+	}
+	
+	function sucessApplications(data) {
+		let container = $('#view-applications-content');
+		container.html('');
+		
+		for(let e in data) {
+			let icon = $(document.createElement('i')).addClass('angle double right icon');
+			
+			let header = $(document.createElement('div')).addClass('header').html(data[e].title);
+			let content = $(document.createElement('div')).addClass('content').append(header);
+			
+			let item = $(document.createElement('div')).addClass('item').append(icon).append(content).on('click', function() {
+				location.href = 'application/actor/view.do?id=' + data[e].id;
+			});
+			
+			container.append(item);
+		}
+	}
+</script>
+

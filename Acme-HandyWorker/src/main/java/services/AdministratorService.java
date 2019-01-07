@@ -277,23 +277,16 @@ public class AdministratorService {
 	}
 
 	public Category saveCategory(Category category) {
-		Category result, saved;
-		UserAccount logedUserAccount;
-		Authority authority;
-		authority = new Authority();
-		authority.setAuthority("ADMINISTRATOR");
-		logedUserAccount = LoginService.getPrincipal();
-
-		if (this.categoryService.exists(category.getId()) && logedUserAccount.getAuthorities().contains(authority)) {
-			saved = this.categoryService.findOne(category.getId());
-			Assert.notNull(saved);
-			result = this.categoryService.save(category);
-			Assert.notNull(result);
-			return result;
+		if(categoryService.exists(category.getId())) {
+			Category saved = categoryService.findOne(category.getId());
+			saved.setEspName(category.getEspName());
+			saved.setName(category.getName());
+			saved.setParentCategory(category.getParentCategory());
+			
+			return categoryService.save(saved);
+		} else {
+			return categoryService.save(category);
 		}
-
-		result = this.categoryService.findOne(category.getId());
-		return result;
 	}
 
 	public List<Category> findAllCategories() {

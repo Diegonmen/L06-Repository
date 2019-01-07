@@ -64,7 +64,8 @@ public class Application extends DomainEntity {
 		this.comments = comments;
 	}
 
-	
+	@Valid
+	@ManyToOne(optional = true)
 	public CreditCard getCreditCard() {
 		return this.creditCard;
 	}

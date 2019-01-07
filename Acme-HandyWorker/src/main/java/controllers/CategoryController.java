@@ -1,14 +1,11 @@
 package controllers;
 
-import java.util.Arrays;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,7 +31,7 @@ public class CategoryController extends AbstractController{
 
 		return model;
 	}
-
+	
 	@RequestMapping(value = "/administrator/edit", method = RequestMethod.POST, params = "delete")
 	public ModelAndView delete(Category category, BindingResult binding) {
 		ModelAndView result;
@@ -55,18 +52,22 @@ public class CategoryController extends AbstractController{
 
 		category = this.categoryservice.create();
 		result = this.createEditModelAndView(category);
+		
 		return result;
 	}
 
 	protected ModelAndView createEditModelAndView(Category category) {
 		ModelAndView result;
 		result = createEditModelAndView(category, null);
+		result.addObject("categories", categoryservice.findAll());
+		
 		return result;
 	}
 
 	protected ModelAndView createEditModelAndView(Category category, String messageCode) {
 		ModelAndView result;
-		result = new ModelAndView("category/administrator/edit");
+		
+		result = new ModelAndView(category.getId() < 1 ? "category/administrator/create" : "category/administrator/edit");
 		result.addObject("category", category);
 		result.addObject("message", messageCode);
 
@@ -91,9 +92,6 @@ public class CategoryController extends AbstractController{
 		
 		if(binding.hasErrors()) {
 			result = createEditModelAndView(category);
-			for(ObjectError e : binding.getAllErrors()) {
-				System.out.println(e.getObjectName() + " error [" + e.getDefaultMessage() + "] " + Arrays.toString(e.getCodes()));
-			}
 		}else {
 			try {
 				administratorService.saveCategory(category);

@@ -15,7 +15,7 @@
 	<bean id="creditCard0" class="domain.CreditCard">
 		<property name="holderName" value="holderName" />
 		<property name="brandName" value="brandName" />
-		<property name="number" value="4560272364137447" />
+		<property name="number" value="374025721086283" />
 		<property name="expirationMonth" value="12" />
 		<property name="expirationYear" value="20" />
 		<property name="cVV" value="123">
@@ -25,7 +25,7 @@
 	<bean id="creditCard1" class="domain.CreditCard">
 		<property name="holderName" value="holderName1" />
 		<property name="brandName" value="brandName1" />
-		<property name="number" value="4560272364131447" />
+		<property name="number" value="341145639357244" />
 		<property name="expirationMonth" value="12" />
 		<property name="expirationYear" value="21" />
 		<property name="cVV" value="321">
@@ -35,7 +35,7 @@
 	<bean id="creditCard2" class="domain.CreditCard">
 		<property name="holderName" value="holderName2" />
 		<property name="brandName" value="brandName2" />
-		<property name="number" value="4560272364131449" />
+		<property name="number" value="345081943319057" />
 		<property name="expirationMonth" value="08" />
 		<property name="expirationYear" value="22" />
 		<property name="cVV" value="323">
@@ -45,7 +45,7 @@
 	<bean id="creditCard3" class="domain.CreditCard">
 		<property name="holderName" value="holderName3" />
 		<property name="brandName" value="brandName3" />
-		<property name="number" value="4560272364125449" />
+		<property name="number" value="347071847384974" />
 		<property name="expirationMonth" value="09" />
 		<property name="expirationYear" value="21" />
 		<property name="cVV" value="666">
@@ -55,7 +55,7 @@
 	<bean id="creditCard4" class="domain.CreditCard">
 		<property name="holderName" value="holderName4" />
 		<property name="brandName" value="brandName4" />
-		<property name="number" value="4560272364125559" />
+		<property name="number" value="347905274581109" />
 		<property name="expirationMonth" value="06" />
 		<property name="expirationYear" value="20" />
 		<property name="cVV" value="777">
@@ -65,7 +65,7 @@
 	<bean id="creditCard5" class="domain.CreditCard">
 		<property name="holderName" value="holderName5" />
 		<property name="brandName" value="brandName5" />
-		<property name="number" value="4560272364125669" />
+		<property name="number" value="4556345881763618" />
 		<property name="expirationMonth" value="08" />
 		<property name="expirationYear" value="22" />
 		<property name="cVV" value="555">
@@ -75,7 +75,7 @@
 	<bean id="creditCard6" class="domain.CreditCard">
 		<property name="holderName" value="holderName6" />
 		<property name="brandName" value="brandName6" />
-		<property name="number" value="4560272346125669" />
+		<property name="number" value="6011849772692152" />
 		<property name="expirationMonth" value="08" />
 		<property name="expirationYear" value="22" />
 		<property name="cVV" value="565">
@@ -85,7 +85,7 @@
 	<bean id="creditCard7" class="domain.CreditCard">
 		<property name="holderName" value="holderName7" />
 		<property name="brandName" value="brandName7" />
-		<property name="number" value="4560272374126569" />
+		<property name="number" value="6011481727751139" />
 		<property name="expirationMonth" value="08" />
 		<property name="expirationYear" value="22" />
 		<property name="cVV" value="557">
@@ -95,7 +95,7 @@
 	<bean id="creditCard8" class="domain.CreditCard">
 		<property name="holderName" value="holderName8" />
 		<property name="brandName" value="brandName8" />
-		<property name="number" value="4560272374348969" />
+		<property name="number" value="341269638769710" />
 		<property name="expirationMonth" value="08" />
 		<property name="expirationYear" value="22" />
 		<property name="cVV" value="194">
@@ -2745,7 +2745,7 @@
 
 	<bean id="application0" class="domain.Application">
 		<property name="applicationMoment" value="2018/01/10 8:30" />
-		<property name="status" value="ACCEPTED" />
+		<property name="status" value="PENDING" />
 		<property name="offeredPrice" value="20.0" />
 		<property name="comments">
 			<list></list>

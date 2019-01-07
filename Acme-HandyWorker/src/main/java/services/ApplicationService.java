@@ -38,8 +38,14 @@ public class ApplicationService {
 
 	// Simple CRUD methods ----------------------------------------------------
 
+	
+	
 	public boolean exists(final Integer id) {
 		return this.applicationRepository.exists(id);
+	}
+
+	public Application findAcceptedHandyWorkerApplicationByFixUpTaskId(int fixUpTaskId, int handyWorkerId) {
+		return applicationRepository.findAcceptedHandyWorkerApplicationByFixUpTaskId(fixUpTaskId, handyWorkerId);
 	}
 
 	public Application addComment(final Application aplication, final String... comments) {
