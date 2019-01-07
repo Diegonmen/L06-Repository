@@ -24,8 +24,6 @@
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="administrator/action-1.do"><spring:message code="master.page.administrator.action.1" /></a></li>
-					<li><a href="administrator/action-2.do"><spring:message code="master.page.administrator.action.2" /></a></li>
 					<li><a href="administrator/viewProfile.do"><spring:message code="master.page.administrator.view" /></a></li>	
 					<li><a href="warranty/list.do"><spring:message code="master.page.warraty.list" /></a></li>
 					<li><a href="category/list.do"><spring:message code="master.page.category.list" /></a></li>
@@ -44,8 +42,6 @@
 			<li><a class="fNiv"><spring:message	code="master.page.customer" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="customer/action-1.do"><spring:message code="master.page.customer.action.1" /></a></li>
-					<li><a href="customer/action-2.do"><spring:message code="master.page.customer.action.2" /></a></li>
 					<li><a href="customer/viewProfile.do"><spring:message code="master.page.customer.view" /></a></li>
 					<li><a href="fixuptask/list.do"><spring:message code="fixuptask.list" /></a></li>
 				</ul>
@@ -101,9 +97,6 @@
 				</a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="profile/action-1.do"><spring:message code="master.page.profile.action.1" /></a></li>
-					<li><a href="profile/action-2.do"><spring:message code="master.page.profile.action.2" /></a></li>
-					<li><a href="profile/action-3.do"><spring:message code="master.page.profile.action.3" /></a></li>					
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>

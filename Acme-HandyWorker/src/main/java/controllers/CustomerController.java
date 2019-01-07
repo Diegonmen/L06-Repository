@@ -40,26 +40,6 @@ public class CustomerController extends AbstractController {
 
 	// Action-1 ---------------------------------------------------------------		
 
-	@RequestMapping("/action-1")
-	public ModelAndView action1() {
-		ModelAndView result;
-
-		result = new ModelAndView("customer/action-1");
-
-		return result;
-	}
-
-	// Action-2 ---------------------------------------------------------------		
-
-	@RequestMapping("/action-2")
-	public ModelAndView action2() {
-		ModelAndView result;
-
-		result = new ModelAndView("customer/action-2");
-
-		return result;
-	}
-
 	@RequestMapping("/viewProfile")
 	public ModelAndView view() {
 		ModelAndView result;
