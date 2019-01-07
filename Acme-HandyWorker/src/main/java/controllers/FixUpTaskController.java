@@ -117,6 +117,26 @@ public class FixUpTaskController {
 		
 		return array.toString();
 	}
+	
+	@RequestMapping(value = "/customer/application-accept", method = RequestMethod.GET)
+	public ModelAndView acceptApplication(@RequestParam(value = "q") int applicationId, @RequestParam(value = "f") int fixUpTaskId) {
+		Application application = applicationservice.findOne(applicationId);
+		application.setStatus("ACCEPTED");
+		
+		applicationservice.save(application);
+		
+		return edit(fixUpTaskId);
+	}
+	
+	@RequestMapping(value = "/customer/application-reject", method = RequestMethod.GET)
+	public ModelAndView rejectApplication(@RequestParam(value = "q") int applicationId, @RequestParam(value = "f") int fixUpTaskId) {
+		Application application = applicationservice.findOne(applicationId);
+		application.setStatus("REJECTED");
+		
+		applicationservice.save(application);
+		
+		return edit(fixUpTaskId);
+	}
 
 	@RequestMapping(value = "/customer/edit", method = RequestMethod.POST, params = "delete")
 	public ModelAndView delete(FixUpTask fixuptask, BindingResult binding) {
