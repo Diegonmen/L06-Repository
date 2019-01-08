@@ -55,7 +55,7 @@
 	<display:column property="endDate" title="${endDate}" />
 	
 	<display:column>
-		<a href="fixuptask/customer/edit.do?fixuptaskId=${row.id}"> <spring:message code="fixUpTask.edit" />
+		<a href="fixuptask/edit.do?fixuptaskId=${row.id}"> <spring:message code="fixUpTask.edit" />
 		</a>
 	</display:column>
 

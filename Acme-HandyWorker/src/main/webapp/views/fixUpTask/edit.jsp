@@ -25,6 +25,7 @@
 <spring:message code="fixUpTask.aplication.creditCard" var="aplication_creditCard" />
 <spring:message code="fixUpTask.aplication.fixUpTask" var="aplication_fixUpTask" />
 <spring:message code="fixUpTask.aplication.handyWorker" var="aplication_handyWorker" />
+<spring:message code="fixUpTask.aplication.applicationMoment" var="aplication_applicationMoment" />
 
 <spring:message code="fixUpTask.phase.title" var="phase_title" />
 <spring:message code="fixUpTask.phase.description" var="phase_description" />
@@ -33,7 +34,7 @@
 
 
 
-<form:form action="fixuptask/customer/edit.do" modelAttribute="fixuptask">
+<form:form action="fixuptask/edit.do" modelAttribute="fixuptask">
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="ticker" />
@@ -141,11 +142,13 @@
 		<table class="ui celled table">
 			<thead>
 				<tr>
-					<th>${phase_title}</th>
-					<th>${phase_description}</th>
+					<th>${aplication_handyWorker}</th>
+					<th>${aplication_status}</th>
+					<th>${aplication_offeredPrice}</th>
+					<th>${aplication_offeredPrice}</th>
 					<jstl:if test="${not canAddPhase}">
-						<th>${phase_title}</th>
-						<th>${aplication_offeredPrice}</th>
+						<th></th>
+						<th></th>
 					</jstl:if>
 					<th></th>
 				</tr>
@@ -154,8 +157,8 @@
 				<jstl:forEach var="e" items="${fixuptask.applications}">
 					<tr>
 						<td data-label="${aplication_handyWorker}">${e.handyWorker.name} ${e.handyWorker.surname}</td>
+						<td data-label="${aplication_status}">${e.status}</td>
 						<td data-label="${aplication_offeredPrice}">${e.offeredPrice}</td>
-						<td data-label="">${e.status}</td>
 						<jstl:if test="${not canAddPhase}">
 							<td><a href="javascript:showDialogAprove('accept-application', acceptApplication, hideErrors, [${e.id}])"><spring:message code="fixUpTask.aplication.accept"/></a></td>
 							<td>

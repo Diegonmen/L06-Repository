@@ -40,7 +40,7 @@ public class WarrantyController extends AbstractController {
 	public ModelAndView delete(Warranty warranty, BindingResult binding) {
 		ModelAndView result;
 		try {
-			warrantyservice.delete(warranty.getId());
+			administratorService.deleteWarranty(warranty);
 			result = new ModelAndView("redirect:/warranty/list.do");
 		} catch (Throwable oops) {
 			result = createEditModelAndView(administratorService.findOneWarranty(warranty.getId()), "warranty.commit.error");
