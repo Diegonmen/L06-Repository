@@ -59,6 +59,8 @@
 		</a>
 	</display:column>
 
+
+
 </display:table>
 
 <!-- <button onclick="window.location.href = '/createFixUpTask.do'">Crear </button> -->

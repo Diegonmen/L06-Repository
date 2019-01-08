@@ -100,6 +100,18 @@
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>
+			
+			<li>
+				<a class="fNiv"> 
+					<spring:message code="master.page.box" /> 
+			        (<security:authentication property="principal.username" />)
+				</a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="message/list.do"><spring:message code="master.page.boxes" /></a></li>
+				</ul>
+			</li>
+			
 		</security:authorize>
 	</ul>
 </div>
