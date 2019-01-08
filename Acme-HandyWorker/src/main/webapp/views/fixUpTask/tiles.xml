@@ -17,7 +17,7 @@
 <tiles-definitions>
 	
 	<definition name="fixuptask/list" extends="master.page">	
-		<put-attribute name="title" value="Fixuptask" />
+		<put-attribute name="title" value="FixUpTask List" />
 		<put-attribute name="body" value="/views/fixUpTask/list.jsp" />
 	</definition>
 	

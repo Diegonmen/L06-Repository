@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import domain.Application;
+import domain.Category;
 import domain.Complaint;
 import domain.Customer;
 import domain.FixUpTask;
@@ -140,4 +141,9 @@ public class FixUpTaskService {
 		return res;
 	}
 
+	public Collection<FixUpTask> findFixUpTasksByCategory(Category category){
+		Collection<FixUpTask> res = new LinkedList<>();
+		res.addAll(fixUpTaskRepository.findFixUpTasksByCategoryId(category.getId()));
+		return res;
+	}
 }

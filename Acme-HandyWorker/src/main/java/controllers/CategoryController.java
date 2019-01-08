@@ -24,6 +24,11 @@ public class CategoryController extends AbstractController{
 	@Autowired
 	AdministratorService administratorService;
 
+	// Constructor
+	public CategoryController() {
+		super();
+	}
+	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView model = new ModelAndView("category/list");
@@ -36,6 +41,8 @@ public class CategoryController extends AbstractController{
 	public ModelAndView delete(Category category, BindingResult binding) {
 		ModelAndView result;
 		try {
+			categoryservice.assignParentCategoryFixUpTask(category);
+			categoryservice.assingParentCategory(category);
 			categoryservice.delete(category.getId());
 			result = new ModelAndView("redirect:/category/list.do");
 		} catch (Throwable oops) {

@@ -336,12 +336,12 @@ public class AdministratorServiceTest extends AbstractTest {
 
 	@Test
 	public void saveConfigurationTest() {
-		Configuration res = this.configurationService.findAll().iterator().next();
+		Configuration res = this.configurationService.findConfiguration();
 		Assert.isTrue(res.getId() != 0);
 		Assert.notNull(res);
-		res.getSpamWords().add("prueba");
-		Configuration saved = this.configurationService.save(res);
-		Assert.isTrue(saved.getSpamWords().contains("prueba"));
+		res.setSystemName("Paco");
+		Configuration saved = this.administratorService.saveConfiguration(res);
+		Assert.isTrue(saved.getSystemName().equals("Paco"));
 	}
 
 	@Test

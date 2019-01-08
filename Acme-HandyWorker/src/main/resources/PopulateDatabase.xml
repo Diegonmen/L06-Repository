@@ -116,6 +116,7 @@
 	<bean id="configuration0" class="domain.Configuration">
 		<property name="bannerURL"
 			value="https://www.vgr.com/wp-content/uploads/2018/11/Red-Dead-Redemption-2-Download-Time-600x300.jpg" />
+		<property name="welcomeMessage" ref="welcomeMessage0" />
 		<property name="spamWords">
 			<list>
 				<value>sex</value>

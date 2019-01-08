@@ -50,8 +50,10 @@
 	<input type="submit" name="save" value="<spring:message code="category.save" />">
 
 	<jstl:if test="${category.getId() != 0}">
+		<jstl:if test="${category.getName() != 'Category'}">
 			<input type="submit" class="btn btn-warning" name="delete" value="<spring:message code="category.delete" />">
 		</jstl:if>
+	</jstl:if>
  	
 	<input type="button" name="cancel" value="<spring:message code="category.cancel" />" onclick="javascript: relativeRedir('category/list.do')">
 	

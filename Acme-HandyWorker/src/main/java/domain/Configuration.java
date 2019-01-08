@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
@@ -118,14 +118,14 @@ public class Configuration extends DomainEntity {
 
 	// Relationships ----------------------------------------------------------
 
-	private Collection<WelcomeMessage> welcomeMessage;
+	private WelcomeMessage welcomeMessage;
 
-	@OneToMany
-	public Collection<WelcomeMessage> getWelcomeMessage() {
+	@OneToOne(optional=false)
+	public WelcomeMessage getWelcomeMessage() {
 		return this.welcomeMessage;
 	}
 
-	public void setWelcomeMessage(final Collection<WelcomeMessage> welcomeMessage) {
+	public void setWelcomeMessage(final WelcomeMessage welcomeMessage) {
 		this.welcomeMessage = welcomeMessage;
 	}
 
