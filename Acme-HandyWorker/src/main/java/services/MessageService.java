@@ -2,6 +2,7 @@ package services;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import domain.Actor;
+import domain.Administrator;
 import domain.Box;
 import domain.Message;
 import repositories.MessageRepository;
@@ -69,11 +71,16 @@ public class MessageService {
 		Box outbox = boxservices.findTashBox(current);
 		
 		if(outbox.getMessages().contains(message)) {
+			
+			if(message.getSender().equals(current)) {
+				outbox.getMessages().remove(message);
+			}
+			
 			message.getRecipients().remove(current);
 			
 			message = messagerepository.save(message);
 			
-			if(message.getRecipients().isEmpty()) {
+			if(message.getRecipients().isEmpty() && !this.findAllTrashboxMessages(message.getSender()).contains(message) && !this.findAllMessagesButTrashbox(message.getSender()).contains(message)) {
 				messagerepository.delete(message.getId());
 			}
 		} else {
@@ -129,6 +136,36 @@ public class MessageService {
 		Collection<Message> res = messagerepository.messagesFromActorId(actor.getId());
 		Assert.notEmpty(res);
 		return res;
+	}
+	
+	public Message create() {
+		Message res = new Message();
+		res.setMoment(new Date(System.currentTimeMillis() - 1));
+		return res;
+	}
+	
+	public Collection<String> findAllUsernamesForSender(Administrator administrator){
+		Collection<String> res = new LinkedList<>();
+		res.addAll(messagerepository.getAllUsernamesForSender(administrator.getUserAccount().getId()));
+		return res;
+	}
+	
+	public Collection<Message> findAllMessagesButTrashbox(Actor actor){
+		Collection<Message> res = new LinkedList<>();
+		res.addAll(messagerepository.getAllMessagesButTrashbox(actor.getUserAccount().getId()));
+		return res;
+	}
+	
+	public Collection<Message> findAllTrashboxMessages(Actor actor){
+		Collection<Message> res = new LinkedList<>();
+		res.addAll(messagerepository.getAllTrashboxMessages(actor.getUserAccount().getId()));
+		return res;
+	}
+	
+	public Box findCurrentBox(Actor actor, Message message){
+		Box box;
+		box = messagerepository.getCurrentBox(actor.getId(), message.getId());
+		return box;
 	}
 	
 }
