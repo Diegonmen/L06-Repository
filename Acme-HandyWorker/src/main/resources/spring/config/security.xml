@@ -52,7 +52,7 @@
 		<security:intercept-url pattern="/warranty/administrator/create.do" access="hasRole('ADMINISTRATOR')" />
 		
 		<security:intercept-url pattern="/fixuptask/list.do" access="hasAnyRole('CUSTOMER', 'HANDYWORKER')" /> 
-		<security:intercept-url pattern="/fixuptask/customer/edit.do" access="hasAnyRole('CUSTOMER', 'HANDYWORKER')" />
+		<security:intercept-url pattern="/fixuptask/edit.do" access="hasAnyRole('CUSTOMER', 'HANDYWORKER')" />
 		<security:intercept-url pattern="/fixuptask/customer/create.do" access="hasAnyRole('CUSTOMER', 'HANDYWORKER')" />
 		<security:intercept-url pattern="/fixuptask/async/phases.do" access="hasAnyRole('CUSTOMER', 'HANDYWORKER')" />
 		<security:intercept-url pattern="/fixuptask/async/complaints.do" access="hasAnyRole('CUSTOMER', 'HANDYWORKER')" />

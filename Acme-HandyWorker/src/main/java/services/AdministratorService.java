@@ -239,9 +239,10 @@ public class AdministratorService {
 			result = this.warrantyService.save(warranty);
 			Assert.notNull(result);
 			return result;
+		}else {
+			result = this.warrantyService.save(warranty);
 		}
 
-		result = this.warrantyService.findOne(warranty.getId());
 		return result;
 	}
 

@@ -162,7 +162,7 @@ public class FixUpTaskController {
 		return edit(fixUpTaskId);
 	}
 
-	@RequestMapping(value = "/customer/edit", method = RequestMethod.POST, params = "delete")
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
 	public ModelAndView delete(FixUpTask fixuptask, BindingResult binding) {
 		ModelAndView result;
 		try {
@@ -199,7 +199,7 @@ public class FixUpTaskController {
 		
 		UserAccount account = LoginService.getPrincipal();
 		
-		result = new ModelAndView(fixuptask.getId() < 1 ? "fixuptasks/customer/create" : "fixuptasks/customer/edit");
+		result = new ModelAndView(fixuptask.getId() < 1 ? "fixuptasks/customer/create" : "fixuptasks/edit");
 		result.addObject("fixuptask", fixuptask);
 		result.addObject("categories", categoryService.findAll());
 		result.addObject("warranties", warrantyService.findAll());
@@ -255,7 +255,7 @@ public class FixUpTaskController {
 		return result;
 	}
 
-	@RequestMapping(value = "/customer/edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam int fixuptaskId) {
 		ModelAndView result;
 		FixUpTask fixuptask;
@@ -267,7 +267,7 @@ public class FixUpTaskController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/customer/edit", method = RequestMethod.POST, params = "save")
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid FixUpTask fixuptask, BindingResult binding) {
 		ModelAndView result = new ModelAndView("redirect:/fixuptask/list.do");
 		

@@ -1,6 +1,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,61 +16,61 @@ import repositories.BoxRepository;
 @Service
 @Transactional
 public class BoxServices {
-	
+
 	@Autowired
 	private BoxRepository boxrepository;
 	@Autowired
 	private ActorService actorservice;
-	
+
 	public Box newBox(Box name) {
 		Actor current = actorservice.findSelf();
-		
+
 		Box saved = boxrepository.save(name);
-		
+
 		current.getBoxes().add(saved);
-		
+
 		actorservice.save(current);
-		
+
 		return saved;
 	}
-	
+
 	public boolean exists(Integer id) {
 		return actorservice.exists(id);
 	}
 
 	public Box findInbox(Actor a) {
 		Assert.notNull(a);
-		
-		for(Box b : a.getBoxes()) {
-			if("INBOX".equals(b.getName())) {
+
+		for (Box b : a.getBoxes()) {
+			if ("INBOX".equals(b.getName())) {
 				return b;
 			}
 		}
-		
+
 		return null;
 	}
 
 	public Box findOutbox(Actor a) {
 		Assert.notNull(a);
-		
-		for(Box b : a.getBoxes()) {
-			if("OUTBOX".equals(b.getName())) {
+
+		for (Box b : a.getBoxes()) {
+			if ("OUTBOX".equals(b.getName())) {
 				return b;
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	public Box findTashBox(Actor a) {
 		Assert.notNull(a);
-		
-		for(Box b : a.getBoxes()) {
-			if("TRASHBOX".equals(b.getName())) {
+
+		for (Box b : a.getBoxes()) {
+			if ("TRASHBOX".equals(b.getName())) {
 				return b;
 			}
 		}
-		
+
 		return null;
 	}
 
@@ -88,7 +89,7 @@ public class BoxServices {
 	public Box getTrashBoxFolderFromActorId(int id) {
 		return boxrepository.getTrashBoxFolderFromActorId(id);
 	}
-	
+
 	public List<Box> save(Iterable<Box> entities) {
 		return boxrepository.save(entities);
 	}
@@ -113,8 +114,36 @@ public class BoxServices {
 
 	public void delete(Box entity) {
 		Assert.notNull(entity);
-		Assert.isTrue(!"INBOX".equals(entity.getName()) && !"OUTBOX".equals(entity.getName()) && !"TRASHBOX".equals(entity.getName()) && !"SPAMBOX".equals(entity.getName()));
-		boxrepository.delete(entity);
+		Assert.isTrue(!"INBOX".equals(entity.getName()) && !"OUTBOX".equals(entity.getName())
+				&& !"TRASHBOX".equals(entity.getName()) && !"SPAMBOX".equals(entity.getName()));
+		Collection<Box> childrenBoxes = this.findAllChildrenBoxes(entity);
+		if (!childrenBoxes.isEmpty()) {
+			for (Box b : childrenBoxes) {
+				b.setParentBox(entity.getParentBox());
+			}
+			boxrepository.delete(entity);
+		} else {
+			boxrepository.delete(entity);
+		}
+
+	}
+
+	public Box moveBox(Box dst, Box box) {
+		Assert.notNull(dst);
+		Assert.notNull(box);
+
+		Actor self = actorservice.findSelf();
+
+		box.setParentBox(dst);
+
+		boxrepository.save(self.getBoxes());
+		return boxrepository.save(dst);
+	}
+
+	public Collection<Box> findAllChildrenBoxes(Box box) {
+		Collection<Box> res = new LinkedList<>();
+		res = boxrepository.findChildrenBoxes(box.getId());
+		return res;
 	}
 
 }
