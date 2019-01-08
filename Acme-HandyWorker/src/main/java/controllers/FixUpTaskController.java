@@ -9,12 +9,14 @@ import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -23,6 +25,7 @@ import domain.Complaint;
 import domain.FixUpTask;
 import domain.HandyWorker;
 import domain.Phase;
+import dto.ApplicationAceptDTO;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
@@ -118,15 +121,36 @@ public class FixUpTaskController {
 		return array.toString();
 	}
 	
-	@RequestMapping(value = "/customer/application-accept", method = RequestMethod.GET)
-	public ModelAndView acceptApplication(@RequestParam(value = "q") int applicationId, @RequestParam(value = "f") int fixUpTaskId) {
-		Application application = applicationservice.findOne(applicationId);
-		application.setStatus("ACCEPTED");
+	@ResponseBody
+	@RequestMapping(value = "/customer/application-accept", method = RequestMethod.POST)
+	public String acceptApplication(@RequestBody String dto) {
+		Gson gson = new Gson();
+		JsonObject json = new JsonObject();
+		JsonArray erros = new JsonArray();
 		
-		applicationservice.save(application);
+		ApplicationAceptDTO parsed = gson.fromJson(dto, ApplicationAceptDTO.class);
 		
-		return edit(fixUpTaskId);
+		try {
+			Application application = applicationservice.accept(parsed);
+			json.addProperty("application", application.getId());
+		} catch (Exception e) {
+			erros.add(e.getMessage());
+		}
+		
+		json.add("erros", erros);
+		
+		return json.toString();
 	}
+	
+//	@RequestMapping(value = "/customer/application-accept", method = RequestMethod.GET)
+//	public ModelAndView acceptApplication(@RequestParam(value = "q") int applicationId, @RequestParam(value = "f") int fixUpTaskId) {
+//		Application application = applicationservice.findOne(applicationId);
+//		application.setStatus("ACCEPTED");
+//		
+//		applicationservice.save(application);
+//		
+//		return edit(fixUpTaskId);
+//	}
 	
 	@RequestMapping(value = "/customer/application-reject", method = RequestMethod.GET)
 	public ModelAndView rejectApplication(@RequestParam(value = "q") int applicationId, @RequestParam(value = "f") int fixUpTaskId) {

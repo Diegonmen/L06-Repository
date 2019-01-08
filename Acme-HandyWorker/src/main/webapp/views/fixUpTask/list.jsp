@@ -62,7 +62,9 @@
 </display:table>
 
 <!-- <button onclick="window.location.href = '/createFixUpTask.do'">Crear </button> -->
+<security:authorize access="hasRole('CUSTOMER')">
 <input type="button" name="createFixUpTask" value="<spring:message code="fixUpTask.create" />" onclick="javascript: relativeRedir('fixUpTask/create.do');" />
+</security:authorize>
 
 <div class="ui modal" id="view-phases" style="display: none">
 	<div class="header">${phases}</div>

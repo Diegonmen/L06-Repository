@@ -136,16 +136,28 @@
 		</jstl:if>
 	</security:authorize>
 	
-	
+	<security:authorize access="hasRole('CUSTOMER')">
+		<h3>Applications</h3>
 		<table class="ui celled table">
+			<thead>
+				<tr>
+					<th>${phase_title}</th>
+					<th>${phase_description}</th>
+					<jstl:if test="${not canAddPhase}">
+						<th>${phase_title}</th>
+						<th>${aplication_offeredPrice}</th>
+					</jstl:if>
+					<th></th>
+				</tr>
+			</thead>
 			<tbody>
-				<jstl:forEach var="e" items="${fixuptask.phases}">
+				<jstl:forEach var="e" items="${fixuptask.applications}">
 					<tr>
 						<td data-label="${aplication_handyWorker}">${e.handyWorker.name} ${e.handyWorker.surname}</td>
 						<td data-label="${aplication_offeredPrice}">${e.offeredPrice}</td>
 						<td data-label="">${e.status}</td>
 						<jstl:if test="${not canAddPhase}">
-							<td><a href="fixuptask/customer/application-accept.do?q=${e.id}&f=${fixuptask.id}"><spring:message code="fixUpTask.aplication.accept"/></a></td>
+							<td><a href="javascript:showDialogAprove('accept-application', acceptApplication, hideErrors, [${e.id}])"><spring:message code="fixUpTask.aplication.accept"/></a></td>
 							<td>
 								<jstl:if test="${e.status != 'REJECTED' }">
 									<a href="fixuptask/customer/application-reject.do?q=${e.id}&f=${fixuptask.id}"><spring:message code="fixUpTask.aplication.rejected"/></a>
@@ -156,48 +168,32 @@
 				</jstl:forEach>
 			</tbody>
 		</table>
-
-		<br />
-		<br />
-		<input type="submit" name="save" value="<spring:message code="fixUpTask.save" />">
-		
+	</security:authorize>
 	
-		<table class="ui celled table">
-			<thead>
+	<h3><spring:message code="fixUpTask.phases" /></h3>
+	<table class="ui celled table">
+		<thead>
+			<tr>
+				<th>${phase_title}</th>
+				<th>${phase_description}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<jstl:forEach var="e" items="${fixuptask.phases}">
 				<tr>
-					<th>${phase_title}</th>
-					<th>${phase_description}</th>
-					<th>${phase_startMoment}</th>
-					<th>${phase_endMoment}</th>
-					<th></th>
+					<td data-label="${aplication_handyWorker}">${e.title}</td>
+					<td data-label="${aplication_handyWorker}">${e.description}</td>
 				</tr>
-			</thead>
-			<tbody>
-				<jstl:forEach var="e" items="${fixuptask.phases}">
-					<tr>
-						<td data-label="${phase_title}">${e.title} </td>
-						<td data-label="${phase_description}">${e.description}</td>
-						<td data-label="${phase_startMoment}">${e.startMoment}</td>
-						<td data-label="${phase_endMoment}">${e.endMoment}</td>
-						<security:authorize access="hasRole('HANDYWORKER')">
-							<td><a href="fixuptask/handyWorker/editPhase.do?q=${e.id}&f=${fixuptask.id}"><spring:message code="fixUpTask.edit"/></a></td>
-							<td>
-								<a href="fixuptask/list.do?q=${e.id}&f=${fixuptask.id}"><spring:message code="fixUpTask.back"/></a>
-							</td>
-						</security:authorize>
-					</tr>
-				</jstl:forEach>
-			</tbody>
-		</table>
+			</jstl:forEach>
+		</tbody>
+	</table>
+	
 
-		<br />
-		<br />
+	<br />
+	<br />
+	<input type="submit" name="save" value="<spring:message code="fixUpTask.save" />">
 		
 </form:form>
-
-
-
-
 
 <div class="ui modal" id="view-phases" style="display: none">
 	<div class="header">${phasesAdd}</div>
@@ -207,37 +203,37 @@
 		<spring:message code="fixUpTask.phase.startMoment" var="phase_startMoment" />
 		<spring:message code="fixUpTask.phase.endMoment" var="phase_endMoment" />
 		
-			<form action="phase/handyworker/save-async.do" id="phase-save">
-				<input type="hidden" name="id" value="0">
-				<input type="hidden" name="version" value="0">
-				
-				<div>
-					<label>${phase_title}:</label>
-					<input type="text" name="title" value="">
-				</div>
-				
-				<div>
-					<label>${phase_description}:</label>
-					<input type="text" name="description" value="">
-				</div>
-				
-				<div>
-					<label>${phase_startMoment}:</label>
-					<input type="text" name="startMoment" value="">
-				</div>
-				
-				<div>
-					<label>${phase_endMoment}:</label>
-					<input type="text" name="endMoment" value="">
-				</div>
+		<form action="phase/handyworker/save-async.do" id="phase-save">
+			<input type="hidden" name="id" value="0">
+			<input type="hidden" name="version" value="0">
+			
+			<div>
+				<label>${phase_title}:</label>
+				<input type="text" name="title" value="">
 			</div>
 			
-			<h2 style="display: none" id="phases-errors" class="error">${error}</h2>
-			<div class="actions">
-				<div class="ui approve button">${save}</div>
-				<div class="ui cancel button">${cancel}</div>
+			<div>
+				<label>${phase_description}:</label>
+				<input type="text" name="description" value="">
 			</div>
-		</form>
+			
+			<div>
+				<label>${phase_startMoment}:</label>
+				<input type="text" name="startMoment" value="">
+			</div>
+			
+			<div>
+				<label>${phase_endMoment}:</label>
+				<input type="text" name="endMoment" value="">
+			</div>
+		</div>
+		
+		<h2 style="display: none" id="phases-errors" class="error">${error}</h2>
+		<div class="actions">
+			<div class="ui approve button">${save}</div>
+			<div class="ui cancel button">${cancel}</div>
+		</div>
+	</form>
 </div>
 
 <div class="ui modal" id="view-applications" style="display: none">
@@ -245,33 +241,98 @@
 	<div class="content">
 		<form action="application/handyworker/save-async.do" id="application-save">
 			<input type="hidden" name="id" value="0">
-				<input type="hidden" name="version" value="0">
-				<input type="hidden" name="comments" value="">
-				
-				<input type="hidden" name="fixUpTask" value="${fixuptask.id}">
-				<input type="hidden" name="handyWorker" value="${workerId}">
-				<input type="hidden" name="status" value="PENDING">
-				
-				<div>
-					<label>${aplication_applicationMoment}:</label>
-					<input type="text" name="applicationMoment" value="">
-				</div>
-				
-				<div>
-					<label>${aplication_offeredPrice}:</label>
-					<input type="number" min="0" name="offeredPrice" value="">
-				</div>
+			<input type="hidden" name="version" value="0">
+			<input type="hidden" name="comments" value="">
+			
+			<input type="hidden" name="fixUpTask" value="${fixuptask.id}">
+			<input type="hidden" name="handyWorker" value="${workerId}">
+			<input type="hidden" name="status" value="PENDING">
+			
+			<div>
+				<label>${aplication_applicationMoment}:</label>
+				<input type="text" name="applicationMoment" value="">
 			</div>
 			
-			<h2 style="display: none" id="actions-errors" class="error">${error}</h2>
-			<div class="actions">
-				<div class="ui approve button">${save}</div>
-				<div class="ui cancel button">${cancel}</div>
+			<div>
+				<label>${aplication_offeredPrice}:</label>
+				<input type="number" min="0" name="offeredPrice" value="">
+			</div>
+		</div>
+		
+		<h2 style="display: none" id="actions-errors" class="error">${error}</h2>
+		<div class="actions">
+			<div class="ui approve button">${save}</div>
+			<div class="ui cancel button">${cancel}</div>
+		</div>
+	</form>
+</div>
+
+<div class="ui modal" id="accept-application" style="display: none">
+	<div class="header"><spring:message code="fixUpTask.aplication.accept"/></div>
+	<div class="content">
+		<form id="accept-application-form">
+			<input type="hidden" name="fixUpTaskId" value="${fixuptask.id}">
+			<input type="hidden" name="applicationId" value="0">
+			<div>
+				<label>holderName:</label>
+				<input type="text" name="holderName" value="">
+			</div>
+			<div>
+				<label>brandName:</label>
+				<input type="text" name="brandName" value="">
+			</div>
+			<div>
+				<label>number:</label>
+				<input type="text" name="number" value="">
+			</div>
+			<div>
+				<label>expirationMonth:</label>
+				<input type="number" min="0" max="11" name="expirationMonth" value="">
+			</div>
+			<div>
+				<label>expirationYear:</label>
+				<input type="number" min="2000" name="expirationYear" value="">
+			</div>
+			<div>
+				<label>cVV:</label>
+				<input type="number" name="cVV" value="">
+			</div>
+			<div>
+				<label>coment:</label>
+				<input type="text" name="coment" value="">
 			</div>
 		</form>
+	</div>
+	<h2 style="display: none" id="accept-errors" class="error">${error}</h2>
+	<div class="actions">
+		<div class="ui approve button">${save}</div>
+		<div class="ui cancel button">${cancel}</div>
+	</div>
 </div>
 
 <script>
+	function acceptApplication(row) {
+		$('#accept-errors').html('');
+		$('[name="applicationId"]').val(row[0]);
+		
+		$.ajax({
+			type : 'POST',
+			url : 'fixuptask/customer/application-accept.do',
+			data : JSON.stringify(getFormData($('#accept-application-form'))),
+			contentType: 'application/json',
+			success : function(data) {
+				let json = JSON.parse(data);
+				
+				if(json.erros.length > 0) {
+					$('#accept-errors').html(json.erros[0]).show();
+				} else {
+					location.reload();
+				}
+			}
+		});
+		
+	}
+	
 	function hideErrors() {
 		$('.error').hide();
 	}
@@ -295,8 +356,9 @@
 						$('[name="phases"]').val(json.phase);
 					}
 					
-					//$('#addPhaseAction').remove();
 					$('#view-phases').modal('hide');
+					
+					location.reload();
 				}
 			}
 		});

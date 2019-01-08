@@ -5,6 +5,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +22,7 @@ import domain.CreditCard;
 import domain.Customer;
 import domain.FixUpTask;
 import domain.HandyWorker;
+import dto.ApplicationAceptDTO;
 import repositories.ApplicationRepository;
 import repositories.HandyWorkerRepository;
 
@@ -35,6 +42,9 @@ public class ApplicationService {
 
 	@Autowired
 	private CustomerService customerService;
+	
+	@Autowired
+	CreditCardService creditcardservice;
 
 	// Simple CRUD methods ----------------------------------------------------
 
@@ -85,6 +95,36 @@ public class ApplicationService {
 	
 	public Application save(Application entity) {
 		return applicationRepository.save(entity);
+	}
+	
+	public Application accept(ApplicationAceptDTO dto) {
+		Assert.isTrue(dto.getComent() != null && !dto.getComent().trim().isEmpty());
+		
+		Application application = applicationRepository.findOne(dto.getApplicationId());
+		application.setStatus("ACCEPTED");
+		
+		CreditCard card = new CreditCard();
+		card.setBrandName(dto.getBrandName());
+		card.setCVV(dto.getcVV());
+		card.setExpirationMonth(dto.getExpirationMonth());
+		card.setExpirationYear(dto.getExpirationYear());
+		card.setHolderName(dto.getHolderName());
+		card.setNumber(dto.getNumber());
+		
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		Validator validator = factory.getValidator();
+		
+		Set<ConstraintViolation<CreditCard>> constraintViolations = validator.validate(card);
+		
+		if(!constraintViolations.isEmpty()) {
+			throw new IllegalArgumentException(constraintViolations.iterator().next().getMessage());
+		}
+		
+		CreditCard savedCard = creditcardservice.save(card);
+		application.getComments().add(dto.getComent());
+		application.setCreditCard(savedCard);
+		
+		return applicationRepository.save(application);
 	}
 	
 	public Application create() {

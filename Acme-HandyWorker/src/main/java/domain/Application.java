@@ -25,7 +25,6 @@ public class Application extends DomainEntity {
 	private Collection<String>	comments;
 	private CreditCard			creditCard;
 
-
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
