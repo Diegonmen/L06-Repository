@@ -60,6 +60,9 @@
 		<security:intercept-url pattern="/fixuptask/async/complaints.do" access="hasAnyRole('CUSTOMER', 'HANDYWORKER')" />
 		<security:intercept-url pattern="/fixuptask/async/aplications.do" access="hasAnyRole('CUSTOMER', 'HANDYWORKER')" />
 		
+		<security:intercept-url pattern="/fixuptask/customer/application-accept.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/fixuptask/customer/application-reject.do" access="hasRole('CUSTOMER')" />
+		
 		<security:intercept-url pattern="/application/handyworker/save-async.do" access="hasRole('HANDYWORKER')" />
 		<security:intercept-url pattern="/phase/handyworker/save-async.do" access="hasRole('HANDYWORKER')" />
 		

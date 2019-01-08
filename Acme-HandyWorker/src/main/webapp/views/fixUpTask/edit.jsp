@@ -32,6 +32,7 @@
 <spring:message code="fixUpTask.phase.endMoment" var="phase_endMoment" />
 
 
+
 <form:form action="fixuptask/customer/edit.do" modelAttribute="fixuptask">
 	<form:hidden path="id" />
 	<form:hidden path="version" />
@@ -135,28 +136,21 @@
 		</jstl:if>
 	</security:authorize>
 	
-	<security:authorize access="hasRole('CUSTOMER')">
+	
 		<table class="ui celled table">
-			<thead>
-				<tr>
-					<th>${aplication_handyWorker}</th>
-					<th>${aplication_offeredPrice}</th>
-					<th></th>
-					<jstl:if test="${not canAddPhase}">
-						<th></th>
-						<th></th>
-					</jstl:if>
-				</tr>
-			</thead>
 			<tbody>
-				<jstl:forEach var="e" items="${fixuptask.applications}">
+				<jstl:forEach var="e" items="${fixuptask.phases}">
 					<tr>
 						<td data-label="${aplication_handyWorker}">${e.handyWorker.name} ${e.handyWorker.surname}</td>
 						<td data-label="${aplication_offeredPrice}">${e.offeredPrice}</td>
 						<td data-label="">${e.status}</td>
 						<jstl:if test="${not canAddPhase}">
-							<td><a href="javascript:void(0)"><spring:message code="fixUpTask.aplication.accept"/></a></td>
-							<td><a href="javascript:void(0)"><spring:message code="fixUpTask.aplication.rejected"/></a></td>
+							<td><a href="fixuptask/customer/application-accept.do?q=${e.id}&f=${fixuptask.id}"><spring:message code="fixUpTask.aplication.accept"/></a></td>
+							<td>
+								<jstl:if test="${e.status != 'REJECTED' }">
+									<a href="fixuptask/customer/application-reject.do?q=${e.id}&f=${fixuptask.id}"><spring:message code="fixUpTask.aplication.rejected"/></a>
+								</jstl:if>
+							</td>
 						</jstl:if>
 					</tr>
 				</jstl:forEach>
@@ -166,9 +160,44 @@
 		<br />
 		<br />
 		<input type="submit" name="save" value="<spring:message code="fixUpTask.save" />">
-	</security:authorize>
+		
 	
+		<table class="ui celled table">
+			<thead>
+				<tr>
+					<th>${phase_title}</th>
+					<th>${phase_description}</th>
+					<th>${phase_startMoment}</th>
+					<th>${phase_endMoment}</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<jstl:forEach var="e" items="${fixuptask.phases}">
+					<tr>
+						<td data-label="${phase_title}">${e.title} </td>
+						<td data-label="${phase_description}">${e.description}</td>
+						<td data-label="${phase_startMoment}">${e.startMoment}</td>
+						<td data-label="${phase_endMoment}">${e.endMoment}</td>
+						<security:authorize access="hasRole('HANDYWORKER')">
+							<td><a href="fixuptask/handyWorker/editPhase.do?q=${e.id}&f=${fixuptask.id}"><spring:message code="fixUpTask.edit"/></a></td>
+							<td>
+								<a href="fixuptask/list.do?q=${e.id}&f=${fixuptask.id}"><spring:message code="fixUpTask.back"/></a>
+							</td>
+						</security:authorize>
+					</tr>
+				</jstl:forEach>
+			</tbody>
+		</table>
+
+		<br />
+		<br />
+		
 </form:form>
+
+
+
+
 
 <div class="ui modal" id="view-phases" style="display: none">
 	<div class="header">${phasesAdd}</div>
