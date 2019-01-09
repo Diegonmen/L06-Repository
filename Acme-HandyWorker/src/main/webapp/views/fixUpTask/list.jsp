@@ -29,9 +29,11 @@
 
 <display:table name="list" id="row" requestURI="fixuptask/list.do" pagesize="3" class="displaytag">
 
+	<security:authorize access="hasRole('HANDYWORKER')">
 	<display:column title="${publishedBy}">
 		<a href="customer/viewProfile.do?customerId=${customers[row.id].id}">${customers[row.id].userAccount.username}</a>
 	</display:column>
+	</security:authorize>
 	<security:authorize access="hasRole('CUSTOMER')">
 		<display:column title="${application}">
 			<a href="javascript:showDialog('view-applications', sucessApplications, 'q=${row.id}', 'fixuptask/async/aplications.do')">${view}</a>
@@ -62,14 +64,12 @@
 		<a href="fixuptask/edit.do?fixuptaskId=${row.id}"> <spring:message code="fixUpTask.edit" />
 		</a>
 	</display:column>
-
-
-
+	
 </display:table>
 
 <!-- <button onclick="window.location.href = '/createFixUpTask.do'">Crear </button> -->
 <security:authorize access="hasRole('CUSTOMER')">
-<input type="button" name="createFixUpTask" value="<spring:message code="fixUpTask.create" />" onclick="javascript: relativeRedir('fixUpTask/create.do');" />
+<input type="button" name="createFixUpTask" value="<spring:message code="fixUpTask.create" />" onclick="javascript: relativeRedir('fixuptask/create.do');" />
 </security:authorize>
 
 <div class="ui modal" id="view-phases" style="display: none">

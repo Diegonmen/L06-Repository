@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 
 import domain.Actor;
 import domain.Box;
+import domain.Message;
 import repositories.BoxRepository;
 
 @Service
@@ -21,6 +22,8 @@ public class BoxServices {
 	private BoxRepository boxrepository;
 	@Autowired
 	private ActorService actorservice;
+	@Autowired
+	private MessageService messageService;
 
 	public Box newBox(Box name) {
 		Actor current = actorservice.findSelf();
@@ -121,8 +124,14 @@ public class BoxServices {
 			for (Box b : childrenBoxes) {
 				b.setParentBox(entity.getParentBox());
 			}
+			for(Message m : entity.getMessages()) {
+				messageService.delete(m);
+			}
 			boxrepository.delete(entity);
 		} else {
+			for(Message m : entity.getMessages()) {
+				messageService.delete(m);
+			}
 			boxrepository.delete(entity);
 		}
 

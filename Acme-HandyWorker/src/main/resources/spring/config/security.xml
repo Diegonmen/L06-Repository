@@ -56,7 +56,7 @@
 		
 		<security:intercept-url pattern="/fixuptask/list.do" access="hasAnyRole('CUSTOMER', 'HANDYWORKER')" /> 
 		<security:intercept-url pattern="/fixuptask/edit.do" access="hasAnyRole('CUSTOMER', 'HANDYWORKER')" />
-		<security:intercept-url pattern="/fixuptask/customer/create.do" access="hasAnyRole('CUSTOMER', 'HANDYWORKER')" />
+		<security:intercept-url pattern="/fixuptask/create.do" access="hasAnyRole('CUSTOMER', 'HANDYWORKER')" />
 		<security:intercept-url pattern="/fixuptask/async/phases.do" access="hasAnyRole('CUSTOMER', 'HANDYWORKER')" />
 		<security:intercept-url pattern="/fixuptask/async/complaints.do" access="hasAnyRole('CUSTOMER', 'HANDYWORKER')" />
 		<security:intercept-url pattern="/fixuptask/async/aplications.do" access="hasAnyRole('CUSTOMER', 'HANDYWORKER')" />
@@ -79,7 +79,7 @@
 		<security:intercept-url pattern="/customer/register.do" access="!isAuthenticated()" />
 		
 		
-		<security:intercept-url pattern="/handyWorker/viewProfile.do" access="hasRole('HANDYWORKER')" /> 
+		<security:intercept-url pattern="/handyWorker/viewProfile.do" access="hasRole('HANDYWORKER')" />  
 		<security:intercept-url pattern="/handyWorker/edit.do" access="hasRole('HANDYWORKER') or isAnonymous()" />
 		<security:intercept-url pattern="/handyWorker/register.do" access="!isAuthenticated()" />
 		

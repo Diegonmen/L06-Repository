@@ -60,10 +60,17 @@
 	</tbody>
 </table>
 
-
+<security:authorize access="hasRole('CUSTOMER')">
 <input type="button" name="save" class="ui button"
  value="<spring:message code="customer.modify" />"
  onclick="javascript: relativeRedir('customer/edit.do');" />
+</security:authorize>
+
+<security:authorize access="hasRole('HANDYWORKER')">
+<input type="button" name="back" class="ui button"
+ value="<spring:message code="customer.back" />"
+ onclick="javascript: relativeRedir('fixuptask/list.do');" />
+</security:authorize>
 
 </body>
 </html>

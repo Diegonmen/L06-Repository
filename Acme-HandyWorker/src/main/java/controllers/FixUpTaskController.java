@@ -1,6 +1,7 @@
 
 package controllers;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -185,7 +187,7 @@ public class FixUpTaskController {
 		return result;
 	}
 
-	@RequestMapping(value = "/customer/create", method = RequestMethod.GET)
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
 		FixUpTask fixuptask;
@@ -209,7 +211,7 @@ public class FixUpTaskController {
 
 		UserAccount account = LoginService.getPrincipal();
 
-		result = new ModelAndView(fixuptask.getId() < 1 ? "fixuptasks/customer/create" : "fixuptasks/edit");
+		result = new ModelAndView(fixuptask.getId() < 1 ? "fixuptask/create" : "fixuptasks/edit");
 		result.addObject("fixuptask", fixuptask);
 		result.addObject("categories", this.categoryService.findAll());
 		result.addObject("warranties", this.warrantyService.findAll());
@@ -232,7 +234,7 @@ public class FixUpTaskController {
 
 		Collection<Complaint> allComplaints = this.complaintservice.findAll();
 
-		// Ya tiene una aplicacion, no puede añadir más
+		// Ya tiene una aplicacion, no puede aï¿½adir mï¿½s
 		if (isHandyWorker) {
 			HandyWorker worker = this.handyworkerservice.findByPrincipal();
 			for (Application a : fixuptask.getApplications())
@@ -276,11 +278,13 @@ public class FixUpTaskController {
 	public ModelAndView save(@Valid FixUpTask fixuptask, BindingResult binding) {
 		ModelAndView result = new ModelAndView("redirect:/fixuptask/list.do");
 
-		if (binding.hasErrors())
+		if (binding.hasErrors()) {
+			for (ObjectError e : binding.getAllErrors())
+			System.out.println(e.getObjectName() + " error [" + e.getDefaultMessage() + "] " + Arrays.toString(e.getCodes()));
 			result = this.createEditModelAndView(fixuptask);
-		else
+		}else
 			try {
-				this.fixuptaskservice.saveAndFlush(fixuptask);
+				this.customerservice.saveCustomerFixUpTask(fixuptask);
 			} catch (ObjectOptimisticLockingFailureException ex) {
 				// This exception will can ignore
 				return result;

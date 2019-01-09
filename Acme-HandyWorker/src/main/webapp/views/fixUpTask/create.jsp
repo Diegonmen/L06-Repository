@@ -1,3 +1,4 @@
+<%@page import="org.springframework.context.i18n.LocaleContextHolder"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -7,16 +8,10 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="view" tagdir="/WEB-INF/tags"%>
-<html>
-	<spring:message code="fixUpTask.description" var="description" />
-	<spring:message code="fixUpTask.address" var="address" />
-	<spring:message code="fixUpTask.maxPrice" var="maxPrice" />
-	<spring:message code="fixUpTask.startDate" var="startDate" />
-	<spring:message code="fixUpTask.endDate" var="endDate" />
-	<spring:message code="fixUpTask.edit" var="editstr" />
-	<spring:message code="fixUpTask.category" var="category" />
 
-	<form:form action="fixUpTask/create.do" modelAttribute="fixUpTask">
+<jstl:set value="<%=LocaleContextHolder.getLocale()%>" var="locale"></jstl:set>
+
+	<form:form action="fixuptask/edit.do" modelAttribute="fixuptask">
 		<form:hidden path="id"/>
 		<form:hidden path="version"/>
 		<form:hidden path="publicationMoment"/>
@@ -25,33 +20,75 @@
 		<form:hidden path="phases"/>
 		<form:hidden path="complaints"/>
 		
-		<form:input path="description" placeholder="${description }"/>
-		<form:errors cssClass="error" path="description"></form:errors>
+		<div> 
+		<form:label path="description">
+			<spring:message code="fixUpTask.description" />
+		</form:label>
+		<form:input path="description" />
+		<form:errors path="description"/>
+		</div>
 		
-		<form:input path="address" placeholder="${address }"/>
-		<form:errors cssClass="error" path="address"></form:errors>
+		<div> 
+		<form:label path="address">
+			<spring:message code="fixUpTask.address" />
+		</form:label>
+		<form:input path="address" />
+		<form:errors path="address"/>
+		</div>
 		
-		<form:input path="maxPrice" placeholder="${maxPrice }"/>
-		<form:errors cssClass="error" path="maxPrice"></form:errors>
+		<div> 
+		<form:label path="maxPrice">
+			<spring:message code="fixUpTask.maxPrice" />
+		</form:label>
+		<form:input path="maxPrice" />
+		<form:errors path="maxPrice"/>
+		</div>
 		
-		<form:input path="startDate" placeholder="${startDate }"/>
-		<form:errors cssClass="error" path="startDate"></form:errors>
+		<div> 
+		<form:label path="startDate">
+			<spring:message code="fixUpTask.startDate" />
+		</form:label>
+		<form:input path="startDate" />
+		<form:errors path="startDate"/>
+		</div>
 		
-		<form:input path="endDate" placeholder="${endDate }"/>
-		<form:errors cssClass="error" path="endDate"></form:errors>
+		<div> 
+		<form:label path="endDate">
+			<spring:message code="fixUpTask.endDate" />
+		</form:label>
+		<form:input path="endDate" />
+		<form:errors path="endDate"/>
+		</div>
 		
-		<form:input path="category.name" placeholder="${category }"/>
-		<form:errors cssClass="error" path="category.name"></form:errors>
+		<form:label path="category.name">
+			<spring:message code="fixUpTask.category" />
+		</form:label>
+		<form:select path="category">
+			<jstl:forEach items="${categories}" var="e">
+				<form:option value="${e.id}">
+					<jstl:if test="${locale == 'en'}">${e.name}</jstl:if>
+					<jstl:if test="${locale == 'es'}">${e.espName}</jstl:if>
+				</form:option>
+			</jstl:forEach>
+		</form:select>
+		<form:errors path="category.name"/>
 		
-		<form:input path="warranty.title" placeholder="${warranty }"/>
-		<form:errors cssClass="error" path="warranty.title"></form:errors>
+		<form:label path="warranty">
+			<spring:message code="fixUpTask.warranty" />
+		</form:label>
+		<form:select path="warranty">
+			<jstl:forEach items="${warranties}" var="e">
+				<form:option value="${e.id}">
+					${e.title}
+				</form:option>
+			</jstl:forEach>
+		</form:select>
+		<form:errors path="warranty.title"/>
 		
-		<input type="button" name="save"
- value="<spring:message code="fixUpTask.save" />"
- onclick="javascript: relativeRedir('fixUpTask/view.do');" />
+		<input type="submit" name="save" value="<spring:message code="fixUpTask.save" />">
  
  <input type="button" name="cancel"
- value="<spring:message code="fixUpTask.cance" />"
- onclick="javascript: relativeRedir('fixUpTask/view.do');" />
+ value="<spring:message code="fixUpTask.cancel" />"
+ onclick="javascript: relativeRedir('fixuptask/list.do');" />
 	</form:form>
 </html>
