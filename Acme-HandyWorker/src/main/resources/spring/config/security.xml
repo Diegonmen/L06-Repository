@@ -69,6 +69,7 @@
 		<security:intercept-url pattern="/application/view.do" access="hasAnyRole('CUSTOMER','HANDYWORKER')" />
 		<security:intercept-url pattern="/phase/handyworker/save-async.do" access="hasRole('HANDYWORKER')" />
 		<security:intercept-url pattern="/phase/list.do" access="hasAnyRole('HANDYWORKER','CUSTOMER')" />
+		<security:intercept-url pattern="/phase/view.do" access="hasAnyRole('HANDYWORKER','CUSTOMER')" />
 		
 		<security:intercept-url pattern="/category/list.do" access="hasRole('ADMINISTRATOR')" /> 
 		<security:intercept-url pattern="/category/administrator/edit.do" access="hasRole('ADMINISTRATOR')" />
