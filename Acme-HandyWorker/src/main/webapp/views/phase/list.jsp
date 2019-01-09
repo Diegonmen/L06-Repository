@@ -13,7 +13,7 @@
 <spring:message code="phase.startMoment" var="startMoment" />
 <spring:message code="phase.endMoment" var="endMoment" />
 
-<display:table name="phase" id="row"
+<display:table name="phases" id="row"
 	requestURI="phase/customer/list.do" pagesize="5" class="displaytag">
 
 	<security:authorize access="hasRole('CUSTOMER')">
