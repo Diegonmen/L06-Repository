@@ -8,7 +8,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.HandyWorker;
-import services.CustomerService;
-import services.FixUpTaskService;
 import services.HandyWorkerService;
-import domain.HandyWorker;
 
 @Controller
 @RequestMapping("/handyWorker")
@@ -28,13 +24,6 @@ public class HandyWorkerController extends AbstractController {
 
 	@Autowired
 	private HandyWorkerService	handyWorkerService;
-	
-	@Autowired
-	private CustomerService	customerService;
-	
-	@Autowired
-	private FixUpTaskService	fixUpTaskService;
-
 
 	public HandyWorkerController() {
 		super();

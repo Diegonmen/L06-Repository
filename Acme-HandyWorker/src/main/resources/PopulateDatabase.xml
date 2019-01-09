@@ -107,8 +107,7 @@
 
 	<bean id="welcomeMessage0" class="domain.WelcomeMessage">
 		<property name="languageCode" value="lenguageCode" />
-		<property name="content" value="welcomeMessageContent">
-		</property>
+		<property name="content" value="Welcome to Acme HandyWorker! Price, quality, and trust in a single place" />
 	</bean>
 
 	<!-- Configuration -->

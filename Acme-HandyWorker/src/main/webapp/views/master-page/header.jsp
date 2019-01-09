@@ -109,7 +109,7 @@
 				</a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="message/list.do"><spring:message code="master.page.boxes" /></a></li>
+					<li><a href="box/list.do"><spring:message code="master.page.boxes" /></a></li>
 				</ul>
 			</li>
 			

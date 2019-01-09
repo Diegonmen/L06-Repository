@@ -12,24 +12,19 @@
 <spring:message code="box.view" var="boxView" />
 <spring:message code="box.delete" var="boxDelete" />
 
-<display:table pagesize="3" class="displaytag" keepStatus="true"
-	name="list" requestURI="/box/list.do" id="row">
+<display:table pagesize="4" class="displaytag" keepStatus="true"
+	name="boxes" requestURI="/box/list.do" id="row">
 
-	<display:column title="${boxName}">
-		<jstl:forEach items="${row}" var="e">
-			${e.name}
-		</jstl:forEach>
-	</display:column>
-	<display:column title="${boxName}">
-		<jstl:forEach items="${row}" var="e">
-			<jstl:if test="${row.predefined==false}">
-				<a href="box/delete.do?boxId=${row.id}">${boxDelete}</a>
-			</jstl:if>
-		</jstl:forEach>
-	</display:column>
+	<display:column value="${row.name}" title="${boxName}"></display:column>
 	<display:column>
 			<a href="box/display.do?boxId=${row.id}">${boxView}</a>
 	</display:column>
+	<display:column>
+			<jstl:if test="${row.predefined==false}">
+				<a href="box/delete.do?boxId=${row.id}">${boxDelete}</a>
+			</jstl:if>
+	</display:column>
+	
 </display:table>
 
 <input type="button" class="ui button" name="create"
