@@ -3,6 +3,7 @@ package services;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -94,7 +95,12 @@ public class ApplicationService {
 	}
 	
 	public Application save(Application entity) {
-		return applicationRepository.save(entity);
+		if(applicationRepository.exists(entity.getId())) {
+			return applicationRepository.save(entity);
+		} else {
+			entity.setApplicationMoment(new Date());
+			return applicationRepository.save(entity);
+		}
 	}
 	
 	public Application accept(ApplicationAceptDTO dto) {
