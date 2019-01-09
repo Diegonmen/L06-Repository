@@ -234,7 +234,7 @@ public class FixUpTaskController {
 
 		Collection<Complaint> allComplaints = this.complaintservice.findAll();
 
-		// Ya tiene una aplicacion, no puede añadir más
+		// Ya tiene una aplicacion, no puede aï¿½adir mï¿½s
 		if (isHandyWorker) {
 			HandyWorker worker = this.handyworkerservice.findByPrincipal();
 			for (Application a : fixuptask.getApplications())

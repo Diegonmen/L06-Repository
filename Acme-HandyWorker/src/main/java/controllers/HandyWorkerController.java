@@ -20,6 +20,7 @@ import domain.HandyWorker;
 import services.CustomerService;
 import services.FixUpTaskService;
 import services.HandyWorkerService;
+import domain.HandyWorker;
 
 @Controller
 @RequestMapping("/handyWorker")
@@ -53,7 +54,7 @@ public class HandyWorkerController extends AbstractController {
 
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
