@@ -22,11 +22,11 @@
 					code="phase.edit" />
 			</a>
 		</display:column>
-		<display:column>
+		<%-- <display:column>
 			<a href="phase/customer/list.do?phaseId=${row.id}"> <spring:message
 					code="phase.delete" />
 			</a>
-		</display:column>
+		</display:column> --%>
 	</security:authorize>
 	
 	<display:column property="title" title="${title}" />

@@ -1,6 +1,9 @@
 
 package controllers;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import services.FixUpTaskService;
 import services.PhaseService;
@@ -55,6 +59,20 @@ public class PhaseController {
 		result.add("errors", errors);
 
 		return result.toString();
+	}
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list(@RequestParam int fixUpTaskId) {
+		ModelAndView result;
+		Collection<Phase> phases = new ArrayList<Phase>();
+		FixUpTask f = this.fixuptaskservice.findOne(fixUpTaskId);
+		if (f != null)
+			phases = f.getPhases();
+		result = new ModelAndView("phase/list");
+
+		result.addObject("phases", phases);
+
+		return result;
 	}
 
 }
