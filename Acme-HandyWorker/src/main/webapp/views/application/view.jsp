@@ -267,10 +267,13 @@ hr[id^="ez-insert-after-placeholder"] {margin-top: 0;}
 </style>
 <style type="text/css">
 
-.pendingLessThanAMonth{background-color: red;}
-.accepted{background-color: green;}
+.pending{background-color: white;}
+.pendingLessThanAMonth{background-color: grey;}
+.accepted{background-color: green; color: white}
 .accepted a{color: white;}
-.rejected{background-color: grey;}
+.rejected{background-color: orange;}
+.due{background-color: yellow;}
+.cancelled{background-color: cyan;}
 
 </style>
 </head>
