@@ -13,7 +13,7 @@
 <spring:message code="phase.startMoment" var="startMoment" />
 <spring:message code="phase.endMoment" var="endMoment" />
 
-<display:table name="phase" id="row"
+<display:table name="phases" id="row"
 	requestURI="phase/customer/list.do" pagesize="5" class="displaytag">
 
 	<security:authorize access="hasRole('CUSTOMER')">
@@ -22,11 +22,11 @@
 					code="phase.edit" />
 			</a>
 		</display:column>
-		<display:column>
+		<%-- <display:column>
 			<a href="phase/customer/list.do?phaseId=${row.id}"> <spring:message
 					code="phase.delete" />
 			</a>
-		</display:column>
+		</display:column> --%>
 	</security:authorize>
 	
 	<display:column property="title" title="${title}" />

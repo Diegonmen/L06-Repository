@@ -111,7 +111,7 @@
 			let content = $(document.createElement('div')).addClass('content').append(header);
 			
 			let item = $(document.createElement('div')).addClass('item').append(icon).append(content).on('click', function() {
-				location.href = 'phase/actor/view.do?id=' + data[e].id;
+				location.href = 'phase/view.do?phaseId=' + data[e].id;
 			});
 			
 			container.append(item);
@@ -147,7 +147,7 @@
 			let content = $(document.createElement('div')).addClass('content').append(header);
 			
 			let item = $(document.createElement('div')).addClass('item').append(icon).append(content).on('click', function() {
-				location.href = 'application/actor/view.do?id=' + data[e].id;
+				location.href = 'application/view.do?applicationId=' + data[e].id;
 			});
 			
 			container.append(item);
