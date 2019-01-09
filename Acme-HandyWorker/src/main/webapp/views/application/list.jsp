@@ -69,17 +69,9 @@
 	<display:column value="${row.fixUpTask.description}" title="${applicationFixUpTask}"></display:column>
 	<display:column title="${applicationHandyWorker}"><a href="handyWorker/viewProfile.do?handyWorkerId=${row.handyWorker.id}">${row.handyWorker.userAccount.username}</a></display:column>
 	
-	<security:authorize access="hasRole('CUSTOMER')">
 	<display:column>
-			<a href="application/customer/view.do?applicationId=${row.id}">${applicationView}</a>
+			<a href="application/view.do?applicationId=${row.id}">${applicationView}</a>
 	</display:column>
-	</security:authorize>
-	
-	<security:authorize access="hasRole('HANDYWORKER')">
-	<display:column>
-			<a href="application/handyWorker/view.do?applicationId=${row.id}">${applicationView}</a>
-	</display:column>
-	</security:authorize>
 	
 </display:table>
 
