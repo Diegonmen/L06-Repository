@@ -32,7 +32,7 @@
 
 <jsp:useBean id="now" class="java.util.Date"/>
 	<fmt:parseNumber var="dateDifference"
-    value="${(now.time - row.trip.startDate.time) / (1000*60*60*24) }"
+    value="${(now.time - application.fixUpTask.endDate.time) / (1000*60*60*24) }"
     integerOnly="true" />
 
 <display:table pagesize="3" class="displaytag" keepStatus="true"

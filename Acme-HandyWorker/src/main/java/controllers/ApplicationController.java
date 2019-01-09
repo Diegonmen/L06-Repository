@@ -77,6 +77,15 @@ public class ApplicationController extends AbstractController {
 		return result.toString();
 	}
 
+	@RequestMapping(value = "/view", method = RequestMethod.GET)
+	public ModelAndView view(@RequestParam int applicationId) {
+		ModelAndView result = new ModelAndView();
+		Application target = this.applicationService.findOne(applicationId);
+		result.addObject("application", target);
+		result.addObject("vatPercent", this.configurationService.findVat());
+		return result;
+	}
+
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam(required = false) Integer handyWorkerId) {
 		ModelAndView result;
