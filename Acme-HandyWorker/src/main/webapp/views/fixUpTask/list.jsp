@@ -11,6 +11,7 @@
 
 <jstl:set value="<%=LocaleContextHolder.getLocale()%>" var="locale"></jstl:set>
 
+<spring:message code="fixUpTask.publishedBy" var="publishedBy" />
 <spring:message code="fixUpTask.ticker" var="ticker" />
 <spring:message code="fixUpTask.publicationMoment" var="publicationMoment" />
 <spring:message code="fixUpTask.publicationMoment" var="publicationMoment" />
@@ -28,6 +29,9 @@
 
 <display:table name="list" id="row" requestURI="fixuptask/list.do" pagesize="3" class="displaytag">
 
+	<display:column title="${publishedBy}">
+		<a href="customer/viewProfile.do?customerId=${customers[row.id].id}">${customers[row.id].userAccount.username}</a>
+	</display:column>
 	<security:authorize access="hasRole('CUSTOMER')">
 		<display:column title="${application}">
 			<a href="javascript:showDialog('view-applications', sucessApplications, 'q=${row.id}', 'fixuptask/async/aplications.do')">${view}</a>
