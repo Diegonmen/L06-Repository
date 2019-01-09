@@ -145,7 +145,7 @@
 					<th>${aplication_handyWorker}</th>
 					<th>${aplication_status}</th>
 					<th>${aplication_offeredPrice}</th>
-					<th>${aplication_offeredPrice}</th>
+					<th>${aplication_applicationMoment}</th>
 					<jstl:if test="${not canAddPhase}">
 						<th></th>
 						<th></th>
@@ -159,6 +159,7 @@
 						<td data-label="${aplication_handyWorker}">${e.handyWorker.name} ${e.handyWorker.surname}</td>
 						<td data-label="${aplication_status}">${e.status}</td>
 						<td data-label="${aplication_offeredPrice}">${e.offeredPrice}</td>
+						<td data-label="${aplication_applicationMoment}">${e.applicationMoment}</td>
 						<jstl:if test="${not canAddPhase}">
 							<td><a href="javascript:showDialogAprove('accept-application', acceptApplication, hideErrors, [${e.id}])"><spring:message code="fixUpTask.aplication.accept"/></a></td>
 							<td>
@@ -250,11 +251,7 @@
 			<input type="hidden" name="fixUpTask" value="${fixuptask.id}">
 			<input type="hidden" name="handyWorker" value="${workerId}">
 			<input type="hidden" name="status" value="PENDING">
-			
-			<div>
-				<label>${aplication_applicationMoment}:</label>
-				<input type="text" name="applicationMoment" value="">
-			</div>
+			<input type="hidden" name="applicationMoment" value="">
 			
 			<div>
 				<label>${aplication_offeredPrice}:</label>

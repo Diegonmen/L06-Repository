@@ -17,69 +17,76 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
-
-<table
-	class="ui celled table <jstl:if test='${actor.suspicious}'>red</jstl:if>">
-	<thead>
-		<tr>
-			<th colspan="2">
-				<h4 class="ui image header">
-					<img src="${actor.photo}" class="ui mini rounded image">
-					<div class="content">
-							<spring:message code="handyWorker.profile.title"/> ${actor.name}
-						</div>
-				</h4>
-			</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td><spring:message code="handyWorker.name" />
-			<td data-label="name">${actor.name}</td>
-		</tr>
-		<tr>
-			<td><spring:message code="handyWorker.middleName" />
-			<td data-label="MiddleName">${actor.middleName}</td>
-		</tr>
-		<tr>
-			<td><spring:message code="handyWorker.surname" />
-			<td data-label="surname">${actor.surname}</td>
-		</tr>
-		<tr>
-			<td><spring:message code="handyWorker.email" />
-			<td data-label="email">${actor.email}</td>
-		</tr>
-		<tr>
-			<td><spring:message code="handyWorker.phoneNumber" />
-			<td data-label="phoneNumber">${actor.phoneNumber}</td>
-		</tr>
-		<tr>
-			<td><spring:message code="handyWorker.address" />
-			<td data-label="address">${actor.address}</td>
-		</tr>
-		<tr>
-			<td><spring:message code="handyWorker.make" />
-			<td data-label="make">${actor.make}</td>
-		</tr>
-		<jstl:if test="${actor.curriculum.id!=0}">
-		<tr>
-			<td><spring:message code="handyWorker.currilum.ticker" />
-			<td>
-				<a href="handyWorker/viewCurriculum.do">
-					<div style="height:100%;width:100%">
-				 		${actor.curriculum.ticker}
-				 	</div>
-				 </a>
-			</td>
-		</tr>
-		</jstl:if>
-	</tbody>
-</table>
-
-
-<input type="button" name="save" class="ui button"
- value="<spring:message code="handyWorker.modify" />"
- onclick="javascript: relativeRedir('handyWorker/edit.do');" />
+<jstl:choose>
+	<jstl:when test="${not empty actor}">
+		<table
+			class="ui celled table <jstl:if test='${actor.suspicious}'>red</jstl:if>">
+			<thead>
+				<tr>
+					<th colspan="2">
+						<h4 class="ui image header">
+							<img src="${actor.photo}" class="ui mini rounded image">
+							<div class="content">
+									<spring:message code="handyWorker.profile.title"/> ${actor.name}
+								</div>
+						</h4>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><spring:message code="handyWorker.name" />
+					<td data-label="name">${actor.name}</td>
+				</tr>
+				<tr>
+					<td><spring:message code="handyWorker.middleName" />
+					<td data-label="MiddleName">${actor.middleName}</td>
+				</tr>
+				<tr>
+					<td><spring:message code="handyWorker.surname" />
+					<td data-label="surname">${actor.surname}</td>
+				</tr>
+				<tr>
+					<td><spring:message code="handyWorker.email" />
+					<td data-label="email">${actor.email}</td>
+				</tr>
+				<tr>
+					<td><spring:message code="handyWorker.phoneNumber" />
+					<td data-label="phoneNumber">${actor.phoneNumber}</td>
+				</tr>
+				<tr>
+					<td><spring:message code="handyWorker.address" />
+					<td data-label="address">${actor.address}</td>
+				</tr>
+				<tr>
+					<td><spring:message code="handyWorker.make" />
+					<td data-label="make">${actor.make}</td>
+				</tr>
+				<jstl:if test="${actor.curriculum.id!=0}">
+				<tr>
+					<td><spring:message code="handyWorker.currilum.ticker" />
+					<td>
+						<a href="handyWorker/viewCurriculum.do">
+							<div style="height:100%;width:100%">
+						 		${actor.curriculum.ticker}
+						 	</div>
+						 </a>
+					</td>
+				</tr>
+				</jstl:if>
+			</tbody>
+		</table>
+		
+		
+		<input type="button" name="save" class="ui button"
+		 value="<spring:message code="handyWorker.modify" />"
+		 onclick="javascript: relativeRedir('handyWorker/edit.do');" />
+	 </jstl:when>
+	 <jstl:otherwise>
+	 	<h3><spring:message code="handyWorker.notfound"/></h3>
+	 	<h4><a href="javascript:history.back()"><spring:message code="handyWorker.backToList"/></a></h4>
+	 </jstl:otherwise>
+ </jstl:choose>
 
 </body>
 </html>
