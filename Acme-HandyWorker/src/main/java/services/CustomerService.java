@@ -239,9 +239,9 @@ public class CustomerService {
 		authority = new Authority();
 		authority.setAuthority("CUSTOMER");
 		Assert.notNull(fixUpTask, "fixUpTask.not.null");
-		final Customer customer = findCustomerByFixUpTask(fixUpTask);
 
-		if (this.exists(fixUpTask.getId())) {
+		if (fixUpTaskService.exists(fixUpTask.getId())) {
+			Customer customer = findCustomerByFixUpTask(fixUpTask);
 			logedUserAccount = LoginService.getPrincipal();
 			Assert.notNull(logedUserAccount, "customer.notLogged ");
 			Assert.isTrue(logedUserAccount.equals(customer.getUserAccount()), "customer.notEqual.userAccount");
@@ -249,12 +249,14 @@ public class CustomerService {
 			Assert.notNull(saved, "fixUpTask.not.null");
 			Assert.isTrue(customer.getUserAccount().isAccountNonLocked() && !(customer.isSuspicious()),
 					"customer.notEqual.accountOrSuspicious");
-			result = this.fixUpTaskService.save(fixUpTask);
+			result = this.fixUpTaskService.saveAndFlush(fixUpTask);
 			Assert.notNull(result);
 
 		} else {
 			fixUpTask.setTicker(tickerGenerator());
-			result = this.fixUpTaskService.save(fixUpTask);
+			result = this.fixUpTaskService.saveAndFlush(fixUpTask);
+			Customer logedUser = this.findByPrincipal();
+			logedUser.getFixUpTasks().add(result);
 			Assert.notNull(result);
 		}
 		return result;
