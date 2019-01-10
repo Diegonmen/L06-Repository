@@ -3,8 +3,6 @@ package repositories;
 
 import java.util.Collection;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -27,7 +25,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 	Customer findCustomerByFixUpTaskId(int fixUpTaskId);
 
 	@Query("select t from Customer t order by t.complaints.size")
-	Page<Customer> topThreeCustomersInTermsOfComplaints(Pageable pageable);
+	Collection<Customer> topThreeCustomersInTermsOfComplaints();
 
 	@Query("select distinct c from Customer c left join c.fixUpTasks fix where c.fixUpTasks.size >= (select avg(r.fixUpTasks.size) * 1.1 from Customer r) order by fix.applications.size")
 	Collection<Customer> customersWith10PercentMoreAvgFixUpTask();

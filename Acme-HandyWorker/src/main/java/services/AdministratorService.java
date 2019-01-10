@@ -84,9 +84,9 @@ public class AdministratorService {
 
 	@Autowired
 	private EndorsementService		endorsementService;
-
+	
 	@Autowired
-	private BoxServices				boxservices;
+	private BoxServices boxservices;
 
 
 	// Simple CRUD methods ----------------------------------------------------
@@ -172,10 +172,10 @@ public class AdministratorService {
 			spambox.setPredefined(true);
 			spambox.setMessages(messages);
 			Collection<Box> boxes = new LinkedList<Box>();
-			boxes.add(this.boxservices.save(inbox));
-			boxes.add(this.boxservices.save(outbox));
-			boxes.add(this.boxservices.save(trashbox));
-			boxes.add(this.boxservices.save(spambox));
+			boxes.add(boxservices.save(inbox));
+			boxes.add(boxservices.save(outbox));
+			boxes.add(boxservices.save(trashbox));
+			boxes.add(boxservices.save(spambox));
 			administrator.setBoxes(boxes);
 
 		}
@@ -233,14 +233,15 @@ public class AdministratorService {
 		authority.setAuthority("ADMINISTRATOR");
 		logedUserAccount = LoginService.getPrincipal();
 
-		if (this.warrantyService.exists(warranty.getId()) && logedUserAccount.getAuthorities().contains(authority) && !warranty.isFinalMode()) {
+		if (warrantyService.exists(warranty.getId()) && logedUserAccount.getAuthorities().contains(authority) && !warranty.isFinalMode()) {
 			saved = this.warrantyService.findOne(warranty.getId());
 			Assert.notNull(saved);
 			result = this.warrantyService.save(warranty);
 			Assert.notNull(result);
 			return result;
-		} else
+		}else {
 			result = this.warrantyService.save(warranty);
+		}
 
 		return result;
 	}
@@ -256,7 +257,7 @@ public class AdministratorService {
 	}
 
 	public Warranty findOneWarranty(Integer warrantyId) {
-		Assert.isTrue(this.warrantyService.exists(warrantyId));
+		Assert.isTrue(warrantyService.exists(warrantyId));
 		UserAccount logedUserAccount;
 		Authority authority;
 		authority = new Authority();
@@ -277,15 +278,16 @@ public class AdministratorService {
 	}
 
 	public Category saveCategory(Category category) {
-		if (this.categoryService.exists(category.getId())) {
-			Category saved = this.categoryService.findOne(category.getId());
+		if(categoryService.exists(category.getId())) {
+			Category saved = categoryService.findOne(category.getId());
 			saved.setEspName(category.getEspName());
 			saved.setName(category.getName());
 			saved.setParentCategory(category.getParentCategory());
-
-			return this.categoryService.save(saved);
-		} else
-			return this.categoryService.save(category);
+			
+			return categoryService.save(saved);
+		} else {
+			return categoryService.save(category);
+		}
 	}
 
 	public List<Category> findAllCategories() {
@@ -322,23 +324,23 @@ public class AdministratorService {
 		this.categoryService.delete(category.getId());
 	}
 
-	public Double[] findAvgMinMaxStdDvtFixUpTasksPerUser() {
-		Double[] res = this.fixUpTaskService.findAvgMinMaxStdDvtFixUpTasksPerUser();
+	public Collection<Double> findAvgMinMaxStdDvtFixUpTasksPerUser() {
+		Collection<Double> res = this.fixUpTaskService.findAvgMinMaxStdDvtFixUpTasksPerUser();
 		return res;
 	}
 
-	public Double[] findAvgMinMaxStrDvtApplicationPerFixUpTask() {
-		Double[] res = this.applicationService.findAvgMinMaxStrDvtApplicationPerFixUpTask();
+	public Collection<Double> findAvgMinMaxStrDvtApplicationPerFixUpTask() {
+		Collection<Double> res = this.applicationService.findAvgMinMaxStrDvtApplicationPerFixUpTask();
 		return res;
 	}
 
-	public Double[] findAvgMinMaxStrDvtPerFixUpTask() {
-		Double[] res = this.fixUpTaskService.findAvgMinMaxStrDvtPerFixUpTask();
+	public Collection<Double> findAvgMinMaxStrDvtPerFixUpTask() {
+		Collection<Double> res = this.fixUpTaskService.findAvgMinMaxStrDvtPerFixUpTask();
 		return res;
 	}
 
-	public Double[] findAvgMinMaxStrDvtPerApplication() {
-		Double[] res = this.applicationService.findAvgMinMaxStrDvtPerApplication();
+	public Collection<Double> findAvgMinMaxStrDvtPerApplication() {
+		Collection<Double> res = this.applicationService.findAvgMinMaxStrDvtPerApplication();
 		return res;
 	}
 
@@ -421,10 +423,10 @@ public class AdministratorService {
 			spambox.setPredefined(true);
 			spambox.setMessages(messages);
 			Collection<Box> boxes = new LinkedList<Box>();
-			boxes.add(this.boxservices.save(inbox));
-			boxes.add(this.boxservices.save(outbox));
-			boxes.add(this.boxservices.save(trashbox));
-			boxes.add(this.boxservices.save(spambox));
+			boxes.add(boxservices.save(inbox));
+			boxes.add(boxservices.save(outbox));
+			boxes.add(boxservices.save(trashbox));
+			boxes.add(boxservices.save(spambox));
 			sponsor.setBoxes(boxes);
 
 		}
@@ -484,10 +486,10 @@ public class AdministratorService {
 			spambox.setPredefined(true);
 			spambox.setMessages(messages);
 			Collection<Box> boxes = new LinkedList<Box>();
-			boxes.add(this.boxservices.save(inbox));
-			boxes.add(this.boxservices.save(outbox));
-			boxes.add(this.boxservices.save(trashbox));
-			boxes.add(this.boxservices.save(spambox));
+			boxes.add(boxservices.save(inbox));
+			boxes.add(boxservices.save(outbox));
+			boxes.add(boxservices.save(trashbox));
+			boxes.add(boxservices.save(spambox));
 			referee.setBoxes(boxes);
 
 		}

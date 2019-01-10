@@ -46,7 +46,7 @@ public class BoxServices {
 	}
 
 	public boolean exists(Integer id) {
-		return actorservice.exists(id);
+		return boxrepository.exists(id);
 	}
 
 	public Box findInbox(Actor a) {
@@ -118,7 +118,8 @@ public class BoxServices {
 			saved = this.findOne(box.getId());
 			Assert.notNull(saved);
 			saved.setName(box.getName());
-			saved.setParentBox(box.getParentBox());
+			//saved.setParentBox(box.getParentBox());
+			//saved.setMessages(box.getMessages());
 			result = boxrepository.save(saved);
 			Assert.notNull(result);
 		}else {

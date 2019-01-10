@@ -37,6 +37,7 @@
 		${e.subject }
 	</jstl:forEach>
 	</display:column>
+	<jstl:if test="${not empty row.messages }" >
 	<display:column>
 	<jstl:forEach var="e" items="${row.messages }">
 		<a href="message/view.do?messageId=${e.id}">${viewMessage}</a>
@@ -47,16 +48,22 @@
 		<a href="message/delete.do?messageId=${e.id}">${deleteMessage}</a>
 	</jstl:forEach>
 	</display:column>
+	 </jstl:if>
 </display:table>
 
+<jstl:if test="${box.predefined==false }" >
 <input type="button" name="edit" class="ui button"
  value="<spring:message code="box.edit" />"
- onclick="javascript: relativeRedir('box/edit.do?boxId=${row.id}');" />
+ onclick="javascript: relativeRedir('box/edit.do?boxId=${box.id}');" />
  
+ <input type="button" name="move" class="ui button"
+ value="<spring:message code="box.move" />"
+ onclick="javascript: relativeRedir('box/move.do?boxId=${box.id}');" />
+
  <input type="button" name="delete" class="ui button"
  value="<spring:message code="box.delete" />"
- onclick="javascript: relativeRedir('box/delete.do?boxId=${row.id}');" />
- 
+ onclick="javascript: relativeRedir('box/delete.do?boxId=${box.id}');" />
+</jstl:if>
 <input type="button" name="back" class="ui button"
  value="<spring:message code="customer.back" />"
  onclick="javascript: relativeRedir('box/list.do');" />

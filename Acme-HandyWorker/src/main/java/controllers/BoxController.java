@@ -84,6 +84,19 @@ public class BoxController extends AbstractController {
 		}
 		return result;
 	}
+	
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
+	public ModelAndView delete(Box box, BindingResult binding) {
+		ModelAndView result;
+		try {
+			boxService.delete(box);
+			result = new ModelAndView("redirect:/box/list.do");
+		} catch (Throwable oops) {
+			result = createEditModelAndView(boxService.findOne(box.getId()), "box.commit.error");
+		}
+
+		return result;
+	}
 
 	protected ModelAndView createEditModelAndView(Box box) {
 		ModelAndView result;
