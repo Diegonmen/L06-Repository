@@ -29,5 +29,6 @@ public class WelcomeMessage extends DomainEntity {
 	public void setContent(final String content) {
 		this.content = content;
 	}
+	
 
 }

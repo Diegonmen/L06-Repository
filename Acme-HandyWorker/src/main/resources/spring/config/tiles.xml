@@ -38,6 +38,7 @@
 		<value>/views/configuration/tiles.xml</value>
 		<value>/views/phase/tiles.xml</value>
 		<value>/views/complaint/tiles.xml</value>
+		<value>/views/box/tiles.xml</value>
 		
 		
 	</util:list>
