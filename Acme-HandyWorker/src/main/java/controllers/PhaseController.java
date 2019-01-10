@@ -75,4 +75,15 @@ public class PhaseController {
 		return result;
 	}
 
+	@RequestMapping(value = "/view", method = RequestMethod.GET)
+	public ModelAndView view(@RequestParam int phaseId) {
+		ModelAndView result;
+		Phase phase = this.phaseService.findOne(phaseId);
+		result = new ModelAndView("phase/view");
+
+		result.addObject("phase", phase);
+
+		return result;
+	}
+
 }
