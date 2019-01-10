@@ -8,14 +8,15 @@
 <%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<form:form action="box/edit.do" modelAttribute="box">
+<form:form class="ui form" action="box/edit.do" modelAttribute="box">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="messages" />
 	<form:hidden path="predefined" />
+	<form:hidden path="messages" />
 	
-	<div> 
+	<div class="two fields">
+	<div class="field"> 
 		<form:label path="name">
 			<spring:message code="box.name" />
 		</form:label>
@@ -23,11 +24,11 @@
 		<form:errors path="name"/>
 	</div>
 	
-	<div> 
+	<div class="field"> 
 		<form:label path="parentBox">
-			<spring:message code="box.parentBox" />
+			<spring:message code="box.parentBoxName" />
 		</form:label>
-		<form:select path="parentBox">
+		<form:select class="ui fluid dropdown" path="parentBox" itemValue="parentBox.id">
 			<jstl:forEach items="${boxes}" var="e">
 				<form:option value="${e.id}">
 					${e.name}
@@ -36,9 +37,14 @@
 		</form:select>
 		<form:errors path="parentBox"/>
 	</div>
+	</div>
 	
-	<input type="submit" name="save" value="<spring:message code="box.save" />">
+	<input type="submit" class="ui button" name="save" value="<spring:message code="box.save" />">
+
+	<jstl:if test="${box.getId() != 0}">
+		<input type="submit" class="ui button" name="delete" value="<spring:message code="box.delete" />">
+ 	</jstl:if>
  	
-	<input type="button" name="cancel" value="<spring:message code="box.cancel" />" onclick="javascript: relativeRedir('box/list.do')">
+	<input type="button" class="ui button" name="cancel" value="<spring:message code="box.cancel" />" onclick="javascript: relativeRedir('box/list.do')">
 	
 </form:form>

@@ -98,6 +98,7 @@
 		<security:intercept-url pattern="/box/list.do" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/box/display.do" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/box/create.do" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/box/edit.do" access="isAuthenticated()" /> 
 		
 		
 	

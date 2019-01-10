@@ -25,6 +25,14 @@ public class BoxServices {
 	@Autowired
 	private MessageService messageService;
 
+	public Box create() {
+		Box res = new Box();
+		Collection<Message> messages = new LinkedList<>();
+		res.setMessages(messages);
+		res.setPredefined(false);
+		return res;
+	}
+	
 	public Box newBox(Box name) {
 		Actor current = actorservice.findSelf();
 
@@ -97,9 +105,29 @@ public class BoxServices {
 		return boxrepository.save(entities);
 	}
 
-	public Box save(Box entity) {
-		Assert.notNull(entity);
-		return boxrepository.save(entity);
+	public Box save(Box box) {
+		Assert.notNull(box);
+		return boxrepository.save(box);
+	}
+	
+	public Box saveBox(Box box) {
+		Assert.notNull(box);
+		Box result, saved;
+		Actor logedActor = actorservice.findSelf();
+		if(this.exists(box.getId()) ) {
+			saved = this.findOne(box.getId());
+			Assert.notNull(saved);
+			saved.setName(box.getName());
+			saved.setParentBox(box.getParentBox());
+			result = boxrepository.save(saved);
+			Assert.notNull(result);
+		}else {
+			box.setPredefined(false);
+			result = boxrepository.save(box);
+			logedActor.getBoxes().add(result);
+			actorservice.save(logedActor);
+		}
+		return result;
 	}
 
 	public Collection<Box> findBoxesByUserAccountId(int userAccountId) {

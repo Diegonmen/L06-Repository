@@ -11,19 +11,18 @@
 <spring:message code="box.name" var="boxName" />
 <spring:message code="box.view" var="boxView" />
 <spring:message code="box.delete" var="boxDelete" />
+<spring:message code="box.edit" var="boxEdit" />
 
 <display:table pagesize="4" class="displaytag" keepStatus="true"
 	name="boxes" requestURI="/box/list.do" id="row">
 
-	<display:column value="${row.name}" title="${boxName}"></display:column>
+		<display:column value="${row.name}" title="${boxName}"></display:column>
+
 	<display:column>
 			<a href="box/display.do?boxId=${row.id}">${boxView}</a>
 	</display:column>
-	<display:column>
-			<jstl:if test="${row.predefined==false}">
-				<a href="box/delete.do?boxId=${row.id}">${boxDelete}</a>
-			</jstl:if>
-	</display:column>
+
+	
 	
 </display:table>
 
