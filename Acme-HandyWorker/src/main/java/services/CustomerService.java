@@ -8,11 +8,16 @@ import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import repositories.CustomerRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.Application;
 import domain.Box;
 import domain.Complaint;
@@ -25,10 +30,6 @@ import domain.Message;
 import domain.Note;
 import domain.Report;
 import domain.SocialIdentity;
-import repositories.CustomerRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 
 @Service
 @Transactional
@@ -37,27 +38,28 @@ public class CustomerService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private CustomerRepository customerRepository;
+	private CustomerRepository	customerRepository;
 
 	// Supporting services ----------------------------------------------------
 
 	@Autowired
-	private FixUpTaskService fixUpTaskService;
+	private FixUpTaskService	fixUpTaskService;
 
 	@Autowired
-	private ApplicationService applicationService;
+	private ApplicationService	applicationService;
 
 	@Autowired
-	private ComplaintService complaintService;
+	private ComplaintService	complaintService;
 
 	@Autowired
-	private ReportService reportService;
+	private ReportService		reportService;
 
 	@Autowired
-	private HandyWorkerService handyWorkerService;
-	
+	private HandyWorkerService	handyWorkerService;
+
 	@Autowired
-	private BoxServices boxservices;
+	private BoxServices			boxservices;
+
 
 	// Simple CRUD methods ----------------------------------------------------
 
@@ -102,19 +104,13 @@ public class CustomerService {
 			Assert.isTrue(logedUserAccount.equals(customer.getUserAccount()), "customer.notEqual.userAccount");
 			saved = this.customerRepository.findOne(customer.getId());
 			Assert.notNull(saved, "customer.not.null");
-			Assert.isTrue(saved.getUserAccount().getUsername().equals(customer.getUserAccount().getUsername()),
-					"customer.notEqual.username");
-			Assert.isTrue(customer.getUserAccount().getPassword().equals(saved.getUserAccount().getPassword()),
-					"customer.notEqual.password");
-			Assert.isTrue(
-					customer.getUserAccount().isAccountNonLocked() == saved.getUserAccount().isAccountNonLocked()
-							&& customer.isSuspicious() == saved.isSuspicious(),
-					"customer.notEqual.accountOrSuspicious");
+			Assert.isTrue(saved.getUserAccount().getUsername().equals(customer.getUserAccount().getUsername()), "customer.notEqual.username");
+			Assert.isTrue(customer.getUserAccount().getPassword().equals(saved.getUserAccount().getPassword()), "customer.notEqual.password");
+			Assert.isTrue(customer.getUserAccount().isAccountNonLocked() == saved.getUserAccount().isAccountNonLocked() && customer.isSuspicious() == saved.isSuspicious(), "customer.notEqual.accountOrSuspicious");
 
 		} else {
 			Assert.isTrue(customer.isSuspicious() == false, "customer.notSuspicious.false");
-			customer.getUserAccount()
-					.setPassword(encoder.encodePassword(customer.getUserAccount().getPassword(), null));
+			customer.getUserAccount().setPassword(encoder.encodePassword(customer.getUserAccount().getPassword(), null));
 			customer.getUserAccount().setEnabled(true);
 
 			Collection<Message> messages = new LinkedList<>();
@@ -135,10 +131,10 @@ public class CustomerService {
 			spambox.setPredefined(true);
 			spambox.setMessages(messages);
 			Collection<Box> boxes = new LinkedList<Box>();
-			boxes.add(boxservices.save(inbox));
-			boxes.add(boxservices.save(outbox));
-			boxes.add(boxservices.save(trashbox));
-			boxes.add(boxservices.save(spambox));
+			boxes.add(this.boxservices.save(inbox));
+			boxes.add(this.boxservices.save(outbox));
+			boxes.add(this.boxservices.save(trashbox));
+			boxes.add(this.boxservices.save(spambox));
 			customer.setBoxes(boxes);
 
 		}
@@ -222,13 +218,13 @@ public class CustomerService {
 
 		result = this.fixUpTaskService.findOne(fixUpTaskId);
 		Assert.notNull(result);
-		Assert.isTrue(findCustomerByFixUpTask(result).getUserAccount().equals(logedUserAccount));
+		Assert.isTrue(this.findCustomerByFixUpTask(result).getUserAccount().equals(logedUserAccount));
 
 		return result;
 	}
 
 	public List<FixUpTask> findAllFixUpTask() {
-		return fixUpTaskService.findAll();
+		return this.fixUpTaskService.findAll();
 	}
 
 	public FixUpTask saveCustomerFixUpTask(final FixUpTask fixUpTask) {
@@ -240,20 +236,19 @@ public class CustomerService {
 		authority.setAuthority("CUSTOMER");
 		Assert.notNull(fixUpTask, "fixUpTask.not.null");
 
-		if (fixUpTaskService.exists(fixUpTask.getId())) {
-			Customer customer = findCustomerByFixUpTask(fixUpTask);
+		if (this.fixUpTaskService.exists(fixUpTask.getId())) {
+			Customer customer = this.findCustomerByFixUpTask(fixUpTask);
 			logedUserAccount = LoginService.getPrincipal();
 			Assert.notNull(logedUserAccount, "customer.notLogged ");
 			Assert.isTrue(logedUserAccount.equals(customer.getUserAccount()), "customer.notEqual.userAccount");
 			saved = this.fixUpTaskService.findOne(fixUpTask.getId());
 			Assert.notNull(saved, "fixUpTask.not.null");
-			Assert.isTrue(customer.getUserAccount().isAccountNonLocked() && !(customer.isSuspicious()),
-					"customer.notEqual.accountOrSuspicious");
+			Assert.isTrue(customer.getUserAccount().isAccountNonLocked() && !(customer.isSuspicious()), "customer.notEqual.accountOrSuspicious");
 			result = this.fixUpTaskService.saveAndFlush(fixUpTask);
 			Assert.notNull(result);
 
 		} else {
-			fixUpTask.setTicker(tickerGenerator());
+			fixUpTask.setTicker(this.tickerGenerator());
 			result = this.fixUpTaskService.saveAndFlush(fixUpTask);
 			Customer logedUser = this.findByPrincipal();
 			logedUser.getFixUpTasks().add(result);
@@ -271,7 +266,7 @@ public class CustomerService {
 		authority.setAuthority("CUSTOMER");
 		logedUserAccount = LoginService.getPrincipal();
 		Assert.isTrue(logedUserAccount.getAuthorities().contains(authority));
-		Assert.isTrue(findCustomerByFixUpTask(fixUpTask).getUserAccount().equals(logedUserAccount));
+		Assert.isTrue(this.findCustomerByFixUpTask(fixUpTask).getUserAccount().equals(logedUserAccount));
 		this.fixUpTaskService.delete(fixUpTask);
 	}
 
@@ -286,34 +281,31 @@ public class CustomerService {
 		authority = new Authority();
 		authority.setAuthority("CUSTOMER");
 
-		if (this.exists(application.getId()) && application.getStatus().equals("PENDING")
-				&& userAccount.getAuthorities().contains(authority) && applicationService
-						.findApplicationsByCustomer(findCustomerByApplication(application)).contains(application)) {
+		if (this.exists(application.getId()) && application.getStatus().equals("PENDING") && userAccount.getAuthorities().contains(authority)
+			&& this.applicationService.findApplicationsByCustomer(this.findCustomerByApplication(application)).contains(application)) {
 			logedUserAccount = LoginService.getPrincipal();
 			Assert.notNull(logedUserAccount, "customer.notLogged ");
-			Assert.isTrue(logedUserAccount.equals(findCustomerByApplication(application).getUserAccount()),
-					"customer.notEqual.userAccount");
+			Assert.isTrue(logedUserAccount.equals(this.findCustomerByApplication(application).getUserAccount()), "customer.notEqual.userAccount");
 			if (application.getApplicationMoment().compareTo(currentMoment) < 0) {
-				saved = applicationService.findOne(application.getId());
+				saved = this.applicationService.findOne(application.getId());
 				Assert.notNull(saved, "application.not.null");
 				application.getComments().add(logedUserAccount.getUsername() + ": - " + comment);
 				application.setStatus("REJECTED");
-				result = applicationService.save(application);
+				result = this.applicationService.save(application);
 				return result;
 			} else {
-				saved = applicationService.findOne(application.getId());
+				saved = this.applicationService.findOne(application.getId());
 				Assert.notNull(saved, "application.not.null");
-				if (!comment.equals(null)) {
+				if (!comment.equals(null))
 					application.getComments().add(logedUserAccount.getUsername() + ": - " + comment);
-				}
 				application.setCreditCard(creditCard);
 				application.setStatus("ACCEPTED");
-				result = applicationService.save(application);
+				result = this.applicationService.save(application);
 				return result;
 			}
 		} else {
 
-			result = applicationService.save(application);
+			result = this.applicationService.save(application);
 			return result;
 		}
 	}
@@ -339,15 +331,15 @@ public class CustomerService {
 		authority.setAuthority("CUSTOMER");
 		logedUserAccount = LoginService.getPrincipal();
 		Assert.isTrue(logedUserAccount.getAuthorities().contains(authority));
-		c.setTicker(tickerGenerator());
+		c.setTicker(this.tickerGenerator());
 		res = this.complaintService.save(c);
 		return res;
 	}
 
 	public Report findReport(int reportId) {
 		Assert.notNull(reportId);
-		Assert.isTrue(reportService.exists(reportId));
-		Report res = reportService.findOne(reportId);
+		Assert.isTrue(this.reportService.exists(reportId));
+		Report res = this.reportService.findOne(reportId);
 		Assert.isTrue(res.isFinalMode() == false);
 		return res;
 	}
@@ -366,42 +358,32 @@ public class CustomerService {
 		UserAccount logedUserAccount = LoginService.getPrincipal();
 		Authority authority = new Authority();
 		authority.setAuthority("CUSTOMER");
-		Assert.isTrue(logedUserAccount.getAuthorities().contains(authority)
-				&& reportService.findReportsByCustomer(findCustomerByUserAccount(logedUserAccount)).contains(report));
-		Assert.isTrue(reportService.exists(report.getId()));
+		Assert.isTrue(logedUserAccount.getAuthorities().contains(authority) && this.reportService.findReportsByCustomer(this.findCustomerByUserAccount(logedUserAccount)).contains(report));
+		Assert.isTrue(this.reportService.exists(report.getId()));
 
 		if (report.getNotes().contains(note) && comments != null) {
 			note.getComments().add(logedUserAccount.getUsername() + ": -" + comments);
 			report.getNotes().add(note);
-		} else {
+		} else
 			report.getNotes().add(note);
-		}
 
-		res = reportService.save(report);
+		res = this.reportService.save(report);
 		return res;
 
 	}
 
 	public Collection<Customer> topThreeCustomersInTermsOfComplaints() {
-		Collection<Customer> aux = customerRepository.topThreeCustomersInTermsOfComplaints();
-		Assert.notNull(aux);
-		Collection<Customer> res = new LinkedList<>();
-		for (int i = 0; i < 3; i++) {
-			Customer customer = aux.iterator().next();
-			aux.remove(customer);
-			res.add(customer);
-		}
-		return res;
+		return this.customerRepository.topThreeCustomersInTermsOfComplaints(new PageRequest(0, 3)).getContent();
 	}
 
 	public String generateAlphanumeric() {
-		final Character[] letras = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
-				'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+		final Character[] letras = {
+			'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+		};
 		final Random rand = new Random();
 		String alpha = "";
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 6; i++)
 			alpha += letras[rand.nextInt(letras.length - 1)];
-		}
 
 		return alpha;
 	}
@@ -413,7 +395,7 @@ public class CustomerService {
 		str += Integer.toString(date.getYear()).substring(Integer.toString(date.getYear()).length() - 2);
 		str += String.format("%02d", date.getMonth());
 		str += String.format("%02d", date.getDay());
-		String res = str + "-" + generateAlphanumeric();
+		String res = str + "-" + this.generateAlphanumeric();
 		return res;
 	}
 
@@ -440,16 +422,14 @@ public class CustomerService {
 		final UserAccount logedUserAccount = LoginService.getPrincipal();
 		Assert.notNull(logedUserAccount, "customer.notLogged");
 		Assert.isTrue(logedUserAccount.getAuthorities().contains(authority));
-		final HandyWorker handyWorker = this.handyWorkerService
-				.findByUserAccountId(e.getHandyWorker().getUserAccount().getId());
-		Assert.isTrue(this.handyWorkerService.findByCustomerUserAccountId(customer.getUserAccount().getId())
-				.contains(handyWorker));
+		final HandyWorker handyWorker = this.handyWorkerService.findByUserAccountId(e.getHandyWorker().getUserAccount().getId());
+		Assert.isTrue(this.handyWorkerService.findByCustomerUserAccountId(customer.getUserAccount().getId()).contains(handyWorker));
 		final Collection<Endorsement> endorsements = customer.getEndorsements();
 		endorsements.add(e);
 		customer.setEndorsements(endorsements);
 		this.customerRepository.save(customer);
 	}
-	
+
 	public Customer findByUserAccountId(final int id) {
 		return this.customerRepository.findByUserAccountId(id);
 	}

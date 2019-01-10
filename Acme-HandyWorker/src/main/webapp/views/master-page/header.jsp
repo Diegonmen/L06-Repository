@@ -28,6 +28,7 @@
 					<li><a href="warranty/list.do"><spring:message code="master.page.warraty.list" /></a></li>
 					<li><a href="category/list.do"><spring:message code="master.page.category.list" /></a></li>
 					<li><a href="configuration/view.do"><spring:message code="master.page.configuration.display" /></a></li>
+					<li><a href="administrator/dashboard.do"><spring:message code="master.page.dashboard" /></a></li>
 				</ul>
 			</li>
 			<li><a class="fNiv"><spring:message code="master.page.register" /></a>
