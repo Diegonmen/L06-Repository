@@ -148,6 +148,12 @@ public class BoxServices {
 		Assert.notNull(entity);
 		Assert.isTrue(!"INBOX".equals(entity.getName()) && !"OUTBOX".equals(entity.getName())
 				&& !"TRASHBOX".equals(entity.getName()) && !"SPAMBOX".equals(entity.getName()));
+		Actor actor = actorservice.findByPrincipal();
+		Assert.notNull(actor);
+		
+		actor.getBoxes().remove(entity);
+		actorservice.save(actor);
+		
 		Collection<Box> childrenBoxes = this.findAllChildrenBoxes(entity);
 		if (!childrenBoxes.isEmpty()) {
 			for (Box b : childrenBoxes) {
@@ -166,7 +172,9 @@ public class BoxServices {
 
 	}
 
-	public Box moveBox(Box dst, Box box) {
+	public Box moveBox(int dstId, Box box) {
+		Box dst = boxrepository.findOne(dstId);
+		
 		Assert.notNull(dst);
 		Assert.notNull(box);
 

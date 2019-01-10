@@ -60,9 +60,6 @@
  value="<spring:message code="box.move" />"
  onclick="javascript: relativeRedir('box/move.do?boxId=${box.id}');" />
 
- <input type="button" name="delete" class="ui button"
- value="<spring:message code="box.delete" />"
- onclick="javascript: relativeRedir('box/delete.do?boxId=${box.id}');" />
 </jstl:if>
 <input type="button" name="back" class="ui button"
  value="<spring:message code="customer.back" />"
