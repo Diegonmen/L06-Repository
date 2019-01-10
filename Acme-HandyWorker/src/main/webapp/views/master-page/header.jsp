@@ -54,7 +54,8 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="handyWorker/viewProfile.do"><spring:message code="master.page.handyWorker.view" /></a></li>
-					<li><a href="fixuptask/list.do"><spring:message code="fixuptask.list" /></a></li>					
+					<li><a href="fixuptask/list.do"><spring:message code="fixuptask.list" /></a></li>
+					<li><a href="fixuptask/filter.do"><spring:message code="master.page.handyWorker.filter" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>

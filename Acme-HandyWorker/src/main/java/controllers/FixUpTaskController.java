@@ -1,11 +1,13 @@
 
 package controllers;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
-import services.ApplicationService;
-import services.CategoryService;
-import services.ComplaintService;
-import services.CustomerService;
-import services.FixUpTaskService;
-import services.HandyWorkerService;
-import services.PhaseService;
-import services.WarrantyService;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -44,6 +34,17 @@ import domain.FixUpTask;
 import domain.HandyWorker;
 import domain.Phase;
 import dto.ApplicationAceptDTO;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
+import services.ApplicationService;
+import services.CategoryService;
+import services.ComplaintService;
+import services.CustomerService;
+import services.FixUpTaskService;
+import services.HandyWorkerService;
+import services.PhaseService;
+import services.WarrantyService;
 
 @Controller
 @RequestMapping("/fixuptask")
@@ -66,6 +67,26 @@ public class FixUpTaskController {
 	@Autowired
 	HandyWorkerService	handyworkerservice;
 
+	@RequestMapping(value = "/filter", method = RequestMethod.GET)
+	public ModelAndView filter(
+			Principal principal,
+			HttpServletRequest request,
+			@RequestParam(value = "command", required = false) String command,
+			@RequestParam(value = "startDate", required = false) String startDate,
+			@RequestParam(value = "endDate", required = false) String endDate,
+			@RequestParam(value = "maxPrice", required = false, defaultValue = "-1") double maxPrice,
+			@RequestParam(value = "minPrice", required = false, defaultValue = "-1") double minPrice) {
+		
+		ModelAndView model = new ModelAndView("fixuptask/filter");
+		try {
+			model.addObject("data", handyworkerservice.filter(command, startDate, endDate, maxPrice, minPrice));
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addObject("data", Arrays.asList());
+		}
+		
+		return model;
+	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {

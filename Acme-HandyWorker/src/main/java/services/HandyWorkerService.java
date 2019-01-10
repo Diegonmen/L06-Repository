@@ -1,6 +1,8 @@
 
 package services;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -331,53 +333,55 @@ public class HandyWorkerService {
 		}
 	}
 
-	public List<FixUpTask> filter(String command, Date startDate, Date endDate, double minPrice, double maxPrice) {
-		if((command == null || "".equals(command)) && startDate == null && endDate == null && minPrice < 0 && maxPrice < 0) {
+	public List<FixUpTask> filter(String command, String startDate, String endDate, double maxPrice, double minPrice) throws ParseException {
+		if((command == null || "".equals(command)) && (startDate == null || "".equals(startDate)) && (endDate == null || "".equals(endDate)) && maxPrice < 0 && minPrice < 0) {
 			return Arrays.asList();
 		}
 		
+		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		
 		StringBuilder str = new StringBuilder("select c from FixUpTask c where 1 = 1 ");
 		
-		if(command != null || !"".equals(command)) {
-			str.append(" and c.ticker like CONCAT('%',:command,'%') or c.description like CONCAT('%',:command,'%') or c.address like CONCAT('%',:command,'%')");
+		if(command != null && !"".equals(command)) {
+			str.append(" or c.ticker like CONCAT('%',:command,'%') or c.description like CONCAT('%',:command,'%') or c.address like CONCAT('%',:command,'%')");
 		}
 		
-		if(startDate != null) {
-			str.append(" and c.startDate > :startDate");
+		if(startDate != null && !"".equals(startDate)) {
+			str.append(" or c.startDate > :startDate");
 		}
 		
-		if(endDate != null) {
-			str.append(" and c.endDate < :endDate");
-		}
-		
-		if(minPrice >= 0) {
-			str.append(" and c.minPrice > :minPrice");
+		if(endDate != null && !"".equals(endDate)) {
+			str.append(" or c.endDate < :endDate");
 		}
 		
 		if(maxPrice >= 0) {
-			str.append(" and c.maxPrice > :maxPrice");
+			str.append(" or c.maxPrice < :maxPrice");
+		}
+		
+		if(minPrice >= 0) {
+			str.append(" or c.maxPrice > :minPrice");
 		}
 		
 		Query query = entitymanager.createQuery(str.toString());
 		
-		if(command != null || !"".equals(command)) {
+		if(command != null && !"".equals(command)) {
 			query.setParameter("command", command);
 		}
 		
-		if(startDate != null) {
-			query.setParameter("startDate", startDate);
+		if(startDate != null && !"".equals(startDate)) {
+			query.setParameter("startDate", sdf.parse(startDate));
 		}
 		
-		if(endDate != null) {
-			query.setParameter("endDate", endDate);
-		}
-		
-		if(minPrice >= 0) {
-			query.setParameter("minPrice", minPrice);
+		if(endDate != null && !"".equals(endDate)) {
+			query.setParameter("endDate", sdf.parse(endDate));
 		}
 		
 		if(maxPrice >= 0) {
-			query.setParameter("maxPrice", maxPrice);
+			query.setParameter("maxPrice", new Double(maxPrice).floatValue());
+		}
+		
+		if(minPrice >= 0) {
+			query.setParameter("minPrice", new Double(minPrice).floatValue());
 		}
 
 		List<FixUpTask> fixuptask = query.getResultList();

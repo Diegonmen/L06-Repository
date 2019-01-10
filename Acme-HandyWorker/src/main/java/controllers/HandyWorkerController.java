@@ -2,13 +2,11 @@
 package controllers;
 
 import java.util.Arrays;
-import java.util.Date;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +18,6 @@ import domain.HandyWorker;
 import services.CustomerService;
 import services.FixUpTaskService;
 import services.HandyWorkerService;
-import domain.HandyWorker;
 
 @Controller
 @RequestMapping("/handyWorker")
@@ -128,16 +125,23 @@ public class HandyWorkerController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/finder", method = RequestMethod.GET)
-	public ModelAndView finder(@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword, @RequestParam(value = "startDate", required = false) Date startDate, @RequestParam(value = "endDate", required = false) Date endDate,
-		@RequestParam(value = "minPrice", required = false, defaultValue = "-1") double minPrice, @RequestParam(value = "maxPrice", required = false, defaultValue = "-1") double maxPrice) {
-
-		ModelAndView result;
-
-		result = new ModelAndView("handyWorker/finder");
-		result.addObject("result", this.handyWorkerService.filter(keyword, startDate, endDate, minPrice, maxPrice));
-
-		return result;
-	}
+//	@RequestMapping(value = "/finder", method = RequestMethod.GET)
+//	public ModelAndView finder(
+//			@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+//			@RequestParam(value = "startDate", required = false) String startDate,
+//			@RequestParam(value = "endDate", required = false) String endDate,
+//			@RequestParam(value = "maxPrice", required = false, defaultValue = "-1") double maxPrice) {
+//
+//		ModelAndView result;
+//
+//		result = new ModelAndView("handyWorker/finder");
+//		try {
+//			result.addObject("result", this.handyWorkerService.filter(keyword, startDate, endDate, maxPrice));
+//		} catch (ParseException e) {
+//			result.addObject("result", Arrays.asList());
+//		}
+//
+//		return result;
+//	}
 
 }
