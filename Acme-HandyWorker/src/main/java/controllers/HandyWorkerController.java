@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.HandyWorker;
-import services.CustomerService;
-import services.FixUpTaskService;
 import services.HandyWorkerService;
 
 @Controller
@@ -25,13 +23,6 @@ public class HandyWorkerController extends AbstractController {
 
 	@Autowired
 	private HandyWorkerService	handyWorkerService;
-	
-	@Autowired
-	private CustomerService	customerService;
-	
-	@Autowired
-	private FixUpTaskService	fixUpTaskService;
-
 
 	public HandyWorkerController() {
 		super();
