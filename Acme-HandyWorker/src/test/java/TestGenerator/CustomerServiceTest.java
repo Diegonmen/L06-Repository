@@ -24,7 +24,6 @@ import services.ApplicationService;
 import services.ComplaintService;
 import services.CustomerService;
 import services.FixUpTaskService;
-import services.NoteService;
 import services.ReportService;
 import utilities.AbstractTest;
 
@@ -49,9 +48,6 @@ public class CustomerServiceTest extends AbstractTest {
 
 	@Autowired
 	private ReportService reportService;
-
-	@Autowired
-	private NoteService noteService;
 
 	@Test
 	public void saveCustomerTest() {
@@ -242,24 +238,24 @@ public class CustomerServiceTest extends AbstractTest {
 		Assert.notNull(res);
 	}
 	
-	@Test
-	public void saveNoteTest1() {
-		Note note = noteService.findAll().iterator().next();
-		Note newNote = new Note();
-		newNote.setComments(note.getComments());
-		newNote.setActor(note.getActor());
-		newNote.setCreatorComment("Prueba");
-		newNote.setMoment(note.getMoment());
-		newNote.setId(note.getId());
-		newNote.setVersion(note.getVersion());
-		this.authenticate("customer2");
-		Customer customer = customerService.findCustomerByUserAccount(LoginService.getPrincipal());
-		Collection<Report> rep = reportService.findReportsByCustomer(customer);
-		Report report = rep.iterator().next();
-		Report saved = customerService.saveNote(newNote, report, null);
-		Assert.notNull(saved);
-		Assert.isTrue(saved.getNotes().contains(newNote));
-	}
+//	@Test
+//	public void saveNoteTest1() {
+//		Note note = noteService.findAll().iterator().next();
+//		Note newNote = new Note();
+//		newNote.setComments(note.getComments());
+//		newNote.setActor(note.getActor());
+//		newNote.setCreatorComment("Prueba");
+//		newNote.setMoment(note.getMoment());
+//		newNote.setId(note.getId());
+//		newNote.setVersion(note.getVersion());
+//		this.authenticate("customer2");
+//		Customer customer = customerService.findCustomerByUserAccount(LoginService.getPrincipal());
+//		Collection<Report> rep = reportService.findReportsByCustomer(customer);
+//		Report report = rep.iterator().next();
+//		Report saved = customerService.saveNote(newNote, report, null);
+//		Assert.notNull(saved);
+//		Assert.isTrue(saved.getNotes().contains(newNote));
+//	}
 	
 	@Test
 	public void saveNoteTest2() {

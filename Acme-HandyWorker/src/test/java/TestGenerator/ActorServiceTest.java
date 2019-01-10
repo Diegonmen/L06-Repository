@@ -12,11 +12,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import domain.Actor;
-import domain.HandyWorker;
+import domain.Referee;
 import security.UserAccount;
 import security.UserAccountService;
 import services.ActorService;
-import services.HandyWorkerService;
+import services.RefereeService;
 import utilities.AbstractTest;
 
 @ContextConfiguration(locations = { "classpath:spring/junit.xml", "classpath:spring/datasource.xml",
@@ -28,7 +28,7 @@ public class ActorServiceTest extends AbstractTest {
 	@Autowired
 	private ActorService actorService;
 	@Autowired
-	private HandyWorkerService handyWorkerService;
+	private RefereeService refereeService;
 	@Autowired
 	private UserAccountService userAccountService;
 
@@ -71,13 +71,13 @@ public class ActorServiceTest extends AbstractTest {
 	
 	@Test
 	public void isSuspiciousTest() {
-		UserAccount userAccount = userAccountService.findUserAccountByUsername("useracount15");
+		UserAccount userAccount = userAccountService.findUserAccountByUsername("referee2");
 		Assert.notNull(userAccount);
-		HandyWorker handyWorker = handyWorkerService.findHandyWorkerByUserAccount(userAccount);
-		Assert.notNull(handyWorker);
-		boolean res = actorService.isSuspicious(handyWorker);
+		Referee referee = refereeService.findRefereeByUserAccount(userAccount);
+		Assert.notNull(referee);
+		boolean res = actorService.isSuspicious(referee);
 		Assert.isTrue(res==true);
-		Assert.isTrue(handyWorker.isSuspicious()==true);
+		Assert.isTrue(referee.isSuspicious()==true);
 	}
 
 }
