@@ -36,6 +36,7 @@
 		<value>/views/fixUpTask/tiles.xml</value>
 		<value>/views/message/tiles.xml</value>
 		<value>/views/configuration/tiles.xml</value>
+		<value>/views/phase/tiles.xml</value>
 		
 		
 	</util:list>
