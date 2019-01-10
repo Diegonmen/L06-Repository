@@ -17,7 +17,7 @@
 <tiles-definitions>
 
 	<definition name="fixuptask/list" extends="master.page">	
-		<put-attribute name="title" value="Chapuzas" />
+		<put-attribute name="title" value="Trabajos de reparación" />
 		<put-attribute name="body" value="/views/fixUpTask/list.jsp" />
 	</definition>
 	

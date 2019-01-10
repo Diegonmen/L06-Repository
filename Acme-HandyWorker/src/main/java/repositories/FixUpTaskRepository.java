@@ -32,4 +32,7 @@ public interface FixUpTaskRepository extends JpaRepository<FixUpTask, Integer> {
 
 	@Query("select f from FixUpTask f where f.category.id = ?1")
 	Collection<FixUpTask> findFixUpTasksByCategoryId(int categoryId);
+
+	@Query("select f from FixUpTask f join f.complaints c where c.id = ?1")
+	FixUpTask findForComplaintId(int id);
 }

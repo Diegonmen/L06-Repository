@@ -46,6 +46,7 @@
 					<li class="arrow"></li>
 					<li><a href="customer/viewProfile.do"><spring:message code="master.page.customer.view" /></a></li>
 					<li><a href="fixuptask/list.do"><spring:message code="fixuptask.list" /></a></li>
+					<li><a href="complaint/customer/list.do"><spring:message code="master.page.complaint.list" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>

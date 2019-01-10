@@ -147,4 +147,8 @@ public class FixUpTaskService {
 		res.addAll(this.fixUpTaskRepository.findFixUpTasksByCategoryId(category.getId()));
 		return res;
 	}
+
+	public FixUpTask findForComplaint(Complaint c) {
+		return this.fixUpTaskRepository.findForComplaintId(c.getId());
+	}
 }
