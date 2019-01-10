@@ -82,14 +82,14 @@ public class FixUpTaskServiceTest extends AbstractTest {
 
 	@Test
 	public void findAvgMinMaxStdDvtFixUpTasksTest() {
-		Collection<Double> res = this.fixuptaskService.findAvgMinMaxStdDvtFixUpTasksPerUser();
+		Double[] res = this.fixuptaskService.findAvgMinMaxStdDvtFixUpTasksPerUser();
 		Assert.notNull(res);
 		Assert.notEmpty(res);
 	}
 	
 	@Test
 	public void findAvgMinMaxStrDvtPerFixUpTaskTest() {
-		Collection<Double> res = this.fixuptaskService.findAvgMinMaxStrDvtPerFixUpTask();
+		Double[] res = this.fixuptaskService.findAvgMinMaxStrDvtPerFixUpTask();
 		Assert.notNull(res);
 		Assert.notEmpty(res);
 	}

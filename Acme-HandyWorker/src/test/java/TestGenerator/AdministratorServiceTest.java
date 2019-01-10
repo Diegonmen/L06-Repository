@@ -12,6 +12,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import domain.Actor;
+import domain.Administrator;
+import domain.Category;
+import domain.Configuration;
+import domain.Referee;
+import domain.Sponsor;
+import domain.Warranty;
 import security.UserAccount;
 import security.UserAccountService;
 import services.ActorService;
@@ -19,19 +26,10 @@ import services.AdministratorService;
 import services.CategoryService;
 import services.ConfigurationService;
 import services.FixUpTaskService;
-import services.HandyWorkerService;
 import services.RefereeService;
 import services.SponsorService;
 import services.WarrantyService;
 import utilities.AbstractTest;
-import domain.Actor;
-import domain.Administrator;
-import domain.Category;
-import domain.Configuration;
-import domain.HandyWorker;
-import domain.Referee;
-import domain.Sponsor;
-import domain.Warranty;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml", "classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
@@ -63,9 +61,6 @@ public class AdministratorServiceTest extends AbstractTest {
 
 	@Autowired
 	private UserAccountService		userAccountService;
-
-	@Autowired
-	private HandyWorkerService		handyWorkerService;
 
 	@Autowired
 	private ActorService			actorService;
@@ -129,32 +124,32 @@ public class AdministratorServiceTest extends AbstractTest {
 
 	@Test
 	public void testChangeEnabledActor() {
-		UserAccount userAccount = this.userAccountService.findUserAccountByUsername("useracount15");
+		UserAccount userAccount = this.userAccountService.findUserAccountByUsername("referee2");
 		Assert.notNull(userAccount);
-		HandyWorker handyWorker = this.handyWorkerService.findHandyWorkerByUserAccount(userAccount);
-		Assert.notNull(handyWorker);
+		Referee referee = refereeService.findRefereeByUserAccount(userAccount);
+		Assert.notNull(referee);
 
-		boolean res = this.actorService.isSuspicious(handyWorker);
+		boolean res = this.actorService.isSuspicious(referee);
 		Assert.isTrue(res == true);
-		UserAccount account = this.administratorService.changeEnabledActor(handyWorker.getUserAccount());
+		UserAccount account = this.administratorService.changeEnabledActor(referee.getUserAccount());
 
 		Assert.isTrue(account.isEnabled() == false);
 	}
 
 	@Test
 	public void testChangeEnabledActor2() {
-		UserAccount userAccount = this.userAccountService.findUserAccountByUsername("useracount15");
+		UserAccount userAccount = this.userAccountService.findUserAccountByUsername("referee2");
 		Assert.notNull(userAccount);
-		HandyWorker handyWorker = this.handyWorkerService.findHandyWorkerByUserAccount(userAccount);
-		Assert.notNull(handyWorker);
+		Referee referee = refereeService.findRefereeByUserAccount(userAccount);
+		Assert.notNull(referee);
 
-		boolean res = this.actorService.isSuspicious(handyWorker);
+		boolean res = this.actorService.isSuspicious(referee);
 		Assert.isTrue(res == true);
-		UserAccount account = this.administratorService.changeEnabledActor(handyWorker.getUserAccount());
+		UserAccount account = this.administratorService.changeEnabledActor(referee.getUserAccount());
 
 		Assert.isTrue(account.isEnabled() == false);
 
-		account = this.administratorService.changeEnabledActor(handyWorker.getUserAccount());
+		account = this.administratorService.changeEnabledActor(referee.getUserAccount());
 
 		Assert.isTrue(account.isEnabled() == true);
 	}

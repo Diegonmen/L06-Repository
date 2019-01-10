@@ -66,14 +66,14 @@ public class ApplicationServiceTest extends AbstractTest {
 	
 	@Test
 	public void findAvgMinMaxStrDvtApplicationPerFixUpTaskTest() {
-		Collection<Double> res = this.applicationService.findAvgMinMaxStrDvtApplicationPerFixUpTask();
+		Double[] res = this.applicationService.findAvgMinMaxStrDvtApplicationPerFixUpTask();
 		Assert.notNull(res);
 		Assert.notEmpty(res);
 	}
 	
 	@Test
 	public void findAvgMinMaxStrDvtPerApplicationTest() {
-		Collection<Double> res = this.applicationService.findAvgMinMaxStrDvtPerApplication();
+		Double[] res = this.applicationService.findAvgMinMaxStrDvtPerApplication();
 		Assert.notNull(res);
 		Assert.notEmpty(res);
 	}

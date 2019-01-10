@@ -143,6 +143,11 @@ public class BoxServices {
 
 		Actor self = actorservice.findSelf();
 
+		if(dst == null) {
+			box.setParentBox(null);
+		}else {
+			box.setParentBox(dst);
+		}
 		box.setParentBox(dst);
 
 		boxrepository.save(self.getBoxes());
